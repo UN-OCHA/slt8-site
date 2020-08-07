@@ -1,0 +1,124 @@
+{
+    "name": "unocha/slt8-site",
+    "description": "Saving Lives Together (SLT) - Drupal 8 version",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "UNOCHA",
+            "role": ""
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "composer/installers": "^1.9.0",
+        "cweagans/composer-patches": "^1.6.7",
+        "drupal/allowed_formats": "^1.2",
+        "drupal-composer/drupal-scaffold": "^2.6.1",
+        "drupal-composer/preserve-paths": "^0.1.5",
+        "drupal/admin_denied": "^1.0",
+        "drupal/core": "^8.9.2",
+        "drupal/components": "^2.0-beta3",
+        "drupal/google_tag": "1.4",
+        "drupal/maintenance200": "^1.0",
+        "drupal/migrate_plus": "^4.2",
+        "drupal/migrate_tools": "^4.5",
+        "drupal/pathauto": "^1.8",
+        "drupal/redirect": "^1.6",
+        "drupal/social_auth_hid": "^2.4",
+        "drush/drush": "^10.2.2",
+        "oomphinc/composer-installers-extender": "^1.1.2",
+        "unocha/common_design": "^2.8.2",
+        "webflo/drupal-finder": "^1.0.0",
+        "zaporylie/composer-drupal-optimizations": "^1.1.1"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3.9",
+        "drupal/console": "^1.9.4",
+        "drupal/devel": "^2.1",
+        "drupal/yaml_content": "^1.0@alpha",
+        "phpcompatibility/php-compatibility": "^9.3.5",
+        "phpmd/phpmd": "^2.8.2",
+        "phpunit/phpunit": "^7.5.20",
+        "weitzman/drupal-test-traits": "^1.5"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "bin-dir": "vendor/bin/",
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "git config core.hooksPath git-hooks || true"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "git config core.hooksPath git-hooks || true"
+        ],
+        "gulp-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
+        "gulp-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/gulp build",
+        "gulp-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
+        "gulp": [
+            "@gulp-prepare",
+            "@gulp-build",
+            "@gulp-cleanup"
+        ]
+    },
+    "extra": {
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "patches-file": "composer.patches.json",
+        "installer-types": ["bower-asset", "npm-asset"],
+        "installer-paths": {
+            "html/core": ["type:drupal-core"],
+            "html/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ],
+            "html/modules/contrib/{$name}": ["type:drupal-module"],
+            "html/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "html/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/Commands/{$name}": ["type:drupal-drush"]
+        },
+        "preserve-paths": [
+            "html/modules/custom",
+            "html/themes/custom"
+        ],
+        "drupal-scaffold": {
+            "initial": {
+                ".editorconfig": "../.editorconfig",
+                ".gitattributes": "../.gitattributes"
+            }
+        }
+    }
+}
