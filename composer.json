@@ -75,12 +75,15 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "git config core.hooksPath git-hooks || true"
+            "git config core.hooksPath git-hooks || true",
+            "@drupal-scaffold"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "git config core.hooksPath git-hooks || true"
+            "git config core.hooksPath git-hooks || true",
+            "@drupal-scaffold"
         ],
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "gulp-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
         "gulp-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/gulp build",
         "gulp-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
@@ -116,9 +119,12 @@
         ],
         "drupal-scaffold": {
             "initial": {
+                "sites/default/default.services.yml": "sites/default/services.yml",
+                "sites/default/default.settings.php": "sites/default/settings.php",
                 ".editorconfig": "../.editorconfig",
                 ".gitattributes": "../.gitattributes"
-            }
+            },
+            "omit-defaults": false
         }
     }
 }
