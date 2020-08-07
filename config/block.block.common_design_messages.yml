@@ -1,16 +1,16 @@
-uuid: 1bce2760-2ef9-453a-b578-5bfc6d7a9ae6
+uuid: d3bca6a6-f555-4d29-8430-aece8e218d63
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - stark
+    - common_design
 _core:
   default_config_hash: 5MNdk3fpMKx_xxBTcz2T11DL4XEU1H5SgHl8BsYdFsA
-id: stark_messages
-theme: stark
-region: highlighted
+id: common_design_messages
+theme: common_design
+region: header_top
 weight: 0
 provider: null
 plugin: system_messages_block

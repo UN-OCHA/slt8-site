@@ -1,4 +1,4 @@
-uuid: 1a6b7ae1-305a-4af4-82ac-b7809233e270
+uuid: 10baaabe-2c5f-46df-baba-a2e7cd0317c6
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   module:
     - system
   theme:
-    - stark
+    - common_design
 _core:
   default_config_hash: OFEDxrButmQ8Vac1kiVr1gtw6vYKuSJPr9cJQZVKCKg
-id: stark_admin
-theme: stark
+id: common_design_admin
+theme: common_design
 region: sidebar_first
 weight: 1
 provider: null

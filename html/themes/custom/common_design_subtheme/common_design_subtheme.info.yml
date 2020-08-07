@@ -4,7 +4,7 @@ description: OCHA Common Design sub theme
 core: 8.x
 # Defines the base theme
 base theme: common_design
-logo: 'img/logos/logo.svg'
+logo: 'img/logos/slt-logo.png'
 
 # Defines libraries group in which we can add css/js.
 libraries:

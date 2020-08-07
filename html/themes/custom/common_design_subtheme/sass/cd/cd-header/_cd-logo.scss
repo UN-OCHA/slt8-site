@@ -14,11 +14,13 @@
   // Logo for mobile.
   // sass-lint:disable no-duplicate-properties
   @include max-width(md) {
-    background: url('../../../../../contrib/common_design/img/logos/ocha-logo-blue@53x37.png') center no-repeat;
-    background: linear-gradient(transparent, transparent), url('../../../../../contrib/common_design/img/logos/ocha-logo-blue.svg') center no-repeat;
+    background: url('../../../../../contrib/common_design/img/logos/slt-mobile-logo.png') center no-repeat;
+    // @todo change to SVG logo when available.
+    background: linear-gradient(transparent, transparent), url('../../../../../contrib/common_design/img/logos/slt-mobile-logo.png') center no-repeat;
   }
 
   @include tablet {
-    width: 186px; // width may need to be adjusted depending on logo width.
+    // Width of the logo.
+    width: 121px;
   }
 }
