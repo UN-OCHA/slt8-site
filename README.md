@@ -8,7 +8,7 @@ Saving Lives Together (SLT) site - Drupal 8 version
 Migration
 ---------
 
-The migration is handled by the [osg_migrate](html/modules/custom/slt_migrate)
+The migration is handled by the [slt_migrate](html/modules/custom/slt_migrate)
 module.
 
 Connection settings to the Drupal 7 database should be defined in a settings.php
