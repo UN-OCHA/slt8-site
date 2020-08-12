@@ -1,0 +1,99 @@
+uuid: 850cb6ac-8e96-406f-84fb-b34cbe2f4f78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.contact.field_agency
+    - field.field.node.contact.field_country
+    - field.field.node.contact.field_duty_station_country
+    - field.field.node.contact.field_duty_station_region
+    - field.field.node.contact.field_email
+    - field.field.node.contact.field_functional_title
+    - field.field.node.contact.field_phone
+    - field.field.node.contact.field_security_role_area
+    - field.field.node.contact.field_security_title
+    - node.type.contact
+  module:
+    - telephone_type
+id: node.contact.default
+targetEntityType: node
+bundle: contact
+mode: default
+content:
+  field_agency:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_country:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_duty_station_country:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_duty_station_region:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_email:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_functional_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone:
+    weight: 26
+    settings:
+      placeholder_type: 'Work cell'
+      placeholder_number: '+0123456789'
+    third_party_settings: {  }
+    type: telephone_type_default
+    region: content
+  field_security_role_area:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_security_title:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 255
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

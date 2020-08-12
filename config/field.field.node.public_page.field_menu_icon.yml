@@ -1,0 +1,29 @@
+uuid: 0692af0c-7ab6-4000-8d19-cbacb6ea8f70
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_icon
+    - media.type.image
+    - node.type.public_page
+id: node.public_page.field_menu_icon
+field_name: field_menu_icon
+entity_type: node
+bundle: public_page
+label: 'Menu Icon'
+description: 'Square image that is used as background  for the link to the page, usually used in custom menus like on the hompeage.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: created
+      direction: DESC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

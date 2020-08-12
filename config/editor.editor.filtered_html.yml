@@ -1,0 +1,58 @@
+uuid: 5d11e0c0-8812-48f6-b307-ea6a84be4aef
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+  module:
+    - ckeditor
+format: filtered_html
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+            - Format
+        -
+          name: Links
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: 'Lists and Tables'
+          items:
+            - BulletedList
+            - NumberedList
+            - Outdent
+            - Indent
+            - Table
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+        -
+          name: Tools
+          items:
+            - Undo
+            - Redo
+            - RemoveFormat
+            - Source
+  plugins:
+    stylescombo:
+      styles: ''
+    language:
+      language_list: un
+image_upload:
+  status: true
+  scheme: private
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: 1024
+    height: 1024

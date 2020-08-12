@@ -1,0 +1,22 @@
+uuid: ccf1d141-ca09-48be-957c-07816e9f6551
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.private_page
+id: node.private_page.status
+field_name: status
+entity_type: node
+bundle: private_page
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

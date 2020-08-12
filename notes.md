@@ -10,7 +10,7 @@ Run `COMPOSER_MEMORY_LIMIT=-1 composer install`
 
 **Fist installation with drush or drupal console**
 
-Run `drush site:install minimal --site-name="OCHA Donor Support Group" --site-mail="admin@slt8.test"`
+Run `drush site:install minimal --site-name="Saving Lives Together" --site-mail="admin@slt8.test"`
 
 This will add the database settings and hash_salt to the `html/sites/default/settings.php` and should probably be removed and added to `/srv/www/shared/settings/settings.local.php` instead.
 

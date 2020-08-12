@@ -1,0 +1,29 @@
+uuid: 08408f28-2cc2-4c20-b34d-aa586e92b2fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_security_role_area
+    - node.type.contact
+    - taxonomy.vocabulary.security_role_area
+id: node.contact.field_security_role_area
+field_name: field_security_role_area
+entity_type: node
+bundle: contact
+label: 'Security Role Area'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      security_role_area: security_role_area
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

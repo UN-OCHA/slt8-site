@@ -1,0 +1,29 @@
+uuid: 92d3f3d4-d7c9-4963-b3ca-ba91228c37fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agency
+    - node.type.contact
+    - taxonomy.vocabulary.agency
+id: node.contact.field_agency
+field_name: field_agency
+entity_type: node
+bundle: contact
+label: Agency
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      agency: agency
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

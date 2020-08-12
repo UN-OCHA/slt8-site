@@ -1,0 +1,29 @@
+uuid: 6160bcea-8501-49c6-b0bf-2000a153c4e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duty_station_region
+    - node.type.contact
+    - taxonomy.vocabulary.duty_station_region
+id: node.contact.field_duty_station_region
+field_name: field_duty_station_region
+entity_type: node
+bundle: contact
+label: 'Duty Station Region'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      duty_station_region: duty_station_region
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

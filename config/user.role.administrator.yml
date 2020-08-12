@@ -1,0 +1,10 @@
+uuid: f924f421-3481-4f76-8c2f-1fb0f1869206
+langcode: en
+status: true
+dependencies: {  }
+id: administrator
+label: Administrator
+weight: 2
+is_admin: null
+permissions:
+  - 'use text format filtered_html'

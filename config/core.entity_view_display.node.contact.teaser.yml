@@ -1,0 +1,38 @@
+uuid: 5e5e8a4b-c03f-49b5-8b10-43a1a0a1326a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.contact.field_agency
+    - field.field.node.contact.field_country
+    - field.field.node.contact.field_duty_station_country
+    - field.field.node.contact.field_duty_station_region
+    - field.field.node.contact.field_email
+    - field.field.node.contact.field_functional_title
+    - field.field.node.contact.field_phone
+    - field.field.node.contact.field_security_role_area
+    - field.field.node.contact.field_security_title
+    - node.type.contact
+  module:
+    - user
+id: node.contact.teaser
+targetEntityType: node
+bundle: contact
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_agency: true
+  field_country: true
+  field_duty_station_country: true
+  field_duty_station_region: true
+  field_email: true
+  field_functional_title: true
+  field_phone: true
+  field_security_role_area: true
+  field_security_title: true
