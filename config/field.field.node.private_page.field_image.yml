@@ -1,19 +1,19 @@
-uuid: dfe565f1-a567-434d-9704-1ca1cd6640ee
+uuid: 85b3cb96-8aa4-4fd5-b96e-640b841bbf20
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_main_image
+    - field.storage.node.field_image
     - media.type.image
     - node.type.private_page
-id: node.private_page.field_main_image
-field_name: field_main_image
+id: node.private_page.field_image
+field_name: field_image
 entity_type: node
 bundle: private_page
-label: 'Main image'
+label: 'Main Image'
 description: 'Large image illustrating the page, usually displayed above the page''s content.'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:

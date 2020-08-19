@@ -29,9 +29,7 @@ regions:
 #   common_design/cd-article-teaser:
 #     - common_design_subtheme/cd-article-teaser
 
-# CD components
-# Requires Components module
-# component-libraries:
-#   cd-components:
-#     paths:
-#       - components
+# Use the common_design_subtheme styles inside the editor.
+ckeditor_stylesheets:
+  - ../../contrib/common_design/components/cd-grid/cd-grid.css
+  - css/styles.css

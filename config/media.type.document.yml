@@ -1,0 +1,13 @@
+uuid: bd019cb5-ee3b-4232-bddb-1e4ebd2f6429
+langcode: en
+status: true
+dependencies: {  }
+id: document
+label: Document
+description: 'A <em>Document</em> file is written information.'
+source: file
+queue_thumbnail_downloads: false
+new_revision: true
+source_configuration:
+  source_field: field_media_file
+field_map: {  }

@@ -32,10 +32,15 @@ settings:
             - Indent
             - Table
         -
+          name: 'Grids and Blocks'
+          items:
+            - ShowBlocks
+            - Templates
+        -
           name: Media
           items:
             - Blockquote
-            - DrupalImage
+            - image
         -
           name: Tools
           items:
@@ -48,8 +53,11 @@ settings:
       styles: ''
     language:
       language_list: un
+    templates:
+      template_path: ''
+      replace_content: 0
 image_upload:
-  status: true
+  status: false
   scheme: private
   directory: inline-images
   max_size: ''

@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.private_page.body
-    - field.field.node.private_page.field_main_image
-    - field.field.node.private_page.field_menu_icon
+    - field.field.node.private_page.field_image
+    - field.field.node.private_page.field_thumbnail
     - node.type.private_page
   module:
     - media_library
@@ -25,19 +25,19 @@ content:
       show_summary: false
     third_party_settings: {  }
     region: content
-  field_main_image:
+  field_image:
+    type: media_library_widget
     weight: 2
     settings:
       media_types: {  }
     third_party_settings: {  }
-    type: media_library_widget
     region: content
-  field_menu_icon:
+  field_thumbnail:
+    type: media_library_widget
     weight: 1
     settings:
       media_types: {  }
     third_party_settings: {  }
-    type: media_library_widget
     region: content
   status:
     type: boolean_checkbox

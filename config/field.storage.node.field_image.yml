@@ -1,12 +1,12 @@
-uuid: 6f052610-e663-4228-ace0-1e98b0e48a8a
+uuid: 55c629f1-cbe8-4f16-b7db-0a5202e8e505
 langcode: en
 status: true
 dependencies:
   module:
     - media
     - node
-id: node.field_main_image
-field_name: field_main_image
+id: node.field_image
+field_name: field_image
 entity_type: node
 type: entity_reference
 settings:

@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.public_page.body
-    - field.field.node.public_page.field_main_image
-    - field.field.node.public_page.field_menu_icon
+    - field.field.node.public_page.field_image
+    - field.field.node.public_page.field_thumbnail
     - node.type.public_page
   module:
     - text
@@ -22,23 +22,21 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_main_image:
-    type: entity_reference_entity_view
+  field_image:
     weight: 2
     label: above
     settings:
-      view_mode: default
-      link: false
+      link: true
     third_party_settings: {  }
+    type: entity_reference_label
     region: content
-  field_menu_icon:
-    type: entity_reference_entity_view
+  field_thumbnail:
     weight: 1
     label: above
     settings:
-      view_mode: default
-      link: false
+      link: true
     third_party_settings: {  }
+    type: entity_reference_label
     region: content
   links:
     weight: 0

@@ -1,17 +1,17 @@
-uuid: aa249d79-b1b5-4707-a7a5-5d6f9268658a
+uuid: 4d801ba5-f9a9-45b1-b85c-aa192b252e1b
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_main_image
+    - field.storage.node.field_thumbnail
     - media.type.image
-    - node.type.public_page
-id: node.public_page.field_main_image
-field_name: field_main_image
+    - node.type.private_page
+id: node.private_page.field_thumbnail
+field_name: field_thumbnail
 entity_type: node
-bundle: public_page
-label: 'Main image'
-description: 'Large image illustrating the page, usually displayed above the page''s content.'
+bundle: private_page
+label: Thumbnail
+description: 'Square image that is used as background  for the link to the page, usually used in custom menus like on the hompeage.'
 required: false
 translatable: false
 default_value: {  }

@@ -4,11 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.public_page.body
-    - field.field.node.public_page.field_main_image
-    - field.field.node.public_page.field_menu_icon
+    - field.field.node.public_page.field_image
+    - field.field.node.public_page.field_thumbnail
     - node.type.public_page
   module:
-    - media_library
     - text
 id: node.public_page.default
 targetEntityType: node
@@ -25,19 +24,25 @@ content:
       show_summary: false
     third_party_settings: {  }
     region: content
-  field_main_image:
-    type: media_library_widget
+  field_image:
     weight: 2
     settings:
-      media_types: {  }
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
-  field_menu_icon:
-    type: media_library_widget
+  field_thumbnail:
     weight: 1
     settings:
-      media_types: {  }
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   status:
     type: boolean_checkbox

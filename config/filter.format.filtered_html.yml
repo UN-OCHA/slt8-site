@@ -3,50 +3,42 @@ langcode: en
 status: true
 dependencies:
   module:
-    - editor
+    - entity_embed
+    - media
 name: 'Filtered HTML'
 format: filtered_html
 weight: -9
 filters:
-  editor_file_reference:
-    id: editor_file_reference
-    provider: editor
-    status: true
-    weight: 0
-    settings: {  }
-  filter_html_image_secure:
-    id: filter_html_image_secure
-    provider: filter
-    status: true
-    weight: 9
-    settings: {  }
-  filter_url:
-    id: filter_url
-    provider: filter
-    status: true
-    weight: 0
-    settings:
-      filter_url_length: 72
   filter_html:
     id: filter_html
     provider: filter
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href hreflang target="_blank"> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type=''1 A I''> <li> <dl> <dt> <dd> <h2 id=''jump-*''> <h3 id> <h4 id> <h5 id> <h6 id> <table> <thead> <tbody> <tr> <th colspan> <td colspan> <drupal-media data-entity-type data-entity-uuid data-caption data-align> <p> <br>'
+      allowed_html: '<a href hreflang target="_blank"> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type=''1 A I''> <li> <dl> <dt> <dd> <h2 id=''jump-*''> <h3 id> <h4 id> <h5 id> <h6 id> <table> <thead> <tbody> <tr> <th colspan> <td colspan> <p> <br> <div class data-*> <drupal-media data-entity-type data-entity-uuid data-caption data-align> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-embed-button data-caption data-align alt title>'
       filter_html_help: true
       filter_html_nofollow: false
-  filter_align:
-    id: filter_align
-    provider: filter
+  media_embed:
+    id: media_embed
+    provider: media
+    status: false
+    weight: 100
+    settings:
+      default_view_mode: default
+      allowed_media_types:
+        image: image
+      allowed_view_modes: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
     status: true
-    weight: 0
+    weight: 100
     settings: {  }
-  filter_caption:
-    id: filter_caption
+  filter_html_image_secure:
+    id: filter_html_image_secure
     provider: filter
     status: true
-    weight: 0
+    weight: 9
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector

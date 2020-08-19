@@ -1,8 +1,10 @@
 module:
   admin_denied: 0
+  allowed_formats: 0
   block: 0
   breakpoint: 0
   ckeditor: 0
+  ckeditor_templates: 0
   components: 0
   config: 0
   contextual: 0
@@ -10,12 +12,17 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
+  embed: 0
+  entity_browser: 0
+  entity_embed: 0
   field: 0
   field_ui: 0
   file: 0
   filter: 0
   google_tag: 0
   image: 0
+  layout_builder: 0
+  layout_discovery: 0
   link: 0
   maintenance200: 0
   media: 0
@@ -23,12 +30,16 @@ module:
   menu_link_content: 0
   menu_ui: 0
   migrate: 0
+  migrate_drupal: 0
   migrate_plus: 0
   migrate_tools: 0
   node: 0
   page_cache: 0
   path: 0
   path_alias: 0
+  slt_access: 0
+  slt_general: 0
+  slt_migrate: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0

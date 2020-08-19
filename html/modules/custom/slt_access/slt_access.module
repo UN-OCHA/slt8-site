@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * SLT access module file.
+ */
+
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_access().
+ *
+ * Deny view access to users without the view published 'node bundle' content
+ * permission.
+ */
+function slt_access_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  $type = $node->bundle();
+  $published = $node->isPublished();
+
+  switch ($op) {
+    case 'view':
+      if ($published && !$account->hasPermission("view published {$type} content", $account)) {
+        return AccessResult::forbidden()->cachePerPermissions();
+      }
+  }
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for 'user_form'.
+ *
+ * Change permission to assign roles.
+ *
+ * @see Drupal\user\AccountForm::form()
+ */
+function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Allow managing the account roles if there are roles and the current user
+  // has the correct permission.
+  $roles_access = !empty($form['account']['roles']['#options']) &&
+                  \Drupal::currentUser()->hasPermission('assign user roles');
+  $form['account']['roles']['#access'] = $roles_access;
+}

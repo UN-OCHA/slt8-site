@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.private_page.body
-    - field.field.node.private_page.field_main_image
-    - field.field.node.private_page.field_menu_icon
+    - field.field.node.private_page.field_image
+    - field.field.node.private_page.field_thumbnail
     - node.type.private_page
   module:
     - text
@@ -22,23 +22,23 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_main_image:
+  field_image:
+    type: entity_reference_entity_view
     weight: 2
     label: above
     settings:
-      link: true
       view_mode: default
+      link: false
     third_party_settings: {  }
-    type: entity_reference_entity_view
     region: content
-  field_menu_icon:
+  field_thumbnail:
+    type: entity_reference_entity_view
     weight: 1
     label: above
     settings:
-      link: true
       view_mode: default
+      link: false
     third_party_settings: {  }
-    type: entity_reference_entity_view
     region: content
   links:
     weight: 0

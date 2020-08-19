@@ -6,7 +6,12 @@ dependencies:
     - field.storage.node.body
     - node.type.public_page
   module:
+    - allowed_formats
     - text
+third_party_settings:
+  allowed_formats:
+    filtered_html: filtered_html
+    plain_text: '0'
 id: node.public_page.body
 field_name: body
 entity_type: node

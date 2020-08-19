@@ -1,17 +1,17 @@
-uuid: 2edf2918-7ef5-4eb2-935c-558f768cfaac
+uuid: 6ba5602a-1ddd-4b29-982d-fa116e93cc61
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_menu_icon
+    - field.storage.node.field_image
     - media.type.image
-    - node.type.private_page
-id: node.private_page.field_menu_icon
-field_name: field_menu_icon
+    - node.type.public_page
+id: node.public_page.field_image
+field_name: field_image
 entity_type: node
-bundle: private_page
-label: 'Menu Icon'
-description: 'Square image that is used as background  for the link to the page, usually used in custom menus like on the hompeage.'
+bundle: public_page
+label: 'Main Image'
+description: 'Large image illustrating the page, usually displayed above the page''s content.'
 required: false
 translatable: true
 default_value: {  }
