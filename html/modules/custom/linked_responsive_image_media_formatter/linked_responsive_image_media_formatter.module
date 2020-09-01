@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Linked Responsive Media Image Formatter.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function linked_responsive_image_media_formatter_theme() {
+  return [
+    // This theme extends the responsive image formatter to be able to display
+    // the link text in addition to the image when it is linked. So we can
+    // re-use the responsive image formatter preprocess function.
+    'linked_responsive_image_media_formatter' => [
+      'variables' => [
+        'item' => NULL,
+        'item_attributes' => NULL,
+        'url' => NULL,
+        'url_title' => NULL,
+        'responsive_image_style_id' => NULL,
+      ],
+      'preprocess functions' => [
+        'template_preprocess_responsive_image_formatter',
+      ],
+    ],
+  ];
+}

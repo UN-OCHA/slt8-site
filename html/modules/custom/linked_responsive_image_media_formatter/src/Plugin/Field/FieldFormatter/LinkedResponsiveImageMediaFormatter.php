@@ -2,20 +2,22 @@
 
 namespace Drupal\linked_responsive_image_media_formatter\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\Core\Utility\Token;
-use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
+use Drupal\responsive_image\ResponsiveImageStyleInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
  * Plugin implementation of a reponsive image formatter for media.
@@ -80,6 +82,13 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
   protected $token;
 
   /**
+   * The path validator service.
+   *
+   * @var \Drupal\Core\Path\PathValidatorInterface
+   */
+  protected $pathValidator;
+
+  /**
    * Constructs a MediaResponsiveThumbnailFormatter object.
    *
    * @param string $plugin_id
@@ -110,8 +119,10 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
    *   The media storage.
    * @param \Drupal\Core\Utility\Token $token
    *   The token service.
+   * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
+   *   The pathvalidator service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $responsive_image_style_storage, EntityStorageInterface $image_style_storage, LinkGeneratorInterface $link_generator, AccountInterface $current_user, RendererInterface $renderer, EntityStorageInterface $parent_media_storage, Token $token) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $responsive_image_style_storage, EntityStorageInterface $image_style_storage, LinkGeneratorInterface $link_generator, AccountInterface $current_user, RendererInterface $renderer, EntityStorageInterface $parent_media_storage, Token $token, PathValidatorInterface $path_validator) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->responsiveImageStyleStorage = $responsive_image_style_storage;
     $this->imageStyleStorage = $image_style_storage;
@@ -120,7 +131,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     $this->renderer = $renderer;
     $this->parentMediaStorage = $parent_media_storage;
     $this->token = $token;
-
+    $this->pathValidator = $path_validator;
   }
 
   /**
@@ -142,6 +153,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       $container->get('renderer'),
       $container->get('entity_type.manager')->getStorage('media'),
       $container->get('token'),
+      $container->get('path.validator'),
     );
   }
 
@@ -166,6 +178,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       'image_link_url' => '',
       'image_alt' => 'image',
       'image_alt_value' => '',
+      'image_as_background' => FALSE,
     ] + parent::defaultSettings();
   }
 
@@ -198,7 +211,8 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     // @todo add an option to link to media?
     $link_types = [
       'content' => $this->t('Content'),
-      'file' => $this->t('File'),
+      'media' => $this->t('Media'),
+      'image' => $this->t('Image'),
       'custom' => $this->t('Custom'),
     ];
     $elements['image_link'] = [
@@ -248,6 +262,13 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       ],
     ];
 
+    $elements['image_as_background'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use the image as background'),
+      '#description' => $this->t('When checked the image will be used as background for the link and the image "alt" will be used as the link text.'),
+      '#default_value' => $this->getSetting('image_as_background'),
+    ];
+
     $elements['token'] = [
       '#type' => 'item',
       '#theme' => 'token_tree_link',
@@ -263,24 +284,38 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
   public function settingsSummary() {
     $summary = parent::settingsSummary();
 
-    $link_types = [
-      'content' => $this->t('Linked to content'),
-      'media' => $this->t('Linked to media item'),
-      'custom' => $this->t('Linked to custom URL'),
-    ];
-    // Display this setting only if image is linked.
-    $image_link_setting = $this->getSetting('image_link');
-    if (isset($link_types[$image_link_setting])) {
-      $summary[] = $link_types[$image_link_setting];
-    }
+    $responsive_image_style = $this->responsiveImageStyleStorage->load($this->getSetting('responsive_image_style'));
+    if ($responsive_image_style) {
+      $summary[] = $this->t('Responsive image style: @responsive_image_style', ['@responsive_image_style' => $responsive_image_style->label()]);
 
-    $alt_types = [
-      'image' => $this->t('Use image alt text'),
-      'custom' => $this->t('Use custom alt text'),
-    ];
-    $image_alt_setting = $this->getSetting('image_alt');
-    if (isset($alt_types[$image_alt_setting])) {
-      $summary[] = $alt_types[$image_alt_setting];
+      $link_types = [
+        'content' => $this->t('Linking to content'),
+        'media' => $this->t('Linking to media item'),
+        'image' => $this->t('Linking to image file'),
+        'custom' => $this->t('Linking to custom URL'),
+      ];
+      // Display this setting only if image is linked.
+      $image_link_setting = $this->getSetting('image_link');
+      if (isset($link_types[$image_link_setting])) {
+        $summary[] = $link_types[$image_link_setting];
+      }
+
+      $alt_types = [
+        'image' => $this->t('Using image alt text'),
+        'custom' => $this->t('Using custom alt text'),
+      ];
+      $image_alt_setting = $this->getSetting('image_alt');
+      if (isset($alt_types[$image_alt_setting])) {
+        $summary[] = $alt_types[$image_alt_setting];
+      }
+
+      $image_as_background_setting = $this->getSetting('image_as_background');
+      if (!empty($image_as_background_setting)) {
+        $summary[] = $this->t('Image used as background');
+      }
+    }
+    else {
+      $summary[] = $this->t('Select a responsive image style.');
     }
 
     return $summary;
@@ -291,82 +326,102 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-    $entity = $items->getEntity();
     $media_items = $this->getEntitiesToView($items, $langcode);
-
-    // Make sure the entity data is available.
-    $token_data = [$entity->getEntityType()->id() => $entity];
-    $token_options = ['clear' => TRUE];
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $elements;
     }
 
+    // The parent entity information will be used for token replacement.
+    $entity = $items->getEntity();
+    $entity_type = $entity->getEntityType()->id();
+
+    // Retrieve the settings values.
+    $image_link = $this->getSetting('image_link');
+    $image_alt = $this->getSetting('image_alt');
+    $image_alt_value = $this->getSetting('image_alt_value');
+    $image_as_background = $this->getSetting('image_as_background');
+
     // Retrieve the url to link to.
     $url = NULL;
-    if ($this->getSetting('image_link') === 'content') {
+    if ($image_link === 'content') {
+      // There is no link if the entity has not yet been saved.
       if (!$entity->isNew()) {
+        // @todo Review because that may possibly not be what is expected when
+        // used for example to format an image field in a paragraph entity.
         $url = $entity->toUrl();
       }
     }
-    elseif ($this->getSetting('image_link') === 'file') {
-      $link_file = TRUE;
-    }
-    elseif ($this->getSetting('image_link') === 'custom') {
-      $url = $this->token->replace($this->getSetting('image_link_url'), $token_data, $token_options);
-      // Try to grab the href attribute if the replaced token is a link.
-      preg_match('/<a[^>]* href="([^"]+)"[^>]*>/', $url, $match);
-      $url = isset($match[1]) ? $match[1] : $url;
-    }
 
-    // Retrieve the alt to use.
-    $alt = '';
-    if ($this->getSetting('image_alt') === 'image') {
-      $use_image_alt = TRUE;
-    }
-    elseif ($this->getSetting('image_alt') === 'custom') {
-      $alt = $this->token->replace($this->getSetting('image_alt_value'), $token_data, $token_options);
-    }
+    // Retrieve the reponsive image style and its cache metadata.
+    $responsive_image_style = $this->getResponsiveImageStyle();
+    $responsive_image_style_cache_metadata = $this->getResponsiveImageStyleCacheableMetadata($responsive_image_style);
 
-    // Collect cache tags to be added for each item in the field.
-    $responsive_image_style = $this->responsiveImageStyleStorage->load($this->getSetting('responsive_image_style'));
-    $image_styles_to_load = [];
-    $cache_tags = [];
-    if ($responsive_image_style) {
-      $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style->getCacheTags());
-      $image_styles_to_load = $responsive_image_style->getImageStyleIds();
-    }
-
-    $image_styles = $this->imageStyleStorage->loadMultiple($image_styles_to_load);
-    foreach ($image_styles as $image_style) {
-      $cache_tags = Cache::mergeTags($cache_tags, $image_style->getCacheTags());
-    }
-
+    // Generate render arrays foreach field elements using the responsive
+    // image formatter.
     foreach ($media_items as $delta => $media_item) {
       $image = $media_item->get('thumbnail')->first();
 
-      // Link the <picture> element to the original image file.
-      if (isset($link_file)) {
+      // We do the token replacements here, because we need to pass the media
+      // entity as well as the parent entity.
+      $token_data = [
+        $entity_type => $entity,
+        'media' => $media_item,
+      ];
+
+      // Link to the original image file.
+      if ($image_link === 'image') {
         assert($image instanceof FileInterface);
         $url = $image->createFileUrl();
       }
+      // Link to the media.
+      elseif ($image_link === 'media') {
+        $url = $media_item->toUrl();
+      }
+      // Link to a custom URL.
+      elseif ($image_link === 'custom') {
+        $url = $this->getCustomUrl($token_data);
+      }
 
-      if (!isset($use_image_alt)) {
-        $image->set('alt', $alt);
+      // Set the custom alt text.
+      if ($image_alt === 'custom') {
+        $image->set('alt', $this->replaceTokens($image_alt_value, $token_data));
+      }
+      // Ensure there is at least an empty alt tag for accessibility.
+      elseif (empty($image->alt)) {
+        $image->set('alt', '');
+      }
+
+      // If the image is to be used as background, we use its alt tag as text
+      // for the link and empty the image alt as the image will then be
+      // considered a decorative image.
+      $url_title = NULL;
+      if ($image_as_background) {
+        $url_title = $image->alt;
+        $image->set('alt', '');
       }
 
       $elements[$delta] = [
-        '#theme' => 'responsive_image_formatter',
+        '#theme' => 'linked_responsive_image_media_formatter',
         '#item' => $image,
-        '#item_attributes' => [],
+        // We copy the alt to the iten attributes so that it's available
+        // in the templates, for example to use as text for the link.
+        '#item_attributes' => ['alt' => $image->alt],
         '#responsive_image_style_id' => $responsive_image_style ? $responsive_image_style->id() : '',
         '#url' => $url,
-        '#cache' => [
-          'tags' => $cache_tags,
-        ],
+        '#url_title' => $url_title,
       ];
+
+      // Add cache metadata for the media entity so that the field is
+      // re-rendered when the media changes.
+      $this->renderer->addCacheableDependency($elements[$delta], $media_item);
     }
+
+    // Ensure the field is re-rendered when the responsive image style's
+    // images styles are changed.
+    $responsive_image_style_cache_metadata->applyTo($elements);
+
     return $elements;
   }
 
@@ -374,14 +429,106 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    $storage_definition = $field_definition->getFieldStorageDefinition();
+    // This formatter is only applicable to media reference fields.
+    return $field_definition->getFieldStorageDefinition()->getSetting('target_type') === 'media';
+  }
 
-    // This formatter is only applicable to media reference field with a
-    // cardinality of 1.
-    // @todo this should only be applicable to media of type image but it's
-    // not easy to retrieve this information.
-    return $storage_definition->getSetting('target_type') === 'media' &&
-       $storage_definition->getCardinality() == 1;
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateDependencies() {
+    $dependencies = parent::calculateDependencies();
+    $style = $this->getResponsiveImageStyle();
+    if (!empty($style)) {
+      $dependencies[$style->getConfigDependencyKey()][] = $style->getConfigDependencyName();
+    }
+    return $dependencies;
+  }
+
+  /**
+   * Get the responsive image style entity.
+   *
+   * @return \Drupal\responsive_image\ResponsiveImageStyleInterface
+   *   Responsive image style entity.
+   */
+  public function getResponsiveImageStyle() {
+    return $this->responsiveImageStyleStorage->load($this->getSetting('responsive_image_style'));
+  }
+
+  /**
+   * Get responsive style cache metadata.
+   *
+   * The responsive image style entity's cache metadata doesn't contain
+   * information on the images styles it uses but this is needed here as we
+   * want to make sure the cache of the rendered media is cleared when an
+   * image style is updated.
+   *
+   * @todo check if that's really needed.
+   *
+   * @param \Drupal\responsive_image\ResponsiveImageStyleInterface $responsive_image_style
+   *   Responsive image style entity.
+   *
+   * @return array
+   *   Cache metadata.
+   */
+  public function getResponsiveImageStyleCacheableMetadata(ResponsiveImageStyleInterface $responsive_image_style) {
+    $cache_metadata = CacheableMetadata::createFromObject($responsive_image_style);
+    $image_styles = $this->imageStyleStorage->loadMultiple($responsive_image_style->getImageStyleIds());
+
+    // Merge the cache data foreach image style of the responsive image style.
+    foreach ($image_styles as $image_style) {
+      $cache_metadata = $cache_metadata->merge(CacheableMetadata::createFromObject($image_style));
+    }
+    return $cache_metadata;
+  }
+
+  /**
+   * Get and validate the custom URL.
+   *
+   * @todo Replace PathValidator with better validation as it uses
+   * UrlHelper::isValid which has several issues (unless those get fixed):
+   * - https://www.drupal.org/project/drupal/issues/2691099
+   * - https://www.drupal.org/project/drupal/issues/2474191
+   *
+   * @param array $token_data
+   *   Context token data used when doing token replacement.
+   * @param array $token_options
+   *   Token replacement options.
+   *
+   * @return string|null
+   *   Validated URL or NULL.
+   */
+  public function getCustomUrl(array $token_data = [], array $token_options = []) {
+    // Tokens can be used.
+    $url = $this->replaceTokens($this->getSetting('image_link_url'), $token_data, $token_options);
+    // Try to grab the href attribute if the replaced token is a link.
+    preg_match('/<a[^>]* href="([^"]+)"[^>]*>/', $url, $match);
+    $url = isset($match[1]) ? $match[1] : $url;
+    // Validate the URL. It will return NULL if invalid.
+    // We don't check the access to internal URLs to avoid cache conflicts,
+    // however there may still be issues if the internal URL doesn't exist, in
+    // which case the  URL is considered invalid and there will be no link.
+    // The cached rendered field, without the link, may still displayed even
+    // after the URL is added.
+    return $this->pathValidator->getUrlIfValidWithoutAccessCheck($url) ?: NULL;
+  }
+
+  /**
+   * Replace tokens.
+   *
+   * @param string $text
+   *   Text with replaceable tokens.
+   * @param array $data
+   *   Token replacement data, like the media entity etc.
+   * @param array $options
+   *   Token replacements options. Unless specified otherwise by setting 'clear'
+   *   to false, tokens that couldn't be replaced will be removed.
+   *
+   * @return string
+   *   Text with replaced token.
+   */
+  public function replaceTokens($text, array $data = [], array $options = []) {
+    return $this->token->replace($text, $data, $options + ['clear' => TRUE]);
   }
 
 }
