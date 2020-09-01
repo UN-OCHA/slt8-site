@@ -1,0 +1,6 @@
+name: 'Paragraphs Page Title'
+description: 'Provides a "page title" paragraph type'
+type: module
+core: 8.x
+dependencies:
+  - paragraphs
