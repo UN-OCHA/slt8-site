@@ -1,0 +1,17 @@
+uuid: 15ba0ed9-8779-463d-a61d-9a387f8de1ee
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: YPzDcPM1ZfMkJ0nx8R9qpiBTeNfHUsAeXAhPYgioYmE
+name: xlarge_x1
+label: 'xlarge x1'
+effects:
+  05cf5c0c-af68-4232-be23-ee1847689a74:
+    uuid: 05cf5c0c-af68-4232-be23-ee1847689a74
+    id: image_scale
+    weight: 1
+    data:
+      width: 1600
+      height: null
+      upscale: false

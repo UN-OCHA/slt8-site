@@ -3,41 +3,23 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.private_page.body
-    - field.field.node.private_page.field_image
-    - field.field.node.private_page.field_thumbnail
+    - field.field.node.private_page.field_content
     - node.type.private_page
   module:
-    - text
+    - layout_paragraphs
     - user
 id: node.private_page.default
 targetEntityType: node
 bundle: private_page
 mode: default
 content:
-  body:
+  field_content:
+    type: layout_paragraphs
+    weight: 4
     label: hidden
-    type: text_default
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  field_image:
-    type: entity_reference_entity_view
-    weight: 2
-    label: above
     settings:
       view_mode: default
-      link: false
-    third_party_settings: {  }
-    region: content
-  field_thumbnail:
-    type: entity_reference_entity_view
-    weight: 1
-    label: above
-    settings:
-      view_mode: default
-      link: false
+      link: ''
     third_party_settings: {  }
     region: content
   links:

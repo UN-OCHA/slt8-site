@@ -1,0 +1,10 @@
+uuid: 74a169a4-4b8e-4cc4-adef-f61a4ad1bcd6
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.linked_image
+label: 'Linked image'
+targetEntityType: paragraph
+cache: true

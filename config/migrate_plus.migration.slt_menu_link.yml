@@ -1,0 +1,69 @@
+uuid: d07e8a23-60a1-4aad-ac92-d9aa6a396bbd
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+_core:
+  default_config_hash: nmHY_9wUEG2jm5kHjGtU_p00MALAcUIHlNwEzikgzxY
+id: slt_menu_link
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: slt
+label: 'Migrate SLT menu links.'
+source:
+  plugin: slt_menu_link
+  constants:
+    bundle: menu_link_content
+process:
+  id: mlid
+  bundle: constants/bundle
+  title: link_title
+  description: description
+  menu_name:
+    plugin: static_map
+    bypass: false
+    source: menu_name
+    map:
+      main-menu: main
+      menu-footer: footer
+  link/uri:
+    plugin: link_uri
+    source: link_path
+  link/options: options
+  route:
+    plugin: route
+    source:
+      - link_path
+      - options
+  route_name: '@route/route_name'
+  route_parameters: '@route/route_parameters'
+  url: '@route/url'
+  options: '@route/options'
+  external: external
+  weight: weight
+  expanded: expanded
+  enabled: enabled
+  parent:
+    plugin: menu_link_parent
+    source:
+      - plid
+      - '@menu_name'
+      - parent_link_path
+  changed: updated
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: und
+destination:
+  plugin: 'entity:menu_link_content'
+  no_stub: true
+migration_dependencies:
+  required:
+    - slt_node_private_page
+    - slt_node_public_page

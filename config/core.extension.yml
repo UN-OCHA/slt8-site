@@ -4,17 +4,15 @@ module:
   block: 0
   breakpoint: 0
   ckeditor: 0
-  ckeditor_templates: 0
   components: 0
   config: 0
+  config_filter: 0
+  config_split: 0
   contextual: 0
   ctools: 0
-  dblog: 0
   dynamic_page_cache: 0
   editor: 0
-  embed: 0
-  entity_browser: 0
-  entity_embed: 0
+  entity_reference_revisions: 0
   field: 0
   field_ui: 0
   file: 0
@@ -23,7 +21,9 @@ module:
   image: 0
   layout_builder: 0
   layout_discovery: 0
+  layout_paragraphs: 0
   link: 0
+  linked_responsive_image_media_formatter: 0
   maintenance200: 0
   media: 0
   media_library: 0
@@ -34,9 +34,13 @@ module:
   migrate_plus: 0
   migrate_tools: 0
   node: 0
+  ocha_media_content: 0
   page_cache: 0
+  paragraphs_page_title: 0
+  paragraphs_viewmode: 0
   path: 0
   path_alias: 0
+  responsive_image: 0
   slt_access: 0
   slt_general: 0
   slt_migrate: 0
@@ -56,6 +60,7 @@ module:
   views_ui: 0
   pathauto: 1
   views: 10
+  paragraphs: 11
   minimal: 1000
 theme:
   stable: 0

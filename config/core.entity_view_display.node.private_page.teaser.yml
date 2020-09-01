@@ -4,31 +4,15 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.private_page.body
-    - field.field.node.private_page.field_image
-    - field.field.node.private_page.field_thumbnail
+    - field.field.node.private_page.field_content
     - node.type.private_page
   module:
-    - text
     - user
 id: node.private_page.teaser
 targetEntityType: node
 bundle: private_page
 mode: teaser
-content:
-  body:
-    label: hidden
-    type: text_summary_or_trimmed
-    weight: 101
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    region: content
-  links:
-    weight: 100
-    settings: {  }
-    third_party_settings: {  }
-    region: content
+content: {  }
 hidden:
-  field_image: true
-  field_thumbnail: true
+  field_content: true
+  links: true

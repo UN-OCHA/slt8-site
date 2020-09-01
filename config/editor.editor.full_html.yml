@@ -1,12 +1,14 @@
-uuid: 5d11e0c0-8812-48f6-b307-ea6a84be4aef
+uuid: d729d37d-a302-4506-aee6-511d8a3b8fed
 langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.filtered_html
+    - filter.format.full_html
   module:
     - ckeditor
-format: filtered_html
+_core:
+  default_config_hash: IayGgq9WzQmqkqhsdVcLxFqnLHnh89P0kRn2GrByohA
+format: full_html
 editor: ckeditor
 settings:
   toolbar:
@@ -17,31 +19,35 @@ settings:
           items:
             - Bold
             - Italic
-            - Format
         -
           name: Links
           items:
             - DrupalLink
             - DrupalUnlink
         -
-          name: 'Lists and Tables'
+          name: Lists
           items:
             - BulletedList
             - NumberedList
-            - Outdent
-            - Indent
-            - Table
+            - Blockquote
+        -
+          name: Align
+          items:
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
         -
           name: Media
           items:
-            - Blockquote
             - DrupalMediaLibrary
+            - DrupalImage
+        -
+          name: Format
+          items:
+            - Format
         -
           name: Tools
           items:
-            - Undo
-            - Redo
-            - RemoveFormat
             - Source
   plugins:
     stylescombo:
@@ -50,9 +56,9 @@ settings:
       language_list: un
 image_upload:
   status: false
-  scheme: private
+  scheme: public
   directory: inline-images
   max_size: ''
   max_dimensions:
-    width: 1024
-    height: 1024
+    width: null
+    height: null

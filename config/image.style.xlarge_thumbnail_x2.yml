@@ -1,0 +1,17 @@
+uuid: 2dade4a7-f804-4def-91e8-983c37b8abaf
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: '-_LjWHvAMWf7v99pfHqXl4KfTFk1-MGV1mdlzPNwORs'
+name: xlarge_thumbnail_x2
+label: 'xlarge thumbnail x2'
+effects:
+  f3fc66b0-b475-4c7b-a424-dad0bda35d5d:
+    uuid: f3fc66b0-b475-4c7b-a424-dad0bda35d5d
+    id: image_scale
+    weight: 1
+    data:
+      width: 800
+      height: null
+      upscale: false

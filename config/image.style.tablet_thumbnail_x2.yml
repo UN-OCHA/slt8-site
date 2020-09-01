@@ -1,0 +1,17 @@
+uuid: 705ccf4c-86a2-4961-b916-c9bf5aa7d0ce
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: wtgJJmT9T_dWOfbFs_1JZ7rFvEcaO5mdfmqEyEbcPUI
+name: tablet_thumbnail_x2
+label: 'tablet thumbnail x2'
+effects:
+  3b6dff67-6e36-4fd3-884c-dc309cd03cf7:
+    uuid: 3b6dff67-6e36-4fd3-884c-dc309cd03cf7
+    id: image_scale
+    weight: 1
+    data:
+      width: 400
+      height: null
+      upscale: false

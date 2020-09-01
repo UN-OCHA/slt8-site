@@ -1,0 +1,12 @@
+uuid: b6b951ed-340a-4566-912d-0847de1d6e69
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+_core:
+  default_config_hash: 5HXQZMuhMl0011tlmJ2WqmliEZ8n4wVKefNM4FPKJNM
+id: media.responsive_image
+label: 'Responsive image'
+targetEntityType: media
+cache: true

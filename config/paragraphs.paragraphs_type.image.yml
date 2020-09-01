@@ -1,0 +1,25 @@
+uuid: 309d8589-a05a-4399-8db2-3696b4d02e5a
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_viewmode
+_core:
+  default_config_hash: ft-OB7bf-6J5fng-Xs9PDXpqIpcpnDd5GZl9ssIbFVA
+id: image
+label: Image
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  paragraphs_viewmode_behavior:
+    enabled: true
+    override_mode: default
+    override_available:
+      responsive_image: responsive_image
+      responsive_thumbnail: responsive_thumbnail
+      default: '0'
+      link_with_background_image: '0'
+      linked_image: '0'
+      preview: '0'
+    override_default: responsive_image

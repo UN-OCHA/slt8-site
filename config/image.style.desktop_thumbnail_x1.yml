@@ -1,0 +1,17 @@
+uuid: fbd52903-db0d-4dc7-90aa-bed09176be77
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: AbVJfGbbrtagsYbgV-6dBmNaPdNOxiXcHrHK8cO6Hho
+name: desktop_thumbnail_x1
+label: 'desktop thumbnail x1'
+effects:
+  72310266-ea97-456c-bd61-c0cc2d85d2be:
+    uuid: 72310266-ea97-456c-bd61-c0cc2d85d2be
+    id: image_scale
+    weight: 1
+    data:
+      width: 300
+      height: null
+      upscale: false

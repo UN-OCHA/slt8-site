@@ -1,0 +1,23 @@
+uuid: e48449d5-091f-4504-91ed-131879a11a6e
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_viewmode
+id: image_link
+label: 'Image link'
+icon_uuid: null
+icon_default: null
+description: 'A paragraph to display a <em>linked image</em> or a <em>link with a background image</em>.'
+behavior_plugins:
+  paragraphs_viewmode_behavior:
+    enabled: true
+    override_mode: default
+    override_available:
+      link_with_background_image: link_with_background_image
+      linked_image: linked_image
+      default: '0'
+      preview: '0'
+      responsive_image: '0'
+      responsive_thumbnail: '0'
+    override_default: linked_image
