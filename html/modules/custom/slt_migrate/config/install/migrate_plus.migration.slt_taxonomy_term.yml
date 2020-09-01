@@ -1,0 +1,43 @@
+id: slt_taxonomy_term
+label: Migrate SLT taxonomy terms.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_taxonomy_term
+destination:
+  plugin: entity:taxonomy_term
+process:
+  tid: tid
+  vid:
+    plugin: migration_lookup
+    migration: slt_taxonomy_vocabulary
+    source: vid
+  name: name
+  description: description
+  weight: weight
+  parent:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: parent
+    -
+      plugin: migration_lookup
+      migration: slt_taxonomy_term
+  changed: timestamp
+  # Disable path alias generation as aliases are already imported.
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+  path/alias:
+    -
+      plugin: default_value
+      default_value: ''
+    -
+      plugin: skip_on_empty
+      method: process
+migration_dependencies:
+  required:
+    - slt_taxonomy_vocabulary

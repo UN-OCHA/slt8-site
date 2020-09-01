@@ -1,0 +1,31 @@
+id: slt_url_alias
+label: Migrate SLT URL aliases
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: d7_url_alias
+  constants:
+    slash: '/'
+destination:
+  plugin: entity:path_alias
+process:
+  id: pid
+  path:
+    plugin: concat
+    source:
+      - constants/slash
+      - source
+  alias:
+    -
+      plugin: concat
+      source:
+        - constants/slash
+        - alias
+  # Default to undefined ("und") if no language is defined.
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: 'und'

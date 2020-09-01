@@ -1,0 +1,32 @@
+id: slt_media_document
+label: Migrate SLT media documents.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_file
+  type: document
+  constants:
+    bundle: 'document'
+destination:
+  plugin: entity:media
+process:
+  mid: fid
+  uid: uid
+  name: filename
+  bundle: constants/bundle
+  langcode:
+    plugin: default_value
+    default_value: 'und'
+  status: status
+  # Drupal 7 didn't keep track of the file's creation or update time -- all it
+  # had was the vague "timestamp" column. So we'll use it for both.
+  created: timestamp
+  changed: timestamp
+  # File field see media_entity.bundle.document.yml.
+  field_media_file/target_id: fid
+migration_dependencies:
+  required:
+    - slt_file

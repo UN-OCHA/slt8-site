@@ -1,0 +1,24 @@
+{
+    "name": "unocha/slt_migrate",
+    "description": "SLT Migration to Drupal 8.",
+    "type": "drupal-module",
+    "authors": [
+        {
+          "name": "UNOCHA"
+        }
+    ],
+    "require": {
+        "drupal/migrate_plus": "^4 || ^5"
+    },
+    "require-dev": {
+        "drush/drush": "^10"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^10"
+            }
+        }
+    }
+}

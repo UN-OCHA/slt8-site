@@ -1,0 +1,58 @@
+id: slt_user
+label: Migrate SLT users.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_user
+destination:
+  plugin: entity:user
+process:
+  uid: uid
+  name: name
+  pass: pass
+  mail: mail
+  status: status
+  created: created
+  changed: changed
+  access: access
+  login: login
+  timezone: timezone
+  langcode:
+    plugin: user_langcode
+    source: language
+    fallback_to_site_default: true
+  preferred_langcode:
+    plugin: user_langcode
+    source: language
+    fallback_to_site_default: true
+  preferred_admin_langcode:
+    plugin: user_langcode
+    source: language
+    fallback_to_site_default: true
+  init: init
+  roles:
+    plugin: static_map
+    default_value: null
+    source: roles
+    map:
+      3: administrator
+  # Disable path alias generation as aliases are already imported.
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+  path/alias:
+    -
+      plugin: default_value
+      default_value: ''
+    -
+      plugin: skip_on_empty
+      method: process
+migration_dependencies:
+  required:
+    - slt_url_alias
+  optional:
+    - language
+    - default_language
