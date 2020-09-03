@@ -1,12 +1,12 @@
-uuid: 412816b6-55e7-4577-b4cf-61dcde7e9bfd
+uuid: 64f694c9-6f5b-47b6-a7a6-cc37ed3642e6
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.responsive_image
+    - core.entity_view_mode.media.hero_image
     - field.field.media.image.field_media_image
     - media.type.image
-    - responsive_image.styles.responsive_image
+    - responsive_image.styles.full_width
   module:
     - layout_builder
     - responsive_image
@@ -14,22 +14,20 @@ third_party_settings:
   layout_builder:
     allow_custom: false
     enabled: false
-_core:
-  default_config_hash: 0-jwDW53Qx6N8ROYN8uU0FepstXzQ6bZRqfjouSofGQ
-id: media.image.responsive_image
+id: media.image.hero_image
 targetEntityType: media
 bundle: image
-mode: responsive_image
+mode: hero_image
 content:
   field_media_image:
-    type: responsive_image
-    weight: 0
-    region: content
     label: hidden
+    weight: 0
     settings:
-      responsive_image_style: responsive_image
+      responsive_image_style: full_width
       image_link: ''
     third_party_settings: {  }
+    type: responsive_image
+    region: content
 hidden:
   created: true
   name: true

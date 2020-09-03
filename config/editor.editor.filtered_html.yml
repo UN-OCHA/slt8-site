@@ -1,4 +1,4 @@
-uuid: 5d11e0c0-8812-48f6-b307-ea6a84be4aef
+uuid: b7315b45-f2b2-4969-b266-3ba20b5cc900
 langcode: en
 status: true
 dependencies:
@@ -35,7 +35,7 @@ settings:
           name: Media
           items:
             - Blockquote
-            - DrupalMediaLibrary
+            - DrupalImage
         -
           name: Tools
           items:
@@ -54,5 +54,5 @@ image_upload:
   directory: inline-images
   max_size: ''
   max_dimensions:
-    width: 1024
-    height: 1024
+    width: null
+    height: null

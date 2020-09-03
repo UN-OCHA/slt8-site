@@ -3,46 +3,23 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.public_page.body
-    - field.field.node.public_page.field_image
-    - field.field.node.public_page.field_thumbnail
+    - field.field.node.public_page.field_content
     - node.type.public_page
   module:
-    - text
+    - layout_paragraphs
 id: node.public_page.default
 targetEntityType: node
 bundle: public_page
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 3
+  field_content:
+    weight: 26
     settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-      show_summary: false
+      preview_view_mode: default
+      nesting_depth: '0'
+      require_layouts: 0
     third_party_settings: {  }
-    region: content
-  field_image:
-    weight: 2
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
-  field_thumbnail:
-    weight: 1
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: layout_paragraphs
     region: content
   status:
     type: boolean_checkbox

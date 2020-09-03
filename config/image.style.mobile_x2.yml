@@ -14,4 +14,4 @@ effects:
     data:
       width: 1152
       height: null
-      upscale: false
+      upscale: true

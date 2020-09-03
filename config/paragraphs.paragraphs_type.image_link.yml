@@ -14,10 +14,17 @@ behavior_plugins:
     enabled: true
     override_mode: default
     override_available:
-      link_with_background_image: link_with_background_image
-      linked_image: linked_image
+      linked_image_medium: linked_image_medium
+      linked_image_small: linked_image_small
+      link_with_background_image_medium: link_with_background_image_medium
+      link_with_background_image_small: link_with_background_image_small
       default: '0'
+      hero_image: '0'
+      linked_image: '0'
+      link_with_background_image: '0'
       preview: '0'
       responsive_image: '0'
       responsive_thumbnail: '0'
-    override_default: linked_image
+      thumbnail_medium: '0'
+      thumbnail_small: '0'
+    override_default: linked_image_medium

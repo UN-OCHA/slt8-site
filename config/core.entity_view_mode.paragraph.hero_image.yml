@@ -1,10 +1,10 @@
-uuid: 6fce87a0-cdde-425c-b803-1eb19d7968c1
+uuid: 41ce67e6-1d6d-47f1-a1e1-464e67169562
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.responsive_image
-label: 'Responsive image'
+id: paragraph.hero_image
+label: 'Hero image'
 targetEntityType: paragraph
 cache: true

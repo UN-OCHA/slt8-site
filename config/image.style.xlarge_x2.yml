@@ -1,17 +1,15 @@
-uuid: 9f152849-11e1-4ddc-8ded-a8b9283d63d5
+uuid: 61090679-8ad5-41f9-ba2f-1afe831e7999
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: twH6CYBN-oUcdL7rpEBke8nFd5Gb9tuvJXWxrjOLcfo
 name: xlarge_x2
-label: 'xlarge x2'
+label: xlarge_x2
 effects:
-  d2adca2c-0573-4678-b5b1-5738a92dce50:
-    uuid: d2adca2c-0573-4678-b5b1-5738a92dce50
+  f232d435-7e98-43db-904a-5109737ffd6a:
+    uuid: f232d435-7e98-43db-904a-5109737ffd6a
     id: image_scale
     weight: 1
     data:
-      width: 3200
+      width: 2280
       height: null
-      upscale: false
+      upscale: true

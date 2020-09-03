@@ -12,7 +12,6 @@ third_party_settings:
   allowed_formats:
     filtered_html: filtered_html
     plain_text: '0'
-    full_html: '0'
 id: paragraph.text.field_media_content_text
 field_name: field_media_content_text
 entity_type: paragraph

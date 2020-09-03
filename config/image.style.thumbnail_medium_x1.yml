@@ -1,0 +1,15 @@
+uuid: 6b779743-33a6-450a-8d37-8bc29b2ca935
+langcode: en
+status: true
+dependencies: {  }
+name: thumbnail_medium_x1
+label: 'thumbnail medium x1'
+effects:
+  aa04fd7a-b453-4371-a83e-7ac8eef59733:
+    uuid: aa04fd7a-b453-4371-a83e-7ac8eef59733
+    id: image_scale
+    weight: 1
+    data:
+      width: 250
+      height: null
+      upscale: true

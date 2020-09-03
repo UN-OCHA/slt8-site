@@ -1,10 +1,10 @@
-uuid: 74a169a4-4b8e-4cc4-adef-f61a4ad1bcd6
+uuid: e6834116-4059-4711-9075-0fcfc7bd2a0e
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.linked_image
-label: 'Linked image'
+id: paragraph.linked_image_small
+label: 'Linked image - Small'
 targetEntityType: paragraph
 cache: true

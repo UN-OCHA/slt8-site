@@ -8,13 +8,12 @@ id: layout
 label: Layout
 icon_uuid: null
 icon_default: null
-description: ''
+description: 'A paragraph to define a region with a given layout (ex: 4 columns)'
 behavior_plugins:
   layout_paragraphs:
     enabled: true
     available_layouts:
       layout_onecol: 'One column'
       layout_twocol_section: 'Two column'
-      layout_twocol_bricks: 'Two column bricks'
       layout_threecol_section: 'Three column'
       layout_fourcol_section: 'Four column'

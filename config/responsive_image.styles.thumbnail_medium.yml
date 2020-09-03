@@ -1,0 +1,24 @@
+uuid: ae4b0146-f426-4134-ac7f-0b7faf3a5c00
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.thumbnail_medium_x1
+    - image.style.thumbnail_medium_x2
+  theme:
+    - common_design
+id: thumbnail_medium
+label: 'Thumbnail Medium'
+image_style_mappings:
+  -
+    breakpoint_id: common_design.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: thumbnail_medium_x1
+  -
+    breakpoint_id: common_design.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: thumbnail_medium_x2
+breakpoint_group: common_design
+fallback_image_style: thumbnail_medium_x1
