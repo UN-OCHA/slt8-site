@@ -224,7 +224,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     ];
 
     $elements['image_link_url'] = [
-      '#title' => $this->t('Link image to'),
+      '#title' => $this->t('Custom URL to link to'),
       '#type' => 'textfield',
       '#maxlength' => 2048,
       '#default_value' => $this->getSetting('image_link_url'),
@@ -251,7 +251,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     ];
 
     $elements['image_alt_value'] = [
-      '#title' => $this->t('Image alt'),
+      '#title' => $this->t('Custom image alt text'),
       '#type' => 'textarea',
       '#description' => $this->t('Tokens are supported. Image description in plain text with optional tokens. Leave empty for decorative images.'),
       '#default_value' => $this->getSetting('image_alt_value'),
@@ -267,6 +267,11 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       '#title' => $this->t('Use the image as background'),
       '#description' => $this->t('When checked the image will be used as background for the link and the image "alt" will be used as the link text.'),
       '#default_value' => $this->getSetting('image_as_background'),
+      '#states' => [
+        'invisible' => [
+          'select[name$="[settings][image_link]"]' => ['value' => ''],
+        ],
+      ],
     ];
 
     $elements['token'] = [
@@ -372,8 +377,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
 
       // Link to the original image file.
       if ($image_link === 'image') {
-        assert($image instanceof FileInterface);
-        $url = $image->createFileUrl();
+        $url = $image->entity->createFileUrl();
       }
       // Link to the media.
       elseif ($image_link === 'media') {
