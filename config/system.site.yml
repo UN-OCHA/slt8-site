@@ -1,11 +1,11 @@
 uuid: 7667347e-84b0-4720-82a3-6ed7b142ac06
 name: 'Saving Lives Together'
-mail: admin@slt8.test
+mail: cederstrand@un.org
 slogan: ''
 page:
   403: ''
   404: ''
-  front: /node/3
+  front: /node/943943
 admin_compact_mode: false
 weight_select_max: 100
 langcode: en

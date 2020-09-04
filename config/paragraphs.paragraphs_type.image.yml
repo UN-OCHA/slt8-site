@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - layout_paragraphs
     - paragraphs_viewmode
 _core:
   default_config_hash: ft-OB7bf-6J5fng-Xs9PDXpqIpcpnDd5GZl9ssIbFVA
@@ -12,6 +13,9 @@ icon_uuid: null
 icon_default: null
 description: 'A paragraph to display an image.'
 behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }
   paragraphs_viewmode_behavior:
     enabled: true
     override_mode: default

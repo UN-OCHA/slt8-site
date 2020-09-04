@@ -24,6 +24,7 @@ visibility:
     id: 'entity_bundle:node'
     bundles:
       private_page: private_page
+      public_page: public_page
     negate: true
     context_mapping:
       node: '@node.node_route_context:node'

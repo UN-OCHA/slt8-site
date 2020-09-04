@@ -1,9 +1,9 @@
-uuid: 59665a36-5c0e-4ee0-9b20-fbda12e203e6
+uuid: 16c3273b-8846-40aa-926a-45a2795cb03d
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_content
+    - field.storage.node.field_paragraphs
     - node.type.private_page
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.image_link
@@ -12,11 +12,11 @@ dependencies:
     - paragraphs.paragraphs_type.text
   module:
     - entity_reference_revisions
-id: node.private_page.field_content
-field_name: field_content
+id: node.private_page.field_paragraphs
+field_name: field_paragraphs
 entity_type: node
 bundle: private_page
-label: Content
+label: Paragraphs
 description: ''
 required: false
 translatable: false
@@ -27,34 +27,25 @@ settings:
   handler_settings:
     negate: 0
     target_bundles:
-      layout: layout
-      text: text
       image: image
       image_link: image_link
+      layout: layout
       page_title: page_title
+      text: text
     target_bundles_drag_drop:
       image:
         enabled: true
-        weight: -12
+        weight: 6
       image_link:
         enabled: true
-        weight: -11
+        weight: 7
       layout:
         enabled: true
-        weight: -15
+        weight: 8
       page_title:
         enabled: true
-        weight: 12
+        weight: 9
       text:
         enabled: true
-        weight: -13
-      text_and_image:
-        weight: -10
-        enabled: false
-      title:
-        enabled: true
-        weight: -14
-      video:
-        weight: -9
-        enabled: false
+        weight: 10
 field_type: entity_reference_revisions

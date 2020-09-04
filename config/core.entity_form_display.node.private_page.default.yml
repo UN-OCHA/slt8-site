@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.private_page.field_content
+    - field.field.node.private_page.field_paragraphs
     - node.type.private_page
   module:
     - layout_paragraphs
@@ -12,9 +12,9 @@ targetEntityType: node
 bundle: private_page
 mode: default
 content:
-  field_content:
+  field_paragraphs:
     type: layout_paragraphs
-    weight: 26
+    weight: 27
     settings:
       preview_view_mode: default
       nesting_depth: '0'

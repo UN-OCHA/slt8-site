@@ -1,4 +1,4 @@
-uuid: b924689f-82ac-4264-a35a-e91fc85f2646
+uuid: 45627ada-2ece-4e07-bc16-5f20fee7449e
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: gDNaw0hit6zwupSM-thhPkLxNh6PAtoVCxnX9r6aHBg
+  default_config_hash: DdbW_Btbz2EDtrV_4o1HX4sCIiyN2gnPQ5hkkpZ5yyU
 id: slt_file
 class: null
 field_plugin_method: null
@@ -19,7 +19,11 @@ source:
 process:
   fid: fid
   uid: uid
-  uri: uri
+  uri:
+    plugin: str_replace
+    source: uri
+    search: 'public://'
+    replace: 'private://'
   langcode:
     plugin: default_value
     default_value: und

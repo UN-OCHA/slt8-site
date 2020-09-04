@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.private_page.field_content
+    - field.field.node.private_page.field_paragraphs
     - node.type.private_page
   module:
     - user
@@ -14,5 +14,5 @@ bundle: private_page
 mode: teaser
 content: {  }
 hidden:
-  field_content: true
+  field_paragraphs: true
   links: true

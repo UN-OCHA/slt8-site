@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.public_page.field_content
+    - field.field.node.public_page.field_paragraphs
     - node.type.public_page
   module:
     - layout_paragraphs
@@ -12,11 +12,11 @@ targetEntityType: node
 bundle: public_page
 mode: default
 content:
-  field_content:
-    weight: 26
+  field_paragraphs:
+    weight: 27
     settings:
       preview_view_mode: default
-      nesting_depth: '0'
+      nesting_depth: 0
       require_layouts: 0
     third_party_settings: {  }
     type: layout_paragraphs

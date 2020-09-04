@@ -1,7 +1,9 @@
 uuid: 797b45e8-ef3a-49e2-af91-87cf5c893f57
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - layout_paragraphs
 _core:
   default_config_hash: cs_VNkXnGA4DXeV-6TloLXhEEfV8KiLmb0ETMu5T-5Q
 id: page_title
@@ -9,4 +11,7 @@ label: 'Page title'
 icon_uuid: null
 icon_default: null
 description: 'Placeholder paragraph that will display the page title.'
-behavior_plugins: {  }
+behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }

@@ -1,4 +1,4 @@
-uuid: ac4b2d50-6365-40bd-989c-58ebc807b35c
+uuid: b752c5fa-21d9-4d95-8268-3b3676391a6c
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: 0wGAgx7u9_Il8GCKv2rwvkQLXfQD0gcZtlDMnEjZQhU
+  default_config_hash: f2RD8M9yGE0ILlXcEhdXRScR02O5NR8mrYAY5rVjc3w
 id: slt_node_contact
 class: null
 field_plugin_method: null
@@ -19,12 +19,12 @@ source:
   node_type: contact
   bundle: contact
   constants:
-    format: filtered_html
+    bundle: contact
 process:
   nid: nid
   vid: vid
   uid: uid
-  type: type
+  type: constants/bundle
   langcode:
     plugin: default_value
     source: language
@@ -52,7 +52,7 @@ process:
     plugin: skip_on_empty
     method: process
     source: field_c_duty_station_region/0/tid
-  field_email/email:
+  field_email/value:
     plugin: skip_on_empty
     method: process
     source: field_c_email/0/email
@@ -73,7 +73,7 @@ process:
   field_security_title/value:
     plugin: skip_on_empty
     method: process
-    source: field_c_security_title/0/tid
+    source: field_c_security_title/0/value
   path/pathauto:
     plugin: default_value
     default_value: 0
@@ -90,3 +90,4 @@ destination:
 migration_dependencies:
   required:
     - slt_user
+    - slt_taxonomy_term

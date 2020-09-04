@@ -17,3 +17,4 @@ behavior_plugins:
       layout_twocol_section: 'Two column'
       layout_threecol_section: 'Three column'
       layout_fourcol_section: 'Four column'
+      layout_fivecol_section: 'Five columns'

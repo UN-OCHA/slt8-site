@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.public_page.field_content
+    - field.field.node.public_page.field_paragraphs
     - node.type.public_page
   module:
     - layout_paragraphs
@@ -13,8 +13,8 @@ targetEntityType: node
 bundle: public_page
 mode: default
 content:
-  field_content:
-    weight: 4
+  field_paragraphs:
+    weight: 5
     label: hidden
     settings:
       view_mode: default

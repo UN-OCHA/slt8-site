@@ -2,7 +2,7 @@ uuid: b26ca49f-d11a-4831-916f-4eb1504a6c3c
 langcode: en
 status: true
 dependencies: {  }
-name: 'Security Role Area'
+name: 'Security Role  Area'
 vid: security_role_area
 description: ''
 weight: 0

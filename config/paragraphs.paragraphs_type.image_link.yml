@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - layout_paragraphs
     - paragraphs_viewmode
 id: image_link
 label: 'Image link'
@@ -10,6 +11,9 @@ icon_uuid: null
 icon_default: null
 description: 'A paragraph to display a <em>linked image</em> or a <em>link with a background image</em>.'
 behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }
   paragraphs_viewmode_behavior:
     enabled: true
     override_mode: default
