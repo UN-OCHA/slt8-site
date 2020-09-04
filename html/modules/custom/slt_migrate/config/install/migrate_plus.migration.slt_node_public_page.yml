@@ -10,7 +10,7 @@ source:
   node_type: basic_page
   bundle: public_page
   constants:
-    format: 'filtered_html'
+    bundle: 'public_page'
 destination:
   plugin: entity:node
   bundle: public_page
@@ -19,7 +19,7 @@ process:
   nid: nid
   vid: vid
   uid: uid
-  type: type
+  type: constants/bundle
   # Default to undefined ("und") if no language is defined.
   langcode:
     plugin: default_value
@@ -38,23 +38,7 @@ process:
   revision_log: log
   revision_timestamp: timestamp
   # Fields.
-  field_thumbnail/target_id:
-    plugin: skip_on_empty
-    method: process
-    source: field_basic_page_icon/0/fid
-  field_image/target_id:
-    plugin: skip_on_empty
-    method: process
-    source: field_basic_page_main_image/0/fid
-  body/value:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: body/0/value
-    -
-      plugin: slt_clean_html
-      source: body/0/value
-  body/format: constants/format
+  field_paragraphs: field_paragraphs
   # Disable path alias generation as aliases are already imported.
   path/pathauto:
     plugin: default_value
@@ -69,3 +53,5 @@ process:
 migration_dependencies:
   required:
     - slt_user
+    # Not really a dependency but it's to ensure it's run later.
+    - slt_node_contact

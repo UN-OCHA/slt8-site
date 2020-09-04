@@ -21,10 +21,14 @@ In migration order:
 11. Taxonomy vocabularies
 12. Taxonomy terms
 
-**Files**
+Files
+-----
 
 The file migration doesn't copy the files, this will be done independently by
 copying the file directories.
+
+As opposed to the drupal 7 site, all the files are private and their access
+is dependent of the page they are displayed on.
 
 Public and private pages
 ------------------------
@@ -33,26 +37,20 @@ Public pages didn't exist in the drupal 7 site. There was a single basic page
 content type and the `content_access` module was used to control access.
 
 However, this basically resulted in having public pages and private pages (most
-pages). So, in drupal 8, we simply model that by having 2 different type of
+pages). So, in drupal 8, we simply model that by having 2 different types of
 pages: public and private and using the basic built-in roles and permissions
 to control acess.
 
-Layouts
--------
+Paragraphs
+----------
 
-There is currently no way to export individual layouts created via the Drupal 8
-layout builder as configuration.
+The drupal 8 pages have only field which can reference different types of
+paragraphs. The content for the drupal 7 pages is converted to paragraphs.
 
-That's not a big issue but we need them for the production migration, so this
-module provides a drush command to export those individual layouts created
-**during development** so that they can be imported during the migration.
+Notes
+-----
 
-Development steps:
-
-1. Migrate content
-2. Create the layouts in Drupal 8
-3. Export them with `drush slt-migrate:export-layouts`
-4. Commit the changes
-
-Now everytime the migration is run somewhere, the exported layouts will be
-imported when migrating the corresponding nodes.
+If you revert the migration, make sure to run `drush cron` or visit
+the /admin/config/system/delete-orphans page to delete the orphan paragraphs as
+entity_reference_revisions doesn't do that directly when the host entity is
+removed but instead put the child entities to delete in a queue.

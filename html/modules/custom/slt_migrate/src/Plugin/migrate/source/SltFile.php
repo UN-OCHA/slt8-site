@@ -28,8 +28,7 @@ class SltFile extends FieldableEntity {
     }
 
     // Skip the user pictures coming from the HID login via hybridauth.
-    $query->leftJoin('file_usage', 'fu', 'fu.fid = fm.fid');
-    $query->condition('fu.type', 'user', '<>');
+    $query->condition('fm.uri', 'public://pictures%', 'NOT LIKE');
 
     return $query->distinct();
   }

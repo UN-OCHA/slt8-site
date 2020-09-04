@@ -24,6 +24,12 @@ process:
       source:
         - constants/slash
         - alias
+    -
+      plugin: static_map
+      bypass: true
+      map:
+        # Change the alias of the welcome page.
+        '/access-denied': '/welcome'
   # Default to undefined ("und") if no language is defined.
   langcode:
     plugin: default_value

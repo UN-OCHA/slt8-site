@@ -1,64 +1,51 @@
 <?php
 
-namespace Drupal\slt_migrate\Plugin\migrate\process;
+namespace Drupal\slt_migrate\Helpers;
 
 use DOMDocument;
 use DOMNode;
 use DOMXPath;
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\migrate\MigrateException;
-use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\ProcessPluginBase;
-use Drupal\migrate\Row;
-use Drupal\slt_migrate\Helpers\Outliner;
 
 /**
- * Clean HTML content.
- *
- * @MigrateProcessPlugin(
- *   id = "slt_clean_html"
- * )
- *
- * To use the plugin:
- *
- * @code
- * field_text:
- *   plugin: slt_clean_html
- *   source: text
- * @endcode
+ * Html Sanitizer implementation.
  */
-class SltCleanHtml extends ProcessPluginBase {
+class HtmlSanitizer {
 
   /**
-   * {@inheritdoc}
+   * Sanitize a HTML string in regardst to the allowed SLT content.
+   *
+   * This also fixes the heading hierarchy to ensure continuity.
+   *
+   * @param string $html
+   *   The HTML string.
+   * @param int $heading_offset
+   *   Heading offset from H1: `1` means headings start at h2.
+   *
+   * @return string
+   *   The sanitized HTML string.
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    if (!is_string($value)) {
-      throw new MigrateException(sprintf('%s is not a string', var_export($value, TRUE)));
+  public static function sanitize($html, $heading_offset = 1) {
+    if (!is_string($html)) {
+      return '';
     }
 
     // Skip if the html string is empty.
-    $value = trim($value);
-    if (empty($value)) {
+    $html = trim($html);
+    if (empty($html)) {
       return '';
     }
 
     // Convert all '&nbsp;' to normal spaces.
-    $value = str_replace('&nbsp;', ' ', $value);
+    $html = str_replace('&nbsp;', ' ', $html);
 
-    // Supported tags an whether they can be empty (no children) or not.
+    // Supported tags and whether they can be empty (no children) or not.
     $tags = [
+      // This is just for the added html structure when loading the html.
       'html' => FALSE,
       'head' => FALSE,
       'meta' => TRUE,
       'body' => FALSE,
-      'div' => FALSE,
-      'article' => FALSE,
-      'section' => FALSE,
-      'header' => FALSE,
-      'footer' => FALSE,
-      'aside' => FALSE,
-      'span' => FALSE,
       // No children.
       'br' => TRUE,
       'a' => FALSE,
@@ -66,18 +53,12 @@ class SltCleanHtml extends ProcessPluginBase {
       'i' => FALSE,
       'strong' => FALSE,
       'b' => FALSE,
-      'cite' => FALSE,
-      'code' => FALSE,
-      'strike' => FALSE,
       'ul' => FALSE,
       'ol' => FALSE,
       'li' => FALSE,
-      'dl' => FALSE,
-      'dt' => FALSE,
-      'dd' => FALSE,
       'blockquote' => FALSE,
+      'cite' => FALSE,
       'p' => FALSE,
-      'pre' => FALSE,
       'h1' => FALSE,
       'h2' => FALSE,
       'h3' => FALSE,
@@ -91,10 +72,6 @@ class SltCleanHtml extends ProcessPluginBase {
       'th' => FALSE,
       'td' => FALSE,
       'tr' => FALSE,
-      'sup' => FALSE,
-      'sub' => FALSE,
-      // No children.
-      'img' => TRUE,
     ];
 
     $convert = [
@@ -113,9 +90,6 @@ class SltCleanHtml extends ProcessPluginBase {
       'h6' => TRUE,
     ];
 
-    // Heading offset from H1: `1` means headings start at h2.
-    $heading_offset = $this->configuration['heading_offset'] ?? 1;
-
     // Flags to load the HTML string.
     $flags = LIBXML_NONET | LIBXML_NOBLANKS | LIBXML_NOERROR | LIBXML_NOWARNING;
 
@@ -125,7 +99,7 @@ class SltCleanHtml extends ProcessPluginBase {
     $prefix = '<!DOCTYPE html><html><head>' . $meta . '</head><body>';
     $suffix = '</body></html>';
     $dom = new DOMDocument();
-    $dom->loadHTML($prefix . $value . $suffix, $flags);
+    $dom->loadHTML($prefix . $html . $suffix, $flags);
 
     // Fix the heading hierarchy.
     Outliner::fixNodeHeadingHierarchy($dom, $heading_offset);
@@ -171,14 +145,6 @@ class SltCleanHtml extends ProcessPluginBase {
       elseif ($tag === 'li') {
         static::handleListItem($node);
       }
-      // Process strong tags.
-      elseif ($tag === 'strong') {
-        static::handleStrong($node);
-      }
-      // Process Line Break tags.
-      elseif ($tag === 'br') {
-        static::handleLineBreak($node);
-      }
       // Process the node, converting if necessary and removing attributes.
       else {
         if (isset($convert[$tag])) {
@@ -192,7 +158,7 @@ class SltCleanHtml extends ProcessPluginBase {
 
     // Remove "ignorable" whitespaces. This is ok-ish for this migration and
     // allows to have a slightly better formatted and more consistent output
-    // than without when combined with `formatOutput` below.
+    // than without, when combined with `formatOutput` below.
     $xpath = new DOMXPath($dom);
     $nodes = $xpath->query('//text()');
     for ($i = $nodes->length - 1; $i >= 0; $i--) {
@@ -251,6 +217,35 @@ class SltCleanHtml extends ProcessPluginBase {
    */
   public static function handleLink(DOMNode $node) {
     $url = $node->getAttribute('href');
+
+    // Process anchors, updating the target ID to avoid ID clashes.
+    if (strpos($url, '#') === 0) {
+      $id = substr($url, 1);
+      $target = $node->ownerDocument->getElementById($id);
+
+      // Prefix the id. This is to avoid clashes with other IDs in the rest of
+      // the HTML.
+      $id = strpos($id, 'jump-') === 0 ? $id : 'jump-' . $id;
+
+      // Remove the link if we couldn't find the target.
+      if (empty($target)) {
+        $node->parentNode->removeChild($node);
+        return;
+      }
+      elseif ($target->tagName === 'a') {
+        // Move the id to the parent node as it is the new recommendation rather
+        // than using anchors.
+        $target->parentNode->setAttribute('id', 'jump-' . $id);
+        $node->parentNode->removeChild($node);
+      }
+      else {
+        $target->setAttribute('id', 'jump-' . $id);
+      }
+
+      // Update the url with the new fragment.
+      $url = '#' . $id;
+      $node->setAttribute('href', $url);
+    }
 
     // Remove links with an invalid url.
     // @todo replace 'isValid' with something more robust.
@@ -311,56 +306,39 @@ class SltCleanHtml extends ProcessPluginBase {
   }
 
   /**
-   * Fix a table, splitting it if it contains several "header" rows.
-   *
-   * Note: this the part specific to ODSG.
+   * Ensure tables have a proper structure.
    *
    * @param \DOMNode $node
    *   Table node.
    */
   public static function handleTable(DOMNode $node) {
     $dom = $node->ownerDocument;
-    $fragment = $dom->createDocumentFragment();
 
-    // Parse the cells, converting header ones to TH.
-    foreach (static::getElementsByTagName($node, 'td') as $td) {
-      // If the cell is marked as "header".
-      if ($td->getAttribute('class') === 'docheaderbkg') {
-        // Replace the TD by a TH.
-        $td = static::changeTag($td, 'th', ['colspan']);
-        // Mark the parent row as being a header row.
-        $td->parentNode->setAttribute('data-header', '');
-      }
+    // Create a new table.
+    $table = $dom->createElement('table');
+    $thead = $dom->createElement('thead');
+    $tbody = $dom->createElement('tbody');
+
+    $captions = static::getElementsByTagName($node, 'caption');
+    if (!empty($captions)) {
+      $table->appendChild(reset($captions));
     }
 
-    // Parse the rows, create a new table when encountering a header row.
-    $table = NULL;
-    foreach (static::getElementsByTagName($node, 'tr') as $index => $tr) {
-      if ($index === 0 || $tr->hasAttribute('data-header')) {
-        if (isset($table)) {
-          $fragment->appendChild($table);
-        }
-        // Create a new table.
-        $table = $dom->createElement('table');
-        $thead = $dom->createElement('thead');
-        $tbody = $dom->createElement('tbody');
-        $table->appendChild($thead);
-        $table->appendChild($tbody);
-      }
+    $table->appendChild($thead);
+    $table->appendChild($tbody);
 
-      if ($tr->hasAttribute('data-header') || $tr->parentNode->tagName === 'thead') {
+    // Add the row to the thead or tbody.
+    foreach (static::getElementsByTagName($node, 'tr') as $tr) {
+      if (count(static::getElementsByTagName($node, 'th')) > 0) {
         $thead->appendChild($tr);
       }
-      else {
+      elseif (count(static::getElementsByTagName($node, 'td')) > 0) {
         $tbody->appendChild($tr);
       }
     }
-    if (isset($table)) {
-      $fragment->appendChild($table);
-    }
 
-    // Replace the table with the list of tables.
-    $node->parentNode->replaceChild($fragment, $node);
+    // Replace the table with the new one.
+    $node->parentNode->replaceChild($table, $node);
   }
 
   /**
@@ -390,68 +368,6 @@ class SltCleanHtml extends ProcessPluginBase {
         $listElement->appendChild($sibling);
         $sibling = $next;
       }
-    }
-  }
-
-  /**
-   * Remove strong tags when only children of headings or table headers.
-   *
-   * @param \DOMNode $node
-   *   Strong node.
-   */
-  public static function handleStrong(DOMNode $node) {
-    // Tags for which there is no need to have a strong element.
-    static $tags = [
-      'h1' => TRUE,
-      'h2' => TRUE,
-      'h3' => TRUE,
-      'h4' => TRUE,
-      'h5' => TRUE,
-      'h6' => TRUE,
-      'th' => TRUE,
-    ];
-
-    $parent = $node->parentNode;
-
-    // Replace the node with its content or remove it if empty.
-    if (isset($parent->tagName, $tags[$parent->tagName])) {
-      $fragment = $node->ownerDocument->createDocumentFragment();
-      while ($node->firstChild !== NULL) {
-        $fragment->appendChild($node->firstChild);
-      }
-      $parent->replaceChild($fragment, $node);
-    }
-  }
-
-  /**
-   * Remove line break tags except when in a paragraph.
-   *
-   * @param \DOMNode $node
-   *   BR node.
-   */
-  public static function handleLineBreak(DOMNode $node) {
-    // Tags for which there is no need to have line breaks.
-    static $tags = [
-      'h1' => TRUE,
-      'h2' => TRUE,
-      'h3' => TRUE,
-      'h4' => TRUE,
-      'h5' => TRUE,
-      'h6' => TRUE,
-      'th' => TRUE,
-    ];
-
-    $parent = $node->parentNode;
-
-    if (isset($parent->tagName, $tags[$parent->tagName])) {
-      // Often the <br> is followed by a line break character, we replace it
-      // with a space if there is anything before or remove it otherwise.
-      $sibling = $node->nextSibling;
-      if ($sibling !== NULL && $sibling->nodeType === 3) {
-        $replacement = $node->previousSibling !== NULL ? ' ' : '';
-        $sibling->nodeValue = preg_replace('/^\s+/u', $replacement, $sibling->nodeValue);
-      }
-      $parent->removeChild($node);
     }
   }
 

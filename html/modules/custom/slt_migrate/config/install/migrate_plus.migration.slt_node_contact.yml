@@ -10,7 +10,7 @@ source:
   node_type: contact
   bundle: contact
   constants:
-    format: 'filtered_html'
+    bundle: contact
 destination:
   plugin: entity:node
   bundle: contact
@@ -19,7 +19,7 @@ process:
   nid: nid
   vid: vid
   uid: uid
-  type: type
+  type: constants/bundle
   # Default to undefined ("und") if no language is defined.
   langcode:
     plugin: default_value
@@ -54,7 +54,7 @@ process:
     plugin: skip_on_empty
     method: process
     source: field_c_duty_station_region/0/tid
-  field_email/email:
+  field_email/value:
     plugin: skip_on_empty
     method: process
     source: field_c_email/0/email
@@ -75,7 +75,7 @@ process:
   field_security_title/value:
     plugin: skip_on_empty
     method: process
-    source: field_c_security_title/0/tid
+    source: field_c_security_title/0/value
   # Disable path alias generation as aliases are already imported.
   path/pathauto:
     plugin: default_value
@@ -90,3 +90,4 @@ process:
 migration_dependencies:
   required:
     - slt_user
+    - slt_taxonomy_term
