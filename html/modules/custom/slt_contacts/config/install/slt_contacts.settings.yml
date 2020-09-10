@@ -1,6 +1,4 @@
 # Maximum number of rows to parse in the spreadsheet.
 max_rows: 9999
-# Number of contacts to show in the confirmation step.
-extract_size: 50
 # Number of contact nodes to delete/create per batch.
 batch_size: 50

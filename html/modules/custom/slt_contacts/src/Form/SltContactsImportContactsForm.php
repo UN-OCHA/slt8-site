@@ -7,13 +7,14 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\file\Entity\File;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\node\Entity\Node;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -39,6 +40,7 @@ class SltContactsImportContactsForm extends FormBase {
    *   arguments. The cell data will be preprocessed by this callback when
    *   parsing a row. The callback will be passed the whole row's data by
    *   reference and is expecting to modify the data (no return value).
+   *   The callback should return FALSE if the value was invalid.
    * - process: array with a callback as first item and additional
    *   arguments. The cell data will be processed by this callback when
    *   added to the field.
@@ -58,11 +60,23 @@ class SltContactsImportContactsForm extends FormBase {
       ],
     ],
     'country' => [
-      'legacy' => TRUE,
+      'mandatory' => TRUE,
+      'multiple' => TRUE,
+      'alternatives' => ['duty station country'],
+      'field' => 'field_country',
+      'process' => [
+        '\Drupal\slt_contacts\Form\SltContactsImportContactsForm::getTermId',
+        'country',
+      ],
+      'preprocess' => [
+        '\Drupal\slt_contacts\Form\SltContactsImportContactsForm::preprocessCountry',
+      ],
+      'table_display' => [
+        '\Drupal\slt_contacts\Form\SltContactsImportContactsForm::displayCountry',
+      ],
     ],
     'duty station country' => [
-      'alternatives' => ['country'],
-      'field' => 'field_station_country',
+      'field' => 'field_duty_station_country',
       'process' => [
         '\Drupal\slt_contacts\Form\SltContactsImportContactsForm::getTermId',
         'country',
@@ -72,7 +86,7 @@ class SltContactsImportContactsForm extends FormBase {
       ],
     ],
     'duty station region' => [
-      'field' => 'field_station_region',
+      'field' => 'field_duty_station_region',
       'process' => [
         '\Drupal\slt_contacts\Form\SltContactsImportContactsForm::getTermId',
         'duty_station_region',
@@ -127,7 +141,14 @@ class SltContactsImportContactsForm extends FormBase {
    *
    * @var \Drupal\Core\Database\Connection
    */
-  private $database;
+  protected $database;
+
+  /**
+   * File system service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
 
   /**
    * Configuration Factory.
@@ -144,19 +165,32 @@ class SltContactsImportContactsForm extends FormBase {
   protected $entityTypeManager;
 
   /**
+   * Messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Class constructor.
    *
    * @param \Drupal\Core\Database\Connection $database
    *   Database connection.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   File system service.
    * @param \Drupal\Core\Config\ConfigFactory $config_factory
    *   Config factory.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   Messenger service.
    */
-  public function __construct(Connection $database, ConfigFactory $config_factory, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(Connection $database, FileSystemInterface $file_system, ConfigFactory $config_factory, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
     $this->database = $database;
+    $this->fileSystem = $file_system;
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -165,8 +199,10 @@ class SltContactsImportContactsForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
+      $container->get('file_system'),
       $container->get('config.factory'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('messenger')
     );
   }
 
@@ -291,19 +327,21 @@ class SltContactsImportContactsForm extends FormBase {
   public function validateFormStepOne(array &$form, FormStateInterface $form_state) {
     $fids = $form_state->getValue('file');
     if (!empty($fids)) {
+      // Load the file object and get its real path as that's what
+      // PHPSpreadsheet expects.
       $file = $this->entityTypeManager->getStorage('file')->load(reset($fids));
+      $path = $this->fileSystem->realpath($file->getFileUri());
       $max_rows = $this->getSetting('max_rows', 9999);
 
-      // Extract the contacts and store them temporarily.
-      // @todo Delete the file after parsing it?
-      $contacts = $this->parseSpreadsheet($file, $max_rows);
+      // Extract the contacts from the spreadsheet.
+      $contacts = static::parseSpreadsheet($path, $max_rows);
       if (empty($contacts['contacts']) && !empty($contacts['errors'])) {
         $form_state->setErrorByName('file', $this->t("Unable to extract contacts from the spreadsheet: \n@errors.", [
           '@errors' => static::formatList($contacts['errors']),
         ]));
       }
       else {
-        $form_state->setTemporaryValue('contacts', $contacts);
+        $form_state->set('contacts', $contacts);
       }
     }
   }
@@ -342,30 +380,43 @@ class SltContactsImportContactsForm extends FormBase {
       '#title' => $this->t('<h2>Step 2: Confirmation</h2>'),
     ];
 
-    // Maximum number of rows and errors to show.
-    $extract_size = $this->getSetting('extract_size', 50);
-
     // Display the table with the list of contacts to import.
-    $contacts = $form_state->getTemporaryValue('contacts');
+    $contacts = $form_state->get('contacts');
     if (!empty($contacts['contacts'])) {
+      // Maximum number of contacts to show.
       $count = count($contacts['contacts']);
       $headers = static::getTableHeaders($contacts['columns']);
-      $rows = static::getTableRows($headers, $contacts['contacts'], $extract_size);
+      $rows = static::getTableRows($headers, $contacts['contacts']);
 
-      $form['contacts'] = [
-        '#type' => 'table',
-        '#caption' => $this->formatPlural($count, '@count contact to import - Sample:', '@count contacts to import - Sample:'),
-        '#header' => $headers,
-        '#rows' => $rows,
+      $form['contact-list'] = [
+        '#type' => 'details',
+        '#title' => $this->formatPlural($count,
+          '@count contact to import',
+          '@count contacts to import'
+        ),
+        'table' => [
+          '#type' => 'table',
+          '#header' => $headers,
+          '#rows' => $rows,
+        ],
       ];
     }
 
     // Display the errors detected while parsing the spreadsheet.
     if (!empty($contacts['errors'])) {
-      $form['errors'] = [
-        '#type' => 'item_list',
-        '#title' => $this->t('Parsing errors'),
-        '#items' => array_slice($contacts['errors'], 0, $extract_size),
+      $count = count($contacts['errors']);
+
+      $form['error-list'] = [
+        '#type' => 'details',
+        '#title' => $this->formatPlural($count,
+          '@count parsing error',
+          '@count parsing errors'
+        ),
+        'list' => [
+          '#theme' => 'item_list',
+          '#list_type' => 'ul',
+          '#items' => $contacts['errors'],
+        ],
       ];
     }
 
@@ -416,7 +467,9 @@ class SltContactsImportContactsForm extends FormBase {
     foreach (static::$columns as $name => $definition) {
       if (!empty($definition['alternatives'])) {
         foreach ($definition['alternatives'] as $alternative) {
-          $mapping[$alternative] = $name;
+          if (!empty(static::$columns[$alternative]['legacy'])) {
+            $mapping[$alternative] = $name;
+          }
         }
       }
       if (empty($definition['legacy'])) {
@@ -440,16 +493,14 @@ class SltContactsImportContactsForm extends FormBase {
    *   List of header column names.
    * @param array $contacts
    *   List of contact data extracted from the spreadsheet.
-   * @param int $limit
-   *   Maximum number of row to display.
    *
    * @return array
    *   Table rows. Each row contains cells for each column. Each cell can be
    *   either a string or a render array.
    */
-  public static function getTableRows(array $headers, array $contacts, $limit = 50) {
+  public static function getTableRows(array $headers, array $contacts) {
     $rows = [];
-    foreach (array_slice($contacts, 0, $limit) as $data) {
+    foreach ($contacts as $data) {
       $row = [];
       foreach ($headers as $name) {
         if (isset(static::$columns[$name]['table_display'])) {
@@ -494,9 +545,7 @@ class SltContactsImportContactsForm extends FormBase {
   /**
    * Submit the form (after step 2).
    *
-   * Generate the contacts.
-   *
-   * @todo show a progress bar?
+   * Generate the batch to delete/create the contacts.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -505,37 +554,81 @@ class SltContactsImportContactsForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $batch_size = $this->getSetting('batch_size', 50);
-    $base_class = '\Drupal\slt_contacts\Form\SltContactsImportContactsForm';
 
-    $operations = [];
+    // We will (optionally) delete the old contacts and create the new ones
+    // in batches as that takes time.
+    $contacts = $form_state->get('contacts');
+    if (!empty($contacts['contacts'])) {
+      $operations = [];
 
-    $delete_contacts = $form_state->get('delete_contacts');
-    if (!empty($delete_contacts)) {
-      // Create batch steps to delete the existing nodes.
-      $records = $this->database->select('node', 'n')
-        ->fields('n', ['nid'])
-        ->condition('n.type', 'contact', '=')
-        ->execute();
+      // We log the parsing errors (if any) during the batch process because
+      // otherwise it slows down too much the parsing. Also it makes more sense
+      // to log them when actually proceeding with the import.
+      $operations[] = [
+        __CLASS__ . '::logParsingInfo',
+        [$contacts['path'], $contacts['errors']],
+      ];
 
-      if (!empty($records)) {
-        foreach (array_chunk($records->fetchCol(), $batch_size) as $ids) {
-          $operations[] = [$base_class . '::deleteContactNodes', [$ids]];
+      $delete_contacts = $form_state->getValue('delete_contacts');
+      if (!empty($delete_contacts)) {
+        // Create batch steps to delete the existing nodes.
+        $records = $this->entityTypeManager->getStorage('node')->getQuery()
+          ->condition('type', 'contact')
+          ->accessCheck(FALSE)
+          ->execute();
+
+        if (!empty($records)) {
+          foreach (array_chunk($records, $batch_size) as $ids) {
+            $operations[] = [__CLASS__ . '::deleteContactNodes', [$ids]];
+          }
         }
       }
+
+      // Create batch steps to create the new contact nodes.
+      foreach (array_chunk($contacts['contacts'], $batch_size) as $data) {
+        $operations[] = [__CLASS__ . '::createContactNodes', [$data]];
+      }
+
+      $batch = [
+        'title' => $this->t('Importing contacts...'),
+        'operations' => $operations,
+        'finished' => __CLASS__ . '::batchFinished',
+      ];
+      batch_set($batch);
+    }
+    else {
+      $this->messenger->addWarning($this->t('No contacts to import. Old contacts were not deleted.'));
+    }
+  }
+
+  /**
+   * Log the parsing errors.
+   *
+   * @param string $path
+   *   The path of the spreadsheet.
+   * @param array $errors
+   *   The parsing errors.
+   * @param array $context
+   *   The batch context.
+   */
+  public static function logParsingInfo($path, array $errors, array &$context) {
+    // Log the filename to help make sense of the parsing errors.
+    static::log(new FormattableMarkup('Parsed spreadsheet: @path', [
+      '@path' => $path,
+    ]), 'info');
+
+    // We log the errors as notices because they don't impact the whole site.
+    foreach ($errors as $error) {
+      static::log($error, 'notice');
     }
 
-    // Create batch steps to create the new contact nodes.
-    $contacts = $form_state->getTemporaryValue('contacts') ?? [];
-    foreach (array_chunk($contacts, $batch_size) as $data) {
-      $operations[] = [$base_class . '::createContactNodes', [$data]];
-    }
-
-    $batch = [
-      'title' => $this->t('Importing contacts...'),
-      'operations' => $operations,
-      'finished' => $base_class . '::batchFinished',
-    ];
-    batch_set($batch);
+    // Set a message for the current batch and update the progress status.
+    $count = count($errors);
+    $context['message'] = \Drupal::translation()->formatPlural($count,
+      'Logged @count parsing error.',
+      'Logged @count parsing errors.'
+    );
+    $context['results']['logged'][] = $count;
   }
 
   /**
@@ -555,7 +648,10 @@ class SltContactsImportContactsForm extends FormBase {
 
     // Set a message for the current batch and update the progress status.
     $count = count($ids);
-    $context['message'] = t('Deleted %count contacts.', ['%count' => $count]);
+    $context['message'] = \Drupal::translation()->formatPlural($count,
+      'Deleted @count old contact.',
+      'Deleted @count old contacts.'
+    );
     $context['results']['deleted'][] = $count;
   }
 
@@ -592,7 +688,10 @@ class SltContactsImportContactsForm extends FormBase {
 
     // Set a message for the current batch and update the progress status.
     $count = count($contacts);
-    $context['message'] = t('Created %count contacts.', ['%count' => $count]);
+    $context['message'] = \Drupal::translation()->formatPlural($count,
+      'Created @count new contact.',
+      'Created @count new contacts.'
+    );
     $context['results']['created'][] = $count;
   }
 
@@ -637,24 +736,21 @@ class SltContactsImportContactsForm extends FormBase {
    */
   public static function batchFinished($success, array $results, array $operations) {
     if ($success) {
-      $parts = [];
       if (!empty($results['deleted'])) {
-        $parts[] = t('Deleted %deleted old contacts.', [
+        \Drupal::messenger()->addStatus(t('Deleted %deleted old contacts.', [
           '%deleted' => array_sum($results['deleted']),
-        ]);
+        ]));
       }
       if (!empty($results['created'])) {
-        $parts[] = t('Created %created old contacts.', [
+        \Drupal::messenger()->addStatus(t('Created %created new contacts.', [
           '%created' => array_sum($results['created']),
-        ]);
+        ]));
       }
-      $message = implode(' ', $parts);
     }
     else {
       // @todo Show a more useful error message?
-      $message = t('Finished with an error.');
+      \Drupal::messenger()->addError(t('No contacts to import. Old contacts were not deleted.'));
     }
-    drupal_set_message($message);
   }
 
   /**
@@ -669,54 +765,60 @@ class SltContactsImportContactsForm extends FormBase {
    *   Id of the first term, newly created if doesn't already exists.
    */
   public static function getTermId($vocabulary, $name) {
-    $name = trim(is_array($name) ? reset($name) : $name);
+    $multiple = is_array($name);
 
-    if (empty($name)) {
+    $names = array_filter(array_map('trim', $multiple ? $name : [$name]));
+
+    if (empty($names)) {
       return NULL;
     }
 
-    $term_storage = \Drupal::entityTypeManager()->getStorage('term');
+    $results = [];
+    foreach ($names as $name) {
+      $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
 
-    // Sanitize and truncate the term if necessary.
-    $words = preg_split('/' . Unicode::PREG_CLASS_WORD_BOUNDARY . '/u', $name, -1, PREG_SPLIT_NO_EMPTY);
-    if (count($words) > 10) {
-      $name = implode(' ', array_slice($words, 0, 10)) . ' ...';
-    }
+      // Sanitize and truncate the term if necessary.
+      $words = preg_split('/' . Unicode::PREG_CLASS_WORD_BOUNDARY . '/u', $name, -1, PREG_SPLIT_NO_EMPTY);
+      if (count($words) > 10) {
+        $name = implode(' ', array_slice($words, 0, 10)) . ' ...';
+      }
 
-    // Get any existing taxonomy term matching the given term name.
-    $terms = $term_storage->loadByProperties([
-      'vid' => $vocabulary,
-      'name' => $name,
-    ]);
-
-    // Get the first existing term or create one.
-    if (!empty($terms)) {
-      $term = reset($terms);
-    }
-    else {
-      $term = $term_storage->create([
+      // Get any existing taxonomy term matching the given term name.
+      $terms = $term_storage->loadByProperties([
         'vid' => $vocabulary,
-        'name' => $term,
+        'name' => $name,
       ]);
-      $term->save();
+
+      // Get the first existing term or create one.
+      if (!empty($terms)) {
+        $term = reset($terms);
+      }
+      else {
+        $term = $term_storage->create([
+          'vid' => $vocabulary,
+          'name' => $name,
+        ]);
+        $term->save();
+      }
+      $results[] = $term->id();
     }
 
-    return $term->id();
+    return $multiple ? $results : reset($results);
   }
 
   /**
    * Extract contacts from a spreadsheet.
    *
-   * @param \Drupal\file\Entity\File $file
-   *   Spreadsheet file object.
+   * @param string $path
+   *   File path.
    * @param int $max_rows
    *   Maximum number rows to parse.
    *
    * @return array
-   *   Associative array with the header columnss, contacts and potential
-   *   parsing errors.
+   *   Associative array with the spreadsheet file path, the header columns,
+   *   contact list and potential parsing errors.
    */
-  public static function parseSpreadsheet(File $file, $max_rows) {
+  public static function parseSpreadsheet($path, $max_rows) {
     $columns = [];
     $contacts = [];
     $errors = [];
@@ -725,7 +827,7 @@ class SltContactsImportContactsForm extends FormBase {
     // various exceptions when parsing a spreadsheet.
     try {
       // Get the worksheet to work with (pun intended).
-      $sheet = static::getWorksheet($file);
+      $sheet = static::getWorksheet($path);
 
       // Get the row to which will stop the parsing.
       $max_rows = min($sheet->getHighestDataRow(), $max_rows);
@@ -753,16 +855,30 @@ class SltContactsImportContactsForm extends FormBase {
         // Parse a contact data row.
         else {
           $data = static::parseDataRow($columns, $sheet, $row);
-          if (!empty($data['errors'])) {
-            $errors = array_merge($errors, $data['errors']);
-          }
-          elseif (!empty($data['data']['email'])) {
-            $email = $data['data']['email'];
-            if (isset($contacts[$email])) {
-              $contacts[$email] = static::mergeContactData($contacts[$email], $data['data']);
+          if (!empty($data['data'])) {
+            // Log the errors only for "useful" rows with some data.
+            if (!empty($data['errors'])) {
+              $errors = array_merge($errors, $data['errors']);
             }
-            else {
-              $contacts[$email] = $data['data'];
+            // If there is an email, merge the data with the contact entry with
+            // the same email address if any, otherwise create a new entry if
+            // the data is "valid", meaning, it has all the mandatory fields.
+            if (!empty($data['data']['email'])) {
+              $email = $data['data']['email'];
+              if (isset($contacts[$email])) {
+                $contacts[$email] = static::mergeContactData($contacts[$email], $data['data']);
+              }
+              elseif (!empty($data['valid'])) {
+                $contacts[$email] = $data['data'];
+              }
+            }
+            // Otherwise, merge the fields that can accept multiple values with
+            // the latest contact entry. This is, for example, to handle cases
+            // where a phone number is on its own row and needs to be added to
+            // the list of phone number of the previously extracted contact.
+            elseif (!empty($contacts)) {
+              $email = array_key_last($contacts);
+              $contacts[$email] = static::mergeContactData($contacts[$email], $data['data'], TRUE);
             }
           }
         }
@@ -773,6 +889,7 @@ class SltContactsImportContactsForm extends FormBase {
     }
 
     return [
+      'path' => $path,
       'columns' => $columns,
       'contacts' => $contacts,
       'errors' => $errors,
@@ -782,27 +899,28 @@ class SltContactsImportContactsForm extends FormBase {
   /**
    * Load a spreadsheet and return its first worksheet.
    *
-   * @param \Drupal\file\Entity\File $file
-   *   Spreadsheet file object.
+   * @param string $path
+   *   File path.
    *
    * @return \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet
    *   First worksheet.
    */
-  public static function getWorksheet(File $file) {
-    if (!($file instanceof File)) {
-      throw new \Exception('Invalid file.');
+  public static function getWorksheet($path) {
+    if (!file_exists($path)) {
+      throw new \Exception("The spreadsheet file doesn't exist.");
     }
 
-    $filename = \Drupal::service('file_system')->realpath($file->getFileUri());
-
     // Get the spreadsheet type.
-    $filetype = IOFactory::identify($filename);
+    $filetype = IOFactory::identify($path);
 
     // Create the spreadsheet reader.
     $reader = IOFactory::createReader($filetype);
 
+    // Load only the first sheet to save memory (see comment below).
+    $reader->setLoadSheetsOnly(0);
+
     // Start reading the file.
-    $spreadsheet = $reader->load($filename);
+    $spreadsheet = $reader->load($path);
 
     // We only deal with the first sheet.
     //
@@ -822,18 +940,18 @@ class SltContactsImportContactsForm extends FormBase {
    * @return array
    *   Empty array if the row is not the header row, otherwise, return an
    *   associative array with the found columns which is an associative array
-   *   with the column name (header) as value and the column index as value.
+   *   with the column name (header) as value and the column letter as value.
    *   If the row is the header one but some mandatory columns are missing, the
    *   returnning array will have an `errors` key with the list of errors.
    */
   public static function parseHeaderRow(Worksheet $sheet, Row $row) {
     $columns = [];
     foreach ($row->getCellIterator() as $cell) {
-      $value = mb_strtolower(static::getCellValue($sheet, $cell));
+      $value = mb_strtolower(static::getCellValue($sheet, $cell->getCoordinate()));
       // Fix malformed column names...
       $value = trim(preg_replace('/\s+/u', ' ', $value));
       if (isset($value, static::$columns[$value]) && !isset($columns[$value])) {
-        $columns[$value] = Coordinate::columnIndexFromString($cell->getColumn());
+        $columns[$value] = $cell->getColumn();
       }
     }
 
@@ -845,7 +963,9 @@ class SltContactsImportContactsForm extends FormBase {
     $errors = [];
     foreach (static::$columns as $name => $definition) {
       if (!static::checkMandatoryField($name, $definition, $columns)) {
-        $errors[] = t('Missing @column column.', [
+        // We use TranslatableMarkup so that the error can be displayed
+        // translated in the confirmation step.
+        $errors[] = new TranslatableMarkup('Missing @column column.', [
           '@column' => $name,
         ]);
       }
@@ -870,18 +990,21 @@ class SltContactsImportContactsForm extends FormBase {
    *   Spreadsheet row.
    *
    * @return array
-   *   Associative array with the data per header column name. If some mandatory
-   *   columns are missing, the returning array will have an `errors` key with
-   *   the list of errors.
+   *   Associative array with the following keys:
+   *   - data: associative array mapping the column names to their values,
+   *   - errors: array with a list of parsing errors,
+   *   - valid: a flag to indicate that the data contains all the mandatory
+   *   fields.
    */
   public static function parseDataRow(array $columns, Worksheet $sheet, Row $row) {
     $index = $row->getRowIndex();
     $data = [];
+    $errors = [];
+    $valid = TRUE;
 
     // Get the data from the row foreach column with a recognized header.
     foreach ($columns as $name => $column) {
-      $cell = $sheet->getCellByColumnAndRow($column, $index);
-      $data[$name] = static::getCellValue($sheet, $cell);
+      $data[$name] = static::getCellValue($sheet, $column . $index);
     }
 
     // Skip the row if empty.
@@ -892,25 +1015,48 @@ class SltContactsImportContactsForm extends FormBase {
     // Process the row's data.
     foreach (static::$columns as $name => $definition) {
       if (isset($definition['preprocess'])) {
-        static::call($definition['preprocess'], $data);
+        if (!static::call($definition['preprocess'], $data)) {
+          $errors[$name] = new TranslatableMarkup('Invalid @column on row @row.', [
+            '@column' => $name,
+            '@row' => $index,
+          ]);
+        }
+      }
+    }
+
+    // Check if the data contains only "multiple" fields, in which case, we
+    // can skip the validation of the mandatory fields, because it's a row that
+    // should be merged with the previous one.
+    $skip = TRUE;
+    foreach ($data as $name => $value) {
+      if (!empty($value) && empty(static::$columns[$name]['multiple'])) {
+        $skip = FALSE;
+        break;
       }
     }
 
     // Check mandatory fields. This is not done in the loop above because
     // the data may change during preprocessing.
-    $errors = [];
-    foreach (static::$columns as $name => $definition) {
-      if (!static::checkMandatoryField($name, $definition, $data)) {
-        $errors[] = t('Missing @column on row @row.', [
-          '@column' => $name,
-          '@row' => $index,
-        ]);
+    if ($skip === FALSE) {
+      foreach (static::$columns as $name => $definition) {
+        if (!static::checkMandatoryField($name, $definition, $data)) {
+          // No need to add different error messages for the same field, for
+          // example if the field data was found invalid during preprocessing.
+          if (!isset($errors[$name])) {
+            $errors[$name] = new TranslatableMarkup('Missing @column on row @row.', [
+              '@column' => $name,
+              '@row' => $index,
+            ]);
+          }
+          $valid = FALSE;
+        }
       }
     }
 
     return [
       'data' => $data,
-      'errors' => $errors,
+      'errors' => array_values($errors),
+      'valid' => $valid,
     ];
   }
 
@@ -922,42 +1068,69 @@ class SltContactsImportContactsForm extends FormBase {
    *
    * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet
    *   Spreadsheet worksheet.
-   * @param \PhpOffice\PhpSpreadsheet\Cell\Cell $cell
-   *   Cell from which to extract the value.
+   * @param string $reference
+   *   Cell reference (ex: A1).
    *
    * @return string
    *   Extracted value, defaulting to an empty string.
    */
-  public static function getCellValue(Worksheet $sheet, Cell $cell) {
-    static $cache = [];
-    $value = '';
-    // If the cell is in a range, retrieve the value for the range by
-    // concatenating the cell values.
-    if ($cell->isInMergeRange()) {
-      $range = $cell->getMergeRange();
+  public static function getCellValue(Worksheet $sheet, $reference) {
+    static $references;
+    static $values;
 
-      // Returned the cached value for the range. This avoids calculating the
-      // value everytime we try to get the value for a cell in a range.
-      if (isset($cache[$range])) {
-        return $cache[$range];
-      }
+    if (!isset($references, $values)) {
+      list($references, $values) = static::extractMergedCells($sheet);
+    }
 
-      $parts = [];
-      $rows = $sheet->rangeToArray($cell->getMergeRange(), '', FALSE, FALSE);
-      foreach ($rows as $cells) {
-        foreach ($cells as $cell) {
-          if (!empty($cell)) {
-            $parts[] = trim($cell);
+    if (isset($references[$reference])) {
+      return $values[$references[$reference]];
+    }
+    elseif ($sheet->getCellCollection()->has($reference)) {
+      return trim($sheet->getCellCollection()->get($reference)->getValue());
+    }
+    return '';
+  }
+
+  /**
+   * Extract the values for the merged cells.
+   *
+   * We store the merged cells references and the merge range values so that
+   * we don't have to parse the merge ranges every time we try to get a cell
+   * value. This speeds tremendously the spreadsheet parsing at the cost of
+   * increased memory usage.
+   *
+   * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet
+   *   Worksheet from which to extract the merged cells data.
+   *
+   * @return array
+   *   Array containing 2 elements: an associative array  of the references of
+   *   the cells included in merge ranges mapped to to the range reference, and
+   *   an associative array mapping range references to their values.
+   */
+  public static function extractMergedCells(Worksheet $sheet) {
+    $references = [];
+    $values = [];
+
+    foreach ($sheet->getMergeCells() as $range) {
+      // Extract all the merged cell references and store their mapping to
+      // the merge range. We don't copy directly the merge range value to
+      // reduce memory usage.
+      foreach (Coordinate::extractAllCellReferencesInRange($range) as $index => $reference) {
+        // The first cell of the range is supposed to contain the value of the
+        // range.
+        // @see \PhpOffice\PhpSpreadsheet\Cell\Cell::isMergeRangeValueCell()
+        if ($index === 0) {
+          if ($sheet->getCellCollection()->has($reference)) {
+            $values[$range] = trim($sheet->getCellCollection()->get($reference)->getValue());
+          }
+          else {
+            $values[$range] = '';
           }
         }
+        $references[$reference] = $range;
       }
-      $value = implode('', $parts);
-      $cache[$range] = $value;
     }
-    elseif (!empty($cell)) {
-      $value = trim($cell->getValue());
-    }
-    return $value;
+    return [$references, $values];
   }
 
   /**
@@ -968,6 +1141,9 @@ class SltContactsImportContactsForm extends FormBase {
    *
    * @param array $data
    *   Row data.
+   *
+   * @return bool
+   *   FALSE if the data was invalid, TRUE otherwise.
    */
   public static function preprocessEmail(array &$data) {
     static $validator;
@@ -976,7 +1152,9 @@ class SltContactsImportContactsForm extends FormBase {
     }
     if (!empty($data['email']) && !$validator->isValid($data['email'])) {
       unset($data['email']);
+      return FALSE;
     }
+    return TRUE;
   }
 
   /**
@@ -987,6 +1165,9 @@ class SltContactsImportContactsForm extends FormBase {
    *
    * @param array $data
    *   Row data.
+   *
+   * @return bool
+   *   FALSE if the data was invalid, TRUE otherwise.
    */
   public static function preprocessName(array &$data) {
     if (empty($data['name'])) {
@@ -1001,28 +1182,56 @@ class SltContactsImportContactsForm extends FormBase {
     }
     unset($data['first name']);
     unset($data['last name']);
+    return TRUE;
   }
 
   /**
    * Preprocess the duty station country field.
    *
-   * This gets the first country from the `duty station country` and/or
-   * the `country` field.
+   * This extracts the countries from the `country` field or from the
+   * `duty station country` field if the former is empty.
    *
    * @param array $data
    *   Row data.
+   *
+   * @return bool
+   *   FALSE if the data was invalid, TRUE otherwise.
+   */
+  public static function preprocessCountry(array &$data) {
+    $countries = [];
+    if (!empty($data['country'])) {
+      $countries = array_merge($countries, array_map('trim', explode('|', $data['country'])));
+    }
+    elseif (!empty($data['duty station country'])) {
+      $countries = array_merge($countries, array_map('trim', explode('|', $data['duty station country'])));
+    }
+    $data['country'] = array_unique(array_filter($countries), SORT_STRING);
+    return TRUE;
+  }
+
+  /**
+   * Preprocess the duty station country field.
+   *
+   * This gets the first country from the `duty station country` field or from
+   * the `country` field if the former is empty.
+   *
+   * @param array $data
+   *   Row data.
+   *
+   * @return bool
+   *   FALSE if the data was invalid, TRUE otherwise.
    */
   public static function preprocessDutyStationCountry(array &$data) {
     $countries = [];
     if (!empty($data['duty station country'])) {
-      $countries = array_merge($countries, array_map('trim', explode('|', $data['duty station country'])));
+      $countries = array_map('trim', explode('|', $data['duty station country']));
     }
-    if (!empty($data['country'])) {
-      $countries = array_merge($countries, array_map('trim', explode('|', $data['country'])));
+    elseif (!empty($data['country'])) {
+      $countries = array_map('trim', explode('|', $data['country']));
     }
-    $countries = array_unique(array_filter($countries), SORT_STRING);
-    $data['duty station country'] = reset($countries);
-    unset($data['country']);
+    $countries = array_filter($countries);
+    $data['duty station country'] = reset($countries) ?? '';
+    return TRUE;
   }
 
   /**
@@ -1036,6 +1245,9 @@ class SltContactsImportContactsForm extends FormBase {
    *
    * @param array $data
    *   Row data.
+   *
+   * @return bool
+   *   FALSE if the data was invalid, TRUE otherwise.
    */
   public static function preprocessPhone(array &$data) {
     $phone = [];
@@ -1047,6 +1259,7 @@ class SltContactsImportContactsForm extends FormBase {
     }
     $data['phone'] = array_unique(array_filter($phone), SORT_REGULAR);
     unset($data['phone type']);
+    return TRUE;
   }
 
   /**
@@ -1098,6 +1311,22 @@ class SltContactsImportContactsForm extends FormBase {
    * @return array|string
    *   Render array or empty string.
    */
+  public static function displayCountry(array $data) {
+    if (empty($data['country'])) {
+      return '';
+    }
+    return static::formatList($data['country']);
+  }
+
+  /**
+   * Get a render array to display a contact's phone numbers as a list.
+   *
+   * @param array $data
+   *   Contact data.
+   *
+   * @return array|string
+   *   Render array or empty string.
+   */
   public static function displayPhone(array $data) {
     if (empty($data['phone'])) {
       return '';
@@ -1122,11 +1351,14 @@ class SltContactsImportContactsForm extends FormBase {
    *   Contact data.
    * @param array $data2
    *   Contact data.
+   * @param bool $multiple_only
+   *   Whether to limit the merging to fields that can have multiple values or
+   *   not.
    *
    * @return array
    *   Merged contact data.
    */
-  public static function mergeContactData(array $data1, array $data2) {
+  public static function mergeContactData(array $data1, array $data2, $multiple_only = FALSE) {
     $data = [];
 
     foreach (static::$columns as $name => $definition) {
@@ -1140,7 +1372,7 @@ class SltContactsImportContactsForm extends FormBase {
         }
         $data[$name] = array_unique($values, SORT_REGULAR);
       }
-      elseif (empty($data1[$name]) && !empty($data2[$name])) {
+      elseif (empty($multiple_only) && empty($data1[$name]) && !empty($data2[$name])) {
         $data[$name] = $data2[$name];
       }
       elseif (!empty($data1[$name])) {
@@ -1183,7 +1415,7 @@ class SltContactsImportContactsForm extends FormBase {
     if (empty($definition['mandatory'])) {
       return TRUE;
     }
-    if (isset($data[$name])) {
+    if (!empty($data[$name])) {
       return TRUE;
     }
     // Check if there is an alternative column.
@@ -1214,6 +1446,25 @@ class SltContactsImportContactsForm extends FormBase {
     $callable = array_shift($arguments);
     $arguments[] = &$data;
     return call_user_func_array($callable, $arguments);
+  }
+
+  /**
+   * Log a message.
+   *
+   * @param mixed $message
+   *   String-ish value. If the message is an instance of
+   *   \Drupal\Core\StringTranslation\TranslatableMarkup then we build a non
+   *   translated message as the logs are for internal information and it
+   *   doesn't make sense to have them in the display language of the current
+   *   user.
+   * @param string $level
+   *   Log level.
+   */
+  public static function log($message, $level = 'info') {
+    if ($message instanceof TranslatableMarkup) {
+      $message = new FormattableMarkup($message->getUntranslatedString(), $message->getArguments());
+    }
+    \Drupal::logger('slt-contact-import')->log($level, $message);
   }
 
 }
