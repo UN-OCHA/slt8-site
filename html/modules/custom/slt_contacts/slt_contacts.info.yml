@@ -1,0 +1,5 @@
+type: module
+name: SLT Contacts
+description: 'SLT contacts import handling.'
+package: slt
+core_version_requirement: ^8.9 || ^9

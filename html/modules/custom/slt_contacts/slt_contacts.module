@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Code for the SLT contacts module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Change default value for the exposed country selector.
+ */
+function slt_contacts_form_views_exposed_form_contacts_page_contacts_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // We re-use the 'All' option to avoid validation errors and add a process
+  // function to actually remove the filter when 'All' is selected.
+  $form['country']['#options']['All'] = t('- Choose a country -');
+  $form['country']['#process'][] = 'slt_contacts_reset_country_default_filter';
+}
+
+/**
+ * Process function for the exposed country filter in the contacts view.
+ *
+ * This ensures that no data is returned with "Choose a country" is the
+ * currently selected option.
+ *
+ * @param array $element
+ *   Form element to process.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state.
+ *
+ * @return array
+ *   Processed element.
+ *
+ * @see \Drupal\views\ViewExecutable::getExposedInput()
+ */
+function slt_contacts_reset_country_default_filter(array $element, FormStateInterface $form_state) {
+  if ($form->getValue('country') === 'All') {
+    $input = $this->view->getExposedInput();
+    unset($input['country']);
+
+    // We set a dummy input value to ensure ViewExecutable::getExposedInput()
+    // doesn't bail out due to an empty input which would counteract the
+    // removal of the 'country' filter value and would cause the query to
+    // return all the entries as if 'All' were still selected.
+    $input['__dummy'] = 'Dummy input';
+    $this->view->setExposedInput($input);
+  }
+  return $element;
+}
