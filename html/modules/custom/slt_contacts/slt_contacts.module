@@ -12,11 +12,14 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * Change default value for the exposed country selector.
  */
-function slt_contacts_form_views_exposed_form_contacts_page_contacts_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // We re-use the 'All' option to avoid validation errors and add a process
-  // function to actually remove the filter when 'All' is selected.
-  $form['country']['#options']['All'] = t('- Choose a country -');
-  $form['country']['#process'][] = 'slt_contacts_reset_country_default_filter';
+function slt_contacts_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $view = $form_state->getStorage('view');
+  if (isset($view['view']) && $view['view']->id() === 'contacts' && $view['view']->current_display === 'page_contacts') {
+    // We re-use the 'All' option to avoid validation errors and add a process
+    // function to actually remove the filter when 'All' is selected.
+    $form['country']['#options']['All'] = t('- Choose a country -');
+    $form['country']['#process'][] = 'slt_contacts_reset_country_default_filter';
+  }
 }
 
 /**
@@ -36,8 +39,9 @@ function slt_contacts_form_views_exposed_form_contacts_page_contacts_alter(&$for
  * @see \Drupal\views\ViewExecutable::getExposedInput()
  */
 function slt_contacts_reset_country_default_filter(array $element, FormStateInterface $form_state) {
-  if ($form->getValue('country') === 'All') {
-    $input = $this->view->getExposedInput();
+  $view = $form_state->getStorage('view');
+  if (isset($view['view']) && $form_state->getValue('country') === 'All') {
+    $input = $view['view']->getExposedInput();
     unset($input['country']);
 
     // We set a dummy input value to ensure ViewExecutable::getExposedInput()
@@ -45,7 +49,7 @@ function slt_contacts_reset_country_default_filter(array $element, FormStateInte
     // removal of the 'country' filter value and would cause the query to
     // return all the entries as if 'All' were still selected.
     $input['__dummy'] = 'Dummy input';
-    $this->view->setExposedInput($input);
+    $view['view']->setExposedInput($input);
   }
   return $element;
 }
