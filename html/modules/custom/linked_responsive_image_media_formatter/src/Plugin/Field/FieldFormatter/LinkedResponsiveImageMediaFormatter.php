@@ -2,13 +2,14 @@
 
 namespace Drupal\linked_responsive_image_media_formatter\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -82,13 +83,6 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
   protected $token;
 
   /**
-   * The path validator service.
-   *
-   * @var \Drupal\Core\Path\PathValidatorInterface
-   */
-  protected $pathValidator;
-
-  /**
    * Constructs a MediaResponsiveThumbnailFormatter object.
    *
    * @param string $plugin_id
@@ -119,10 +113,8 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
    *   The media storage.
    * @param \Drupal\Core\Utility\Token $token
    *   The token service.
-   * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
-   *   The pathvalidator service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $responsive_image_style_storage, EntityStorageInterface $image_style_storage, LinkGeneratorInterface $link_generator, AccountInterface $current_user, RendererInterface $renderer, EntityStorageInterface $parent_media_storage, Token $token, PathValidatorInterface $path_validator) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $responsive_image_style_storage, EntityStorageInterface $image_style_storage, LinkGeneratorInterface $link_generator, AccountInterface $current_user, RendererInterface $renderer, EntityStorageInterface $parent_media_storage, Token $token) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->responsiveImageStyleStorage = $responsive_image_style_storage;
     $this->imageStyleStorage = $image_style_storage;
@@ -131,7 +123,6 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     $this->renderer = $renderer;
     $this->parentMediaStorage = $parent_media_storage;
     $this->token = $token;
-    $this->pathValidator = $path_validator;
   }
 
   /**
@@ -153,7 +144,6 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       $container->get('renderer'),
       $container->get('entity_type.manager')->getStorage('media'),
       $container->get('token'),
-      $container->get('path.validator'),
     );
   }
 
@@ -345,7 +335,6 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
     // Retrieve the settings values.
     $image_link = $this->getSetting('image_link');
     $image_alt = $this->getSetting('image_alt');
-    $image_alt_value = $this->getSetting('image_alt_value');
     $image_as_background = $this->getSetting('image_as_background');
 
     // Retrieve the url to link to.
@@ -390,7 +379,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
 
       // Set the custom alt text.
       if ($image_alt === 'custom') {
-        $image->set('alt', $this->replaceTokens($image_alt_value, $token_data));
+        $image->set('alt', $this->getCustomAlt($token_data));
       }
       // Ensure there is at least an empty alt tag for accessibility.
       elseif (empty($image->alt)) {
@@ -400,9 +389,9 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       // If the image is to be used as background, we use its alt tag as text
       // for the link and empty the image alt as the image will then be
       // considered a decorative image.
-      $url_title = NULL;
+      $link_title = NULL;
       if ($image_as_background) {
-        $url_title = $image->alt;
+        $link_title = $image->alt;
         $image->set('alt', '');
       }
 
@@ -414,7 +403,9 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
         '#item_attributes' => ['alt' => $image->alt],
         '#responsive_image_style_id' => $responsive_image_style ? $responsive_image_style->id() : '',
         '#url' => $url,
-        '#url_title' => $url_title,
+        '#link_title' => $link_title,
+        // @todo add rel, target, download?
+        '#link_attributes' => [],
       ];
 
       // Add cache metadata for the media entity so that the field is
@@ -489,8 +480,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
   /**
    * Get and validate the custom URL.
    *
-   * @todo Replace PathValidator with better validation as it uses
-   * UrlHelper::isValid which has several issues (unless those get fixed):
+   * @todo Replace UrlHelper::isValid which has several issues (unless fixed):
    * - https://www.drupal.org/project/drupal/issues/2691099
    * - https://www.drupal.org/project/drupal/issues/2474191
    *
@@ -505,16 +495,45 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
   public function getCustomUrl(array $token_data = [], array $token_options = []) {
     // Tokens can be used.
     $url = $this->replaceTokens($this->getSetting('image_link_url'), $token_data, $token_options);
+
     // Try to grab the href attribute if the replaced token is a link.
     preg_match('/<a[^>]* href="([^"]+)"[^>]*>/', $url, $match);
     $url = isset($match[1]) ? $match[1] : $url;
-    // Validate the URL. It will return NULL if invalid.
-    // We don't check the access to internal URLs to avoid cache conflicts,
-    // however there may still be issues if the internal URL doesn't exist, in
-    // which case the  URL is considered invalid and there will be no link.
-    // The cached rendered field, without the link, may still displayed even
-    // after the URL is added.
-    return $this->pathValidator->getUrlIfValidWithoutAccessCheck($url) ?: NULL;
+
+    // The URL maybe an internal url to an entity like entity:node/123 etc.
+    // so we need to get the computed url. If the url is external we check its
+    // validity.
+    try {
+      $url = Url::fromUri($url)->toString();
+
+      if (UrlHelper::isExternal($url) && !UrlHelper::isValid($url)) {
+        throw new \Exception();
+      }
+    }
+    catch (\Exception $exception) {
+      return NULL;
+    }
+
+    return $url;
+  }
+
+  /**
+   * Get the custom alt text.
+   *
+   * @param array $token_data
+   *   Context token data used when doing token replacement.
+   * @param array $token_options
+   *   Token replacement options.
+   *
+   * @return string
+   *   Link title.
+   */
+  public function getCustomAlt(array $token_data = [], array $token_options = []) {
+    // Tokens can be used.
+    $alt = $this->replaceTokens($this->getSetting('image_alt_value'), $token_data, $token_options);
+    // The text will be santized when displayed as an attribute so this prevents
+    // double encoding.
+    return Html::decodeEntities(strip_tags($alt));
   }
 
   /**

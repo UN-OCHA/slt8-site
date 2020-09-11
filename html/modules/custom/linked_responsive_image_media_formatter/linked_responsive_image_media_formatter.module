@@ -5,6 +5,8 @@
  * Linked Responsive Media Image Formatter.
  */
 
+use Drupal\Core\Template\Attribute;
+
 /**
  * Implements hook_theme().
  */
@@ -18,12 +20,34 @@ function linked_responsive_image_media_formatter_theme() {
         'item' => NULL,
         'item_attributes' => NULL,
         'url' => NULL,
-        'url_title' => NULL,
+        'link_title' => NULL,
+        'link_attributes' => NULL,
         'responsive_image_style_id' => NULL,
-      ],
-      'preprocess functions' => [
-        'template_preprocess_responsive_image_formatter',
       ],
     ],
   ];
+}
+
+/**
+ * Prepares variables for responsive image formatter templates.
+ *
+ * Default template: responsive-image-formatter.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - item: An ImageItem object.
+ *   - item_attributes: An optional associative array of HTML attributes to be
+ *     placed in the img tag.
+ *   - url: An optional \Drupal\Core\Url object.
+ *   - link_title: An optional string to display in addition to the image.
+ *   - link_attributes: An optional array of attributes for the link.
+ *   - responsive_image_style_id: The ID of the responsive image style.
+ */
+function template_preprocess_linked_responsive_image_media_formatter(array &$variables) {
+  // Let the responsive image formatter do it's thing to preparet the image.
+  template_preprocess_responsive_image_formatter($variables);
+
+  // Create an attribute object for the link for easier manipulation in
+  // the template.
+  $variables['link_attributes'] = new Attribute($variables['link_attributes'] ?? []);
 }

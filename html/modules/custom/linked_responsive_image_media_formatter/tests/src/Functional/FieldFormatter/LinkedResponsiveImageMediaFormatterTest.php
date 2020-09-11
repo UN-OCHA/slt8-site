@@ -129,7 +129,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
     $media->save();
 
     // Create the node and reference the media.
-    $node = $this->drupalCreateNode(['type' => 'article']);
+    $node = $this->drupalCreateNode(['type' => 'article', 'id' => 1]);
     $node->field_media->target_id = $media->id();
     $node->save();
 
@@ -287,6 +287,28 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           '.field--name-field-media > .field__item > a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestNodeUrl'],
+            ],
+          ],
+        ],
+      ],
+      'Responsive image with custom entity link' => [
+        'settings' => [
+          'responsive_image_style' => 'responsive_image_style',
+          'image_link' => 'custom',
+          'image_link_url' => 'entity:node/1',
+          'image_alt' => 'image',
+          'image_alt_value' => '',
+          'image_as_background' => FALSE,
+        ],
+        'selectors' => [
+          '.field--name-field-media > .field__item > a' => [
+            'attributes' => [
+              'href' => ['callback' => 'getTestNodeUrl'],
+            ],
+          ],
+          '.field--name-field-media > .field__item > a > picture > img' => [
+            'attributes' => [
+              'alt' => 'test image alt text',
             ],
           ],
         ],

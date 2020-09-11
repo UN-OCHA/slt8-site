@@ -15,16 +15,10 @@
  */
 #}
 {% if url %}
-  {%
-    set attributes = item_attributes|filter((v, k) =>
-      v != '' and
-      k in ['rel', 'target', 'download']
-    ).addClass('link')
-  %}
-  {% if url_title %}
-    <a href="{{ url }}"{{ attributes }}>{{ responsive_image }}<span class="link__title">{{ url_title }}</span></a>
+  {% if link_title %}
+    <a href="{{ url }}"{{ link_attributes.addClass('link') }}>{{ responsive_image }}<span class="link__title">{{ link_title }}</span></a>
   {% else %}
-    <a href="{{ url }}"{{ attributes }}>{{ responsive_image }}</a>
+    <a href="{{ url }}"{{ link_attributes.addClass('link') }}>{{ responsive_image }}</a>
   {% endif %}
 {% else %}
   {{ responsive_image }}
