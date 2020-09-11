@@ -27,7 +27,10 @@ class SltTaxonomyVocabulary extends SqlBase {
         'module',
         'weight',
         'machine_name',
-      ])->distinct();
+      ])
+      // SLT-6: No need to import the security role area taxonomies.
+      ->condition('vid', [18], 'NOT IN')
+      ->distinct();
   }
 
   /**

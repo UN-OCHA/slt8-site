@@ -2,9 +2,6 @@
 
 namespace Drupal\slt_migrate\Helpers;
 
-use DOMDocument;
-use DOMNode;
-use DOMXPath;
 use Drupal\Component\Utility\UrlHelper;
 
 /**
@@ -70,8 +67,12 @@ class HtmlSanitizer {
       'thead' => FALSE,
       'tbody' => FALSE,
       'th' => FALSE,
-      'td' => FALSE,
+      // We allow table cells to be empty.
+      'td' => TRUE,
       'tr' => FALSE,
+      'span' => FALSE,
+      // No children.
+      'img' => TRUE,
     ];
 
     $convert = [
@@ -98,7 +99,7 @@ class HtmlSanitizer {
     $meta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
     $prefix = '<!DOCTYPE html><html><head>' . $meta . '</head><body>';
     $suffix = '</body></html>';
-    $dom = new DOMDocument();
+    $dom = new \DOMDocument();
     $dom->loadHTML($prefix . $html . $suffix, $flags);
 
     // Fix the heading hierarchy.
@@ -159,7 +160,7 @@ class HtmlSanitizer {
     // Remove "ignorable" whitespaces. This is ok-ish for this migration and
     // allows to have a slightly better formatted and more consistent output
     // than without, when combined with `formatOutput` below.
-    $xpath = new DOMXPath($dom);
+    $xpath = new \DOMXPath($dom);
     $nodes = $xpath->query('//text()');
     for ($i = $nodes->length - 1; $i >= 0; $i--) {
       $node = $nodes->item($i);
@@ -191,7 +192,7 @@ class HtmlSanitizer {
    * @return bool
    *   TRUE if the node is considered empty.
    */
-  public static function isEmpty(DOMNode $node) {
+  public static function isEmpty(\DOMNode $node) {
     // Trim the content, including nbps.
     $content = preg_replace('/(?:^\s+)|(?:\s+$)/u', '', $node->textContent);
     return empty($content);
@@ -203,7 +204,7 @@ class HtmlSanitizer {
    * @param \DOMNode $node
    *   Heading node.
    */
-  public static function handleHeading(DOMNode $node) {
+  public static function handleHeading(\DOMNode $node) {
     // Remove all the attributes except the 'id' that we keep to allow
     // internal links.
     static::removeAttributes($node, ['id']);
@@ -215,36 +216,60 @@ class HtmlSanitizer {
    * @param \DOMNode $node
    *   Link node.
    */
-  public static function handleLink(DOMNode $node) {
+  public static function handleLink(\DOMNode $node) {
     $url = $node->getAttribute('href');
+
+    // Check if the link is an anchor.
+    if (empty($url)) {
+      $id = $node->getAttribute('id');
+
+      if (empty($id) || empty($node->parentNode)) {
+        $node->parentNode->removeChild($node);
+      }
+      else {
+        // Move the id to the parent and delete the node.
+        $id = static::sanitizeId($id);
+        $node->parentNode->setAttribute('id', $id);
+        $node->parentNode->removeChild($node);
+      }
+
+      // Skip the rest of the process.
+      return;
+    }
 
     // Process anchors, updating the target ID to avoid ID clashes.
     if (strpos($url, '#') === 0) {
       $id = substr($url, 1);
-      $target = $node->ownerDocument->getElementById($id);
 
-      // Prefix the id. This is to avoid clashes with other IDs in the rest of
-      // the HTML.
-      $id = strpos($id, 'jump-') === 0 ? $id : 'jump-' . $id;
+      // Get the target element and modify the fragment.
+      if ($id !== '') {
+        $target = $node->ownerDocument->getElementById($id);
+        $id = static::sanitizeId($id);
+      }
 
       // Remove the link if we couldn't find the target.
-      if (empty($target)) {
+      if (empty($target) || empty($target->parentNode)) {
         $node->parentNode->removeChild($node);
+
+        // Skip the rest of the process.
         return;
       }
       elseif ($target->tagName === 'a') {
         // Move the id to the parent node as it is the new recommendation rather
         // than using anchors.
-        $target->parentNode->setAttribute('id', 'jump-' . $id);
-        $node->parentNode->removeChild($node);
+        $target->parentNode->setAttribute('id', $id);
+        $target->parentNode->removeChild($target);
       }
       else {
-        $target->setAttribute('id', 'jump-' . $id);
+        $target->setAttribute('id', $id);
       }
 
       // Update the url with the new fragment.
-      $url = '#' . $id;
-      $node->setAttribute('href', $url);
+      $node->setAttribute('href', '#' . $id);
+      static::removeAttributes($node, ['href']);
+
+      // Skip the rest of the process.
+      return;
     }
 
     // Remove links with an invalid url.
@@ -286,23 +311,15 @@ class HtmlSanitizer {
   /**
    * Validate image url and sanitize attributes.
    *
+   * @todo change source URL and attempt to find corresponding media.
+   *
    * @param \DOMNode $node
    *   Image node.
    */
-  public static function handleImage(DOMNode $node) {
-    $url = $node->getAttribute('src');
-
-    // Remove images with an invalid url.
-    // @todo replace 'isValid' with something more robust.
-    // @todo check if anchors are preserved.
-    if (!UrlHelper::isValid($url, UrlHelper::isExternal($url))) {
-      // Remove the node.
-      $node->parentNode->removeChild($node);
-    }
-    // Remove all the attributes except the 'src', 'alt' and 'title' ones.
-    else {
-      static::removeAttributes($node, ['src', 'alt', 'title']);
-    }
+  public static function handleImage(\DOMNode $node) {
+    static::removeAttributes($node, ['src', 'alt', 'title']);
+    // Ensure the is an alt tag.
+    $node->setAttribute('alt', $node->getAttribute('alt') ?? '');
   }
 
   /**
@@ -311,7 +328,7 @@ class HtmlSanitizer {
    * @param \DOMNode $node
    *   Table node.
    */
-  public static function handleTable(DOMNode $node) {
+  public static function handleTable(\DOMNode $node) {
     $dom = $node->ownerDocument;
 
     // Create a new table.
@@ -347,7 +364,7 @@ class HtmlSanitizer {
    * @param \DOMNode $node
    *   Table cell node.
    */
-  public static function handleTableCell(DOMNode $node) {
+  public static function handleTableCell(\DOMNode $node) {
     static::removeAttributes($node, ['colspan']);
   }
 
@@ -357,7 +374,7 @@ class HtmlSanitizer {
    * @param \DOMNode $node
    *   List item node.
    */
-  public static function handleListItem(DOMNode $node) {
+  public static function handleListItem(\DOMNode $node) {
     // Add a list parent to orphan list items.
     if ($node->parentNode->tagName !== 'ul' && $node->parentNode->tagName !== 'ol') {
       $listElement = $node->ownerDocument->createElement('ul');
@@ -379,7 +396,7 @@ class HtmlSanitizer {
    * @param array $allowed_attributes
    *   List of allowed attributes.
    */
-  public static function removeAttributes(DOMNode $node, array $allowed_attributes = []) {
+  public static function removeAttributes(\DOMNode $node, array $allowed_attributes = []) {
     if ($node->hasAttributes()) {
       $allowed_attributes = array_flip($allowed_attributes);
 
@@ -404,7 +421,7 @@ class HtmlSanitizer {
    * @param array $allowed_attributes
    *   Attributes to move to the new node.
    */
-  public static function changeTag(DOMNode $node, $tag, array $allowed_attributes = []) {
+  public static function changeTag(\DOMNode $node, $tag, array $allowed_attributes = []) {
     if (!empty($tag)) {
       $newNode = $node->ownerDocument->createElement($tag);
     }
@@ -443,7 +460,7 @@ class HtmlSanitizer {
    * @return array
    *   List of nodes with the given tag name.
    */
-  public static function getElementsByTagName(DOMNode $node, $tag) {
+  public static function getElementsByTagName(\DOMNode $node, $tag) {
     $elements = [];
     if (method_exists($node, 'getElementsByTagName')) {
       foreach ($node->getElementsByTagName($tag) as $element) {
@@ -451,6 +468,22 @@ class HtmlSanitizer {
       }
     }
     return $elements;
+  }
+
+  /**
+   * Sanitize internal link target id.
+   *
+   * @param string $id
+   *   Id to santitize.
+   *
+   * @return string
+   *   Sanitized Id.
+   */
+  public static function sanitizeId($id) {
+    // Prefix the id. This is to avoid clashes with other IDs in the rest of
+    // the HTML and is what the Filtered HTML format supports.
+    $id = strpos($id, 'jump-') === 0 ? $id : 'jump-' . $id;
+    return str_replace('_', '-', $id);
   }
 
 }

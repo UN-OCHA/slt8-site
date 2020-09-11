@@ -14,6 +14,10 @@ source:
 destination:
   plugin: entity:node
   bundle: contact
+  # Run entity and fields validation before saving an entity.
+  # This is to prevent importing contacts with an invalid email address.
+  # @see \Drupal\Core\Entity\FieldableEntityInterface::validate()
+  validate: true
 process:
   # Base properties.
   nid: nid
@@ -68,10 +72,6 @@ process:
     process:
       type: linklabel
       number: phonenumber
-  field_security_role_area/target_id:
-    plugin: skip_on_empty
-    method: process
-    source: field_c_security_role_area/0/tid
   field_security_title/value:
     plugin: skip_on_empty
     method: process

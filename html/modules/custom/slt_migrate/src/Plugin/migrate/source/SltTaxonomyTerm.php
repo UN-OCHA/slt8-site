@@ -30,8 +30,8 @@ class SltTaxonomyTerm extends SqlBase {
         'weight',
         'format',
       ])
-      // Skip the unused Active and Role taxonomy vocabularies.
-      ->condition('vid', [6, 7], 'NOT IN')
+      // SLT-6: No need to import the security role area taxonomies.
+      ->condition('vid', [18], 'NOT IN')
       ->distinct();
   }
 

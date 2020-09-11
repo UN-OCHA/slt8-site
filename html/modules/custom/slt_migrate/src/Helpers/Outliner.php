@@ -9,11 +9,8 @@
 
 namespace Drupal\slt_migrate\Helpers;
 
-use DOMDocument;
-use DOMNode;
-
 /**
- * Outliner.
+ * HTML Outliner implementation.
  */
 class Outliner {
 
@@ -26,7 +23,7 @@ class Outliner {
    * @return bool
    *   TRUE if the node is a heading.
    */
-  public static function isHeading(DOMNode $node) {
+  public static function isHeading(\DOMNode $node) {
     static $tags = [
       'h1' => TRUE,
       'h2' => TRUE,
@@ -48,7 +45,7 @@ class Outliner {
    * @return bool
    *   TRUE if the node is a sectioning content.
    */
-  public static function isSectioningContent(DOMNode $node) {
+  public static function isSectioningContent(\DOMNode $node) {
     static $tags = [
       'article' => TRUE,
       'aside' => TRUE,
@@ -67,7 +64,7 @@ class Outliner {
    * @return bool
    *   TRUE if the node is a sectioning root.
    */
-  public static function isSectioningRoot(DOMNode $node) {
+  public static function isSectioningRoot(\DOMNode $node) {
     static $tags = [
       'blockquote' => TRUE,
       'body' => TRUE,
@@ -89,7 +86,7 @@ class Outliner {
    * @return bool
    *   TRUE if the node is hidden.
    */
-  public static function isHidden(DOMNode $node) {
+  public static function isHidden(\DOMNode $node) {
     return isset($node) && $node->hasAttributes() && $node->hasAttribute('hidden');
   }
 
@@ -102,7 +99,7 @@ class Outliner {
    * @return int
    *   Heading's rank.
    */
-  public static function getHeadingRank(DOMNode $node) {
+  public static function getHeadingRank(\DOMNode $node) {
     $heading = static::getRankingHeading($node);
     return !empty($heading) ? -intval(substr($heading->nodeName, 1)) : -1;
   }
@@ -118,7 +115,7 @@ class Outliner {
    * @return \DOMNode
    *   Ranking heading node.
    */
-  public static function getRankingHeading(DOMNode $node) {
+  public static function getRankingHeading(\DOMNode $node) {
     // Get the top level heading in the hgroup.
     if ($node->nodeName === 'hgroup') {
       for ($i = 1; $i <= 6; $i++) {
@@ -147,7 +144,7 @@ class Outliner {
    * @return int
    *   Heading's rank.
    */
-  public static function isSubSection(?OutlineTarget $outline_target, DOMNode $node) {
+  public static function isSubSection(?OutlineTarget $outline_target, \DOMNode $node) {
     if (empty($outline_target) || empty($outline_target->outline) || empty($outline_target->outline->sections)) {
       return FALSE;
     }
@@ -167,7 +164,7 @@ class Outliner {
    * @param array $stack
    *   Stack to track processed elements.
    */
-  public static function enterNode(DOMNode $node, ?OutlineTarget &$outline_target, ?Section &$current_section, array &$stack) {
+  public static function enterNode(\DOMNode $node, ?OutlineTarget &$outline_target, ?Section &$current_section, array &$stack) {
     // Nothing to do if the top of the stack is hidden or a heading.
     $stackTop = end($stack);
     if (!empty($stackTop) && (static::isHeading($stackTop->node) || static::isHidden($stackTop->node))) {
@@ -272,7 +269,7 @@ class Outliner {
    * @param array $stack
    *   Stack to track processed elements.
    */
-  public static function exitNode(DOMNode $node, ?OutlineTarget &$outline_target, ?Section &$current_section, array &$stack) {
+  public static function exitNode(\DOMNode $node, ?OutlineTarget &$outline_target, ?Section &$current_section, array &$stack) {
     $stackTop = end($stack);
     if (!empty($stackTop)) {
       // Remove the node from the stack if it's the last added element.
@@ -343,7 +340,7 @@ class Outliner {
    * @return \Outliner\Outline|null
    *   Outline object.
    */
-  public static function parseNode(?DOMNode $root) {
+  public static function parseNode(?\DOMNode $root) {
     // Skip if the root node is not a sectioning content or root node.
     if (!empty($root) && !static::isSectioningContent($root) && !static::isSectioningRoot($root)) {
       return NULL;
@@ -402,7 +399,7 @@ class Outliner {
     $meta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
     $prefix = '<!DOCTYPE html><html><head>' . $meta . '</head><body>';
     $suffix = '</body></html>';
-    $dom = new DOMDocument();
+    $dom = new \DOMDocument();
     $dom->loadHTML($prefix . $html . $suffix, $flags);
 
     return static::parseNode(static::getBody($dom));
@@ -420,7 +417,7 @@ class Outliner {
    *   no gaps between heading levels. Otherwise the headings will be fixed
    *   according to their level in the outline.
    */
-  public static function fixNodeHeadingHierarchy(DOMNode $node, $level = 0, $nogap = TRUE) {
+  public static function fixNodeHeadingHierarchy(\DOMNode $node, $level = 0, $nogap = TRUE) {
     if (is_a($node, 'DOMDocument')) {
       $outline = static::parseNode(static::getBody($node));
     }
@@ -505,7 +502,7 @@ class Outliner {
    * @return \DOMNode
    *   New heading or same one if there was no need for a change.
    */
-  public static function fixHeadingRank(DOMNode $heading, $rank) {
+  public static function fixHeadingRank(\DOMNode $heading, $rank) {
     // Replace the heading with a strong tag if it goes beyond the 6th rank.
     $tag = $rank > 6 ? 'strong' : 'h' . $rank;
     // Nothing to do if the tag name is unchanged.
@@ -535,14 +532,14 @@ class Outliner {
    * without creating infinite loops for example.
    *
    * @param \DOMNode $node
-   *   Node (DOMDocument or DOMElement)
+   *   Node (\DOMDocument or DOMElement)
    * @param string $tag
    *   Tag name or `*` for all nodes.
    *
    * @return array
    *   List of nodes with the given tag name.
    */
-  public static function getElementsByTagName(DOMNode $node, $tag) {
+  public static function getElementsByTagName(\DOMNode $node, $tag) {
     $elements = [];
     if (method_exists($node, 'getElementsByTagName')) {
       foreach ($node->getElementsByTagName($tag) as $element) {
@@ -556,12 +553,12 @@ class Outliner {
    * Get body.
    *
    * @param \DOMNode $node
-   *   Node (DOMDocument or DOMElement)
+   *   Node (\DOMDocument or DOMElement)
    *
    * @return \DOMNode
    *   Body node.
    */
-  public static function getBody(DOMNode $node) {
+  public static function getBody(\DOMNode $node) {
     $elements = static::getElementsByTagName($node, 'body');
     return count($elements) > 0 ? $elements[0] : NULL;
   }
@@ -586,14 +583,14 @@ class Node {
    * @param \DOMNode $node
    *   DOM node.
    */
-  public function __construct(DOMNode $node) {
+  public function __construct(\DOMNode $node) {
     $this->node = $node;
   }
 
 }
 
 /**
- * Section.
+ * Section node implementation.
  */
 class Section extends Node {
   /**
@@ -633,7 +630,7 @@ class Section extends Node {
 }
 
 /**
- * Outline.
+ * Outline node implementation.
  */
 class Outline extends Node {
   /**
@@ -651,7 +648,7 @@ class Outline extends Node {
    * @param \Outliner\Section $section
    *   First section of the outline.
    */
-  public function __construct(DOMNode $node, Section $section) {
+  public function __construct(\DOMNode $node, Section $section) {
     $this->node = $node;
     $this->sections[] = $section;
   }
@@ -705,7 +702,7 @@ class Outline extends Node {
 }
 
 /**
- * Outline target.
+ * Outline target node implementation.
  */
 class OutlineTarget extends Node {
 
