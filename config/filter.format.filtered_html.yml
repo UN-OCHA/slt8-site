@@ -14,7 +14,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href target="_blank"> <em> <strong> <cite> <blockquote cite> <ul type> <ol start type=''''1 A I''''> <li> <dl> <dt> <dd> <h2 id=''''jump-*''''> <h3 id=''''jump-*''''> <h4 id=''''jump-*''''> <h5 id=''''jump-*''''> <h6 id=''''jump-*''''> <table> <caption> <thead> <tbody> <tr> <th colspan> <td colspan> <p> <br> '
+      allowed_html: '<a href target="_blank"> <em> <strong> <cite> <blockquote cite> <ul type> <ol start type=''''1 A I''''> <li> <dl> <dt> <dd> <h2 id=''''jump-*''''> <h3 id=''''jump-*''''> <h4 id=''''jump-*''''> <h5 id=''''jump-*''''> <h6 id=''''jump-*''''> <table> <caption> <thead> <tbody> <tr> <th colspan> <td colspan> <p> <br> <img src alt title>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_htmlcorrector:

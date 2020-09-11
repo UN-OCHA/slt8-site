@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.contact.field_email
     - field.field.node.contact.field_functional_title
     - field.field.node.contact.field_phone
-    - field.field.node.contact.field_security_role_area
     - field.field.node.contact.field_security_title
     - node.type.contact
   module:
@@ -34,5 +33,4 @@ hidden:
   field_email: true
   field_functional_title: true
   field_phone: true
-  field_security_role_area: true
   field_security_title: true

@@ -10,5 +10,4 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
-  - 'view media'
   - 'view published public_page content'

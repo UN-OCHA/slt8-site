@@ -1,4 +1,4 @@
-uuid: b752c5fa-21d9-4d95-8268-3b3676391a6c
+uuid: be293d05-cc93-454c-98bb-bdc3687adf07
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: f2RD8M9yGE0ILlXcEhdXRScR02O5NR8mrYAY5rVjc3w
+  default_config_hash: Tx2LwtgSxZxsU2n1bk2b3vJ72Oklo-EVL2InLb5g1Lk
 id: slt_node_contact
 class: null
 field_plugin_method: null
@@ -66,10 +66,6 @@ process:
     process:
       type: linklabel
       number: phonenumber
-  field_security_role_area/target_id:
-    plugin: skip_on_empty
-    method: process
-    source: field_c_security_role_area/0/tid
   field_security_title/value:
     plugin: skip_on_empty
     method: process
@@ -87,6 +83,7 @@ process:
 destination:
   plugin: 'entity:node'
   bundle: contact
+  validate: true
 migration_dependencies:
   required:
     - slt_user

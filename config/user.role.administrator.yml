@@ -8,6 +8,7 @@ weight: 2
 is_admin: null
 permissions:
   - 'access content overview'
+  - 'access media overview'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
@@ -47,6 +48,7 @@ permissions:
   - 'edit terms in country'
   - 'edit terms in duty_station_region'
   - 'edit terms in security_role_area'
+  - 'import contacts'
   - 'revert all revisions'
   - 'revert contact revisions'
   - 'revert private_page revisions'

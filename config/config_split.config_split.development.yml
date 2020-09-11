@@ -10,6 +10,7 @@ module:
   dblog: 0
   devel: 0
   kint: 0
+  webprofiler: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }

@@ -8,7 +8,7 @@ dependencies:
 id: paragraphs
 label: Paragraphs
 module: views
-description: ''
+description: 'List of existing paragraphs.'
 tag: ''
 base_table: paragraphs_item_field_data
 base_field: id
@@ -250,7 +250,7 @@ display:
         description: ''
         expanded: false
         parent: system.admin_content
-        weight: 0
+        weight: 10
         context: '0'
         menu_name: admin
     cache_metadata:

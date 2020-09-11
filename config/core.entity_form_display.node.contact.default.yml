@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.contact.field_email
     - field.field.node.contact.field_functional_title
     - field.field.node.contact.field_phone
-    - field.field.node.contact.field_security_role_area
     - field.field.node.contact.field_security_title
     - node.type.contact
   module:
@@ -61,18 +60,12 @@ content:
     type: string_textfield
     region: content
   field_phone:
-    weight: 26
+    weight: 8
     settings:
       placeholder_type: 'Work cell'
       placeholder_number: '+0123456789'
     third_party_settings: {  }
     type: telephone_type_default
-    region: content
-  field_security_role_area:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
     region: content
   field_security_title:
     weight: 5
@@ -89,6 +82,11 @@ content:
     settings:
       size: 255
       placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 9
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
