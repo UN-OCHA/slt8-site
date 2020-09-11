@@ -1,0 +1,5 @@
+fivecol_section:
+  version: VERSION
+  css:
+    theme:
+      layouts/fivecol_section/fivecol_section.css: {}
