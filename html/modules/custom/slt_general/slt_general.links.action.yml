@@ -1,0 +1,23 @@
+slt_general.add_public_page:
+  title: 'Add public page'
+  route_name: node.add
+  route_parameters:
+    node_type: public_page
+  appears_on:
+    - view.content.page_public_pages
+
+slt_general.add_private_page:
+  title: 'Add private page'
+  route_name: node.add
+  route_parameters:
+    node_type: private_page
+  appears_on:
+    - view.content.page_private_pages
+
+slt_general.add_contact:
+  title: 'Add contact'
+  route_name: node.add
+  route_parameters:
+    node_type: contact
+  appears_on:
+    - view.content.page_contacts
