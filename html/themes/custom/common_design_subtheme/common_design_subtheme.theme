@@ -6,6 +6,7 @@
  */
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Access\AccessResultInterface;
 
 /**
  * Get the list of components to attach to formatted text fields.
@@ -17,7 +18,7 @@ use Drupal\Component\Utility\Html;
 function common_design_subtheme_get_components() {
   static $components = [
     'common_design/cd-table' => [
-      'table' => ['cd-table', 'cd-table--responsive'],
+      'table' => ['cd-table', 'cd-table--striped', 'cd-table--responsive'],
     ],
   ];
   return $components;
@@ -88,4 +89,62 @@ function common_design_subtheme_add_component_classes($html, array $element) {
 
   $html = Html::serialize($dom);
   return trim($html);
+}
+
+/**
+ * Implements hook_preprocess_paragraph__page_title().
+ *
+ * We want to display the local tasks links between the hero image and the
+ * page title which are paragraphs of the node. To do so, we render the
+ * local tasks block and pass it to the paragraphs--page-title template.
+ * This assumes that the visibility of the local tasks (Tabs) has been disabled
+ * for the node type on the local tasks block configuration page.
+ *
+ * @see /admin/structure/block/manage/common_design_subtheme_local_tasks
+ */
+function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
+  $variables['local_tasks'] = common_design_subtheme_get_local_tasks_render_array();
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Ensure we display the local tasks (edit etc.) on node pages.
+ */
+function common_design_subtheme_preprocess_page(&$variables) {
+  if (isset($variables['node']) && !isset($variables['page']['content']['common_design_subtheme_local_tasks'])) {
+    $block = common_design_subtheme_get_local_tasks_render_array();
+    $variables['page']['content']['common_design_subtheme_local_tasks'] = $block;
+  }
+}
+
+/**
+ * Render the local tasks block.
+ *
+ * @see https://drupal.stackexchange.com/a/171733
+ *
+ * @return array
+ *   Renderable array of the local tasks block. Empty array if this was already
+ *   called before to avoid displaying the block several times.
+ */
+function common_design_subtheme_get_local_tasks_render_array() {
+  static $rendered = FALSE;
+
+  if (!$rendered) {
+    // Prevent rendering the block several times.
+    $rendered = TRUE;
+
+    // Generate an instance of the local tasks plugin block.
+    $block_manager = \Drupal::service('plugin.manager.block');
+    $plugin_block = $block_manager->createInstance('local_tasks_block', []);
+
+    // Check if the block is accessible to the current user.
+    $access = $plugin_block->access(\Drupal::currentUser());
+    // This can be a boolean or an object implementing AccessResultInterface.
+    if ($access === TRUE || ($access instanceof AccessResultInterface && $access->isAllowed())) {
+      return $plugin_block->build();
+    }
+  }
+
+  return [];
 }

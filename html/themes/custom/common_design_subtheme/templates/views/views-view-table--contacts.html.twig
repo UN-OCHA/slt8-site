@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Theme implementation for the contacts table.
+ *
+ * Overrides core/modules/views/templates/views-view-table.html.twig.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ *   - class: HTML classes that can be used to style contextually through CSS.
+ * - title : The title of this group of rows.
+ * - header: The table header columns.
+ *   - attributes: Remaining HTML attributes for the element.
+ *   - content: HTML classes to apply to each header cell, indexed by
+ *   the header's key.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - caption_needed: Is the caption tag needed.
+ * - caption: The caption for this table.
+ * - accessibility_description: Extended description for the table details.
+ * - accessibility_summary: Summary for the table details.
+ * - rows: Table row items. Rows are keyed by row number.
+ *   - attributes: HTML classes to apply to each row.
+ *   - columns: Row column items. Columns are keyed by column number.
+ *     - attributes: HTML classes to apply to each column.
+ *     - content: The column content.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - responsive: A flag indicating whether table is responsive.
+ * - sticky: A flag indicating whether table header is sticky.
+ * - summary_element: A render array with table summary information (if any).
+ *
+ * @see template_preprocess_views_view_table()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('common_design/cd-table') }}
+{{ attach_library('common_design_subtheme/slt-contact-table') }}
+{%
+  set classes = [
+    'cd-table',
+    'cd-table--responsive',
+    'cd-table--striped',
+    'slt-contact-table',
+  ]
+%}
+<table{{ attributes.addClass(classes) }}>
+    <thead>
+      <tr>
+        {% for key, column in header %}
+          <th>{{ column.content }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for row in rows %}
+      <tr>
+        {% for key, column in row.columns %}
+          {%
+            set cell_attributes = create_attribute({
+              'class': [
+                'slt-contact-table__' ~ header[key].content|trim|clean_class,
+              ]
+            })
+          %}
+          <td {{ cell_attributes }}>{{ column.content }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+

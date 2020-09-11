@@ -1,0 +1,33 @@
+/*
+ * @file
+ * Provides the layout styles for five columns layout section.
+ *
+ * See common_desing/common_design.breakpoints.yml for the breakpoints.
+ */
+
+.layout--fivecol-section > .layout__region {
+  float: left;
+  width: 100%;
+  padding: 16px;
+}
+
+/* 2 columns layout on small screens. */
+@media screen and (min-width: 576px) {
+  .layout--fivecol-section > .layout__region {
+    max-width: 50%;
+  }
+}
+
+/* 3 columns layout on medium screens. */
+@media screen and (min-width: 768px) {
+  .layout--fivecol-section > .layout__region {
+    max-width: 33.3%;
+  }
+}
+
+/* 5 columns layout on larger screens. */
+@media screen and (min-width: 1024px) {
+  .layout--fivecol-section > .layout__region {
+    max-width: 20%;
+  }
+}

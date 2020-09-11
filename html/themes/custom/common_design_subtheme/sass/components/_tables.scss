@@ -1,24 +1,7 @@
 //——————————————————————————————————————————————————————————————————————————————
-// Common Design: Logo
-//
-// Replace images with your site logo.
+// Tables
 //——————————————————————————————————————————————————————————————————————————————
 
-.cd-site-logo {
-  width: 52px;
-
-  &:focus {
-    outline: 3px solid $implementation-highlight;
-  }
-
-  // Logo for mobile.
-  // sass-lint:disable no-duplicate-properties
-  @include max-width(md) {
-    background: url('../img/logos/slt-compact.svg') center no-repeat;
-  }
-
-  @include tablet {
-    // Width of the logo.
-    width: 121px;
-  }
+td img {
+  max-height: 100px;
 }

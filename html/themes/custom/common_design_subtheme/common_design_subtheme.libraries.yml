@@ -4,7 +4,21 @@ global-styling:
       css/styles.css: {}
 
 # Custom components
-# cd-article-teaser:
-#   css:
-#     theme:
-#       components/cd-article-teaser/cd-article-teaser.css: {}
+slt-contact-table:
+  css:
+    theme:
+      components/slt-contact-table/slt-contact-table.css: {}
+  dependencies:
+    - common_design/cd-table
+
+slt-image-link:
+  css:
+    theme:
+      components/slt-image-link/slt-image-link.css: {}
+  dependencies:
+    - common_design/css-vars-ponyfill
+
+slt-hero:
+  css:
+    theme:
+      components/slt-hero/slt-hero.css: {}
