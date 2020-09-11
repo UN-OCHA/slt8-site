@@ -1,0 +1,11 @@
+/**
+ * Styling of the SLT contact import form.
+ */
+.slt-contacts-import-contacts-form .seven-details__wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.slt-contacts-import-contacts-form .seven-details__wrapper table th {
+  position: sticky;
+  top: 0;
+}

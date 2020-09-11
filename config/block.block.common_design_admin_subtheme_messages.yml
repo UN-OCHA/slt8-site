@@ -1,0 +1,22 @@
+uuid: 8ba01a7f-6471-4dbf-a0f5-28ecbf9099c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - common_design_admin_subtheme
+_core:
+  default_config_hash: 5MNdk3fpMKx_xxBTcz2T11DL4XEU1H5SgHl8BsYdFsA
+id: common_design_admin_subtheme_messages
+theme: common_design_admin_subtheme
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }
