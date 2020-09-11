@@ -229,7 +229,7 @@ class SltContactsImportContactsForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'slt_contacts_import_spreadsheet_form';
+    return 'slt_contacts_import_contacts_form';
   }
 
   /**
