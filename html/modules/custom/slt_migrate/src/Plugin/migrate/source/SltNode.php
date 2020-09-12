@@ -6,11 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Database\Database;
 use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\slt_migrate\Helpers\HtmlSanitizer;
-
-use DOMElement;
-use DOMXPath;
 
 /**
  * Drupal 7 nodes source from database.
@@ -121,7 +117,7 @@ class SltNode extends Node {
    */
   public static function convertGridContent($html) {
     $dom = Html::load($html);
-    $xpath = new DomXPath($dom);
+    $xpath = new \DomXPath($dom);
     $nodes = $xpath->query("//*[@class='col-sm-6 col-md-3']");
 
     if ($nodes === FALSE || $nodes->count() === 0) {
@@ -185,7 +181,7 @@ class SltNode extends Node {
    * @return array|null
    *   Array containing the link url, title and the media id.
    */
-  public static function extractImageLink(DOMElement $node) {
+  public static function extractImageLink(\DOMElement $node) {
     $url = $node->getAttribute('href');
     $title = '';
     $media_id = '';
@@ -333,7 +329,9 @@ class SltNode extends Node {
    *   The paragraph object.
    */
   public static function createParagraph(array $data, array $behavior_settings = []) {
-    $paragraph = Paragraph::create($data);
+    $paragraph = \Drupal::entityTypeManager()
+      ->getStorage('paragraph')
+      ->create($data);
     foreach ($behavior_settings as $plugin_id => $settings) {
       $paragraph->setBehaviorSettings($plugin_id, $settings);
     }
@@ -353,7 +351,7 @@ class SltNode extends Node {
    *   The file ID or NULL if not found.
    */
   public static function getFileIdFromUri($filename) {
-    /* @var \Drupal\file\FileInterface[] $files */
+    /** @var \Drupal\file\FileInterface[] $files */
     $files = \Drupal::entityTypeManager()
       ->getStorage('file')
       ->loadByProperties(['uri' => 'private://' . $filename]);
@@ -369,7 +367,7 @@ class SltNode extends Node {
    * @return \DOMElement|null
    *   The first child element or null if none was found.
    */
-  public static function getFirstChildElement(DOMElement $node) {
+  public static function getFirstChildElement(\DOMElement $node) {
     $child = $node->firstChild;
     while ($child) {
       if ($child->nodeType === XML_ELEMENT_NODE) {
@@ -389,7 +387,7 @@ class SltNode extends Node {
    * @return string
    *   The inner HTML.
    */
-  public static function getInnerHtml(DOMElement $node) {
+  public static function getInnerHtml(\DOMElement $node) {
     $html = '';
     foreach ($node->childNodes as $child) {
       $html .= $child->ownerDocument->saveHtml($child);

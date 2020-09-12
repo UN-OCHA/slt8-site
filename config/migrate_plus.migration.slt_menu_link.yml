@@ -1,4 +1,4 @@
-uuid: df81270d-6bab-406a-b8c7-9b06defa3015
+uuid: f9f352be-1eec-49ff-a2ef-496117f35752
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: nmHY_9wUEG2jm5kHjGtU_p00MALAcUIHlNwEzikgzxY
+  default_config_hash: O--kdEm6xCgY62aCOhZCwOZh7A2kwjzk5D3hZUeUdl8
 id: slt_menu_link
 class: null
 field_plugin_method: null
@@ -56,10 +56,6 @@ process:
       - '@menu_name'
       - parent_link_path
   changed: updated
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: und
 destination:
   plugin: 'entity:menu_link_content'
   no_stub: true

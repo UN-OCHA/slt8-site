@@ -1,4 +1,4 @@
-uuid: f2b4f5eb-6dc9-4b82-9d2c-4d9bdb69083e
+uuid: dc4958b4-0273-4b54-8b2b-58e531f657cd
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: RNG6CVEM-xhD1IB9UlNfAs_H9n88AGzhO9B4-y1ffGE
+  default_config_hash: rnDt4CmM5Ukio7Xog1ymxmhsOGn6OwIrS57d2IHPZoM
 id: slt_node_public_page
 class: null
 field_plugin_method: null
@@ -25,10 +25,6 @@ process:
   vid: vid
   uid: uid
   type: constants/bundle
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: und
   title: title
   created: created
   changed: changed

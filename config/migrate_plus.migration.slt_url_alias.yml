@@ -1,4 +1,4 @@
-uuid: e57a3041-fcae-4907-8d98-48a5da3f9886
+uuid: b27c0a16-876d-4dc5-a986-46dceef19181
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: LMZe6z6fB-bx-JiDE2rdFp7q1lCe6yW9eYoQgJZPB-E
+  default_config_hash: _So58IIczV_YM6Oej7OzTYLRTxHgrPPfhXTY9rXIZvE
 id: slt_url_alias
 class: null
 field_plugin_method: null
@@ -36,10 +36,6 @@ process:
       bypass: true
       map:
         /access-denied: /welcome
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: und
 destination:
   plugin: 'entity:path_alias'
 migration_dependencies: null

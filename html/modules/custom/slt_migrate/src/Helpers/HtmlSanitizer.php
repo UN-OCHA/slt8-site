@@ -66,8 +66,8 @@ class HtmlSanitizer {
       'caption' => FALSE,
       'thead' => FALSE,
       'tbody' => FALSE,
-      'th' => FALSE,
       // We allow table cells to be empty.
+      'th' => TRUE,
       'td' => TRUE,
       'tr' => FALSE,
       'span' => FALSE,

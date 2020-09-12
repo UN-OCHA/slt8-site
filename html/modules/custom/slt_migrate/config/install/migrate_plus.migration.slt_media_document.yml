@@ -17,9 +17,12 @@ process:
   uid: uid
   name: filename
   bundle: constants/bundle
-  langcode:
-    plugin: default_value
-    default_value: 'und'
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
   status: status
   # Drupal 7 didn't keep track of the file's creation or update time -- all it
   # had was the vague "timestamp" column. So we'll use it for both.

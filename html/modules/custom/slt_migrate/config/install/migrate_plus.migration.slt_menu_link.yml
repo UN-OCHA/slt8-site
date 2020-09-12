@@ -52,11 +52,12 @@ process:
       - '@menu_name'
       - parent_link_path
   changed: updated
-  # Default to undefined ("und") if no language is defined.
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: 'und'
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
 migration_dependencies:
   required:
     - slt_node_private_page

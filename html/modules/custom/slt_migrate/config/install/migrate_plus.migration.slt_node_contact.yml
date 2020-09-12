@@ -24,11 +24,12 @@ process:
   vid: vid
   uid: uid
   type: constants/bundle
-  # Default to undefined ("und") if no language is defined.
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: 'und'
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
   # We skip the sticky and promote values as they are not used. They will be
   # resetted to 0.
   # sticky: sticky

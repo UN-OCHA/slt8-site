@@ -30,8 +30,9 @@ process:
       map:
         # Change the alias of the welcome page.
         '/access-denied': '/welcome'
-  # Default to undefined ("und") if no language is defined.
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: 'und'
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'

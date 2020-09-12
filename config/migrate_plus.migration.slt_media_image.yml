@@ -1,4 +1,4 @@
-uuid: 8290e031-49e1-4efb-86b6-83aad799fd60
+uuid: d55ba1af-a32e-476a-a6f1-3ca12718068e
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - slt_migrate
 _core:
-  default_config_hash: XAM73B1Mwd-2WCiyObCO7g3dTXze1cOWQ1miyJoVE_0
+  default_config_hash: yi6WMOe2mWdGloQ9cusOVMrbim3SjnfxD9TXS7zqo0w
 id: slt_media_image
 class: null
 field_plugin_method: null
@@ -24,9 +24,6 @@ process:
   uid: uid
   name: filename
   bundle: constants/bundle
-  langcode:
-    plugin: default_value
-    default_value: und
   status: status
   created: timestamp
   changed: timestamp
