@@ -31,6 +31,7 @@
         "drupal/components": "^2.0-beta3",
         "drupal/core": "^8.9.2",
         "drupal/editor_advanced_link": "^1.8",
+        "drupal/entity_usage": "2.0-beta3",
         "drupal/google_tag": "1.4",
         "drupal/layout_paragraphs": "^1.0.0-beta3",
         "drupal/maintenance200": "^1.0",

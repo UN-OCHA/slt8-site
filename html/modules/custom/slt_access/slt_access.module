@@ -9,18 +9,22 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\node\NodeInterface;
+use Drupal\file\FileInterface;
 
 /**
  * Implements hook_node_access().
  *
  * Deny view access to users without the view published 'node bundle' content
  * permission.
+ *
+ * @todo reverse the logic and allow access if the node is published and the
+ * user has the permission to view published content of that type?
  */
-function slt_access_node_access(NodeInterface $node, $op, AccountInterface $account) {
+function slt_access_node_access(NodeInterface $node, $operation, AccountInterface $account) {
   $type = $node->bundle();
   $published = $node->isPublished();
 
-  switch ($op) {
+  switch ($operation) {
     case 'view':
       if ($published && !$account->hasPermission("view published {$type} content", $account)) {
         return AccessResult::forbidden()->cachePerPermissions();
@@ -43,4 +47,86 @@ function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state,
   $roles_access = !empty($form['account']['roles']['#options']) &&
                   \Drupal::currentUser()->hasPermission('assign user roles');
   $form['account']['roles']['#access'] = $roles_access;
+}
+
+/**
+ * Implements hook_file_access().
+ *
+ * Allow access to private files when referenced in published public pages if
+ * the user is allowed to view published public pages.
+ */
+function slt_access_file_access(FileInterface $file, $operation, AccountInterface $account) {
+  if ($operation === 'download' && strpos($file->getFileUri(), 'private://') === 0) {
+    $nodes = slt_access_get_nodes_referencing_entities('file', [$file->id()]);
+    if (!empty($nodes)) {
+      // Check if any of the referencing nodes is a public page in which case
+      // we grant access to the file.
+      $records = \Drupal::service('entity_type.manager')
+        ->getStorage('node')
+        ->getQuery()
+        ->condition('type', 'public_page')
+        // Published.
+        ->condition('status', 1)
+        ->condition('vid', $nodes, 'IN')
+        // Being referenced by one published public page is enough.
+        ->range(0, 1)
+        ->accessCheck(FALSE)
+        ->execute();
+      if (!empty($records)) {
+        // Allow access to the file if the user can view to public pages.
+        $account = \Drupal::currentUser();
+        $permission = 'view published public_page content';
+        return AccessResult::allowedIfHasPermission($account, $permission)
+          // Invalidate the cache when a public page is changed as the file
+          // may not be referenced anymore then.
+          ->addCacheTags(['node_list:public_page']);
+      }
+    }
+  }
+  // Let the file permissions etc. take over.
+  return AccessResult::neutral();
+}
+
+/**
+ * Get the list of nodes referencing the given entities.
+ *
+ * @param string $entity_type
+ *   Type of the entities.
+ * @param array $ids
+ *   Entity ids.
+ *
+ * @return array
+ *   List of nodes (revision id) referencing the entities.
+ */
+function slt_access_get_nodes_referencing_entities($entity_type, array $ids) {
+  $nodes = [];
+
+  $records = \Drupal::database()->select('entity_usage', 'eu')
+    ->fields('eu', [
+      'source_id',
+      'source_type',
+      'source_vid',
+    ])
+    ->condition('eu.target_id', $ids, 'IN')
+    ->condition('eu.target_type', $entity_type)
+    ->condition('eu.count', 0, '>')
+    ->execute();
+
+  if (!empty($records)) {
+    $sources = [];
+    foreach ($records as $record) {
+      if ($record->source_type === 'node') {
+        $nodes[$record->source_id . '-' . $record->source_vid] = $record->source_vid;
+      }
+      else {
+        $sources[$record->source_type][] = $record->source_id;
+      }
+    }
+
+    foreach ($sources as $source_type => $source_ids) {
+      $nodes += slt_access_get_nodes_referencing_entities($source_type, $source_ids);
+    }
+  }
+
+  return $nodes;
 }

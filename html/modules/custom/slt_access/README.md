@@ -19,8 +19,14 @@ of this module.
 
 **Roles**
 
-This modules also provides a permission to assign user roles, decoupling it
+This module also provides a permission to assign user roles, decoupling it
 from the `administer permissions` permission.
+
+**Private files**
+
+This module check the access to private files by determining if the file is
+referenced by a published public page and the user has the permission to view
+published public page.
 
 Setup
 -----
