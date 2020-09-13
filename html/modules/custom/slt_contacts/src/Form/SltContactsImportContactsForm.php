@@ -1265,8 +1265,8 @@ class SltContactsImportContactsForm extends FormBase {
   /**
    * Parse a string containing a phone number and optionally its type.
    *
-   * @todo Preserve the random text between the phone type and the phone
-   * number?
+   * The is no standard so we are lenient and just try to extract the phone
+   * type.
    *
    * @param string $data
    *   String containing the phone number.
@@ -1276,30 +1276,35 @@ class SltContactsImportContactsForm extends FormBase {
    */
   public static function extractPhoneData($data) {
     static $pattern = '
-      (?<type>\(?[^0-9):]+[):])?                    # Phone type.
+      (?<type>\(?[^0-9):]*[):])?                    # Phone type.
       \s*                                           # Any space.
-      ([a-zA-Z-]+\s*)?                              # N/A value.
-      (?<number>[0-9 ()+-]+)                        # Phone number.
-      \s*                                           # Any space.
-      ((,|Ext\s*:)\s*(?<extension>.+))?             # Extension.
+      (-\s*)?                                       # N/A value.
+      (?<number>.*)                                 # Phone number.
     ';
 
-    if (preg_match('~^' . $pattern . '$~x', trim($data), $matches) === 1) {
-      $number = trim($matches['number']);
-
-      // Add the extension to the phone number if defined.
-      $extension = trim($matches['extension'] ?? '');
-      if (!empty($extension)) {
-        $number .= ',' . $extension;
-      }
-
-      return [
-        'type' => trim($matches['type'] ?? '', '(): '),
-        'number' => $number,
-      ];
+    // Nothing to do if there is no phone data.
+    $data = trim($data);
+    if (empty($data)) {
+      return [];
     }
 
-    return [];
+    // Try to extract the phone type and number from the most common pattern.
+    if (preg_match('~^' . $pattern . '$~x', $data, $matches) === 1) {
+      $number = trim($matches['number']);
+      if (!empty($number)) {
+        return [
+          'type' => trim($matches['type'] ?? '', '(): '),
+          'number' => $number,
+        ];
+      }
+      return [];
+    }
+
+    // Otherwise be conservative and preserve the data.
+    return [
+      'type' => '',
+      'number' => $data,
+    ];
   }
 
   /**
