@@ -1,0 +1,10 @@
+uuid: 889fed59-6edc-451e-96a8-67c44475f351
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.thumbnail_small
+label: 'Thumbnail Small'
+targetEntityType: media
+cache: true

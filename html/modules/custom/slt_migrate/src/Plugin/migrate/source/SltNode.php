@@ -125,14 +125,16 @@ class SltNode extends Node {
     }
 
     // Create the layout paragraph.
-    $paragraphs = [static::createLayoutParagraph('layout_fourcol_section')];
+    $paragraphs = [
+      static::createLayoutParagraph('layout_image_grid_four_columns', [
+        'grid_size' => count($nodes),
+      ]),
+    ];
 
     $parent_uuid = $paragraphs[0]->uuid();
 
-    $regions = ['first', 'second', 'third', 'fourth'];
-
     // Parse the grid elements and generate the appropriate paragraphs.
-    $index = 0;
+    $index = 1;
     foreach ($nodes as $node) {
       $child = static::getFirstChildElement($node);
 
@@ -142,7 +144,7 @@ class SltNode extends Node {
 
       $behavior_settings = [
         'layout_paragraphs' => [
-          'region' => $regions[$index % 4],
+          'region' => 'region-' . $index++,
           'parent_uuid' => $parent_uuid,
           'layout' => '',
           'config' => [],
@@ -165,8 +167,6 @@ class SltNode extends Node {
         $text = static::getInnerHtml($node);
         $paragraphs[] = static::createTextParagraph($text, 2, $behavior_settings);
       }
-
-      $index++;
     }
 
     return $paragraphs;
@@ -202,17 +202,19 @@ class SltNode extends Node {
    *
    * @param string $layout
    *   The layout machine name. Default to the 4 columns layout.
+   * @param array $config
+   *   Lyout paragraph configuration (associative array).
    *
    * @return \Drupal\paragraphs\Entity\Paragraph
    *   The paragraph object.
    */
-  public static function createLayoutParagraph($layout = 'layout_fourcol_section') {
+  public static function createLayoutParagraph($layout, array $config = []) {
     $behavior_settings = [
       'layout_paragraphs' => [
         'region' => '',
         'parent_uuid' => '',
         'layout' => $layout,
-        'config' => [
+        'config' => $config + [
           'label' => '',
         ],
       ],
@@ -412,24 +414,27 @@ class SltNode extends Node {
     $query->addField('fi', 'field_basic_page_icon_fid', 'media_id');
     $query->orderBy('position', 'ASC');
 
-    $records = $query->execute();
-    if (empty($records)) {
+    $result = $query->execute();
+    if (empty($result)) {
       return [];
     }
+    $records = $result->fetchAll();
 
     // Create the layout paragraph.
-    $paragraphs = [static::createLayoutParagraph('layout_fivecol_section')];
+    $paragraphs = [
+      static::createLayoutParagraph('layout_image_grid_five_columns', [
+        'grid_size' => count($records),
+      ]),
+    ];
 
     $parent_uuid = $paragraphs[0]->uuid();
 
-    $regions = ['first', 'second', 'third', 'fourth', 'fifth'];
-
     // Create a paragraph for each node in the nodequeue.
-    $index = 0;
+    $index = 1;
     foreach ($records as $record) {
       $paragraphs[] = static::createImageLinkParagraph($record->url, $record->title, $record->media_id, [
         'layout_paragraphs' => [
-          'region' => $regions[$index % 5],
+          'region' => 'region-' . $index++,
           'parent_uuid' => $parent_uuid,
           'layout' => '',
           'config' => [],
@@ -438,7 +443,6 @@ class SltNode extends Node {
           'view_mode' => 'link_with_background_image_small',
         ],
       ]);
-      $index++;
     }
 
     return $paragraphs;

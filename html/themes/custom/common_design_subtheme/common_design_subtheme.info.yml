@@ -34,15 +34,20 @@ libraries-override:
         components/cd-table/cd-table.css: components/cd-table/cd-table.css
     js:
       components/cd-table/cd-table.js: components/cd-table/cd-table.js
+  # Overrides the layouts.
   # @todo: put that in the common_design theme instead?
+  layout_builder/twocol_section:
+    css:
+      theme:
+        layouts/twocol_section/twocol_section.css: layouts/twocol_section/twocol_section.css
+  layout_builder/threecol_section:
+    css:
+      theme:
+        layouts/threecol_section/threecol_section.css: layouts/threecol_section/threecol_section.css
   layout_builder/fourcol_section:
     css:
       theme:
         layouts/fourcol_section/fourcol_section.css: layouts/fourcol_section/fourcol_section.css
-  slt_layouts/fivecol_section:
-    css:
-      theme:
-        layouts/fivecol_section/fivecol_section.css: layouts/fivecol_section/fivecol_section.css
 
 # Use the common_design_subtheme styles inside the editor.
 # ckeditor_stylesheets:

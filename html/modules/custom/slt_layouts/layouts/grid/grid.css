@@ -1,0 +1,13 @@
+.layout--grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.layout--image-grid-four-columns .layout__region {
+  flex: 0 0 25%;
+  padding: 16px;
+}
+.layout--image-grid-five-columns .layout__region {
+  flex: 0 0 20%;
+  padding: 16px;
+}
+

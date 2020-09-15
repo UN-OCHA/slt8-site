@@ -17,4 +17,5 @@ behavior_plugins:
       layout_twocol_section: 'Two column'
       layout_threecol_section: 'Three column'
       layout_fourcol_section: 'Four column'
-      layout_fivecol_section: 'Five columns'
+      layout_image_grid_five_columns: 'Image grid (up to 5 columns)'
+      layout_image_grid_four_columns: 'Image grid (up to 4 columns)'

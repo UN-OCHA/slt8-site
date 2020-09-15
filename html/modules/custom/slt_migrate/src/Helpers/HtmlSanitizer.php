@@ -73,6 +73,7 @@ class HtmlSanitizer {
       'span' => FALSE,
       // No children.
       'img' => TRUE,
+      'drupal-media' => TRUE,
     ];
 
     $convert = [
@@ -131,7 +132,7 @@ class HtmlSanitizer {
         static::handleLink($node);
       }
       // Process images.
-      elseif ($tag === 'img') {
+      elseif ($tag === 'img' || $tag === 'drupal-media') {
         static::handleImage($node);
       }
       // Process tables.
@@ -311,15 +312,60 @@ class HtmlSanitizer {
   /**
    * Validate image url and sanitize attributes.
    *
-   * @todo change source URL and attempt to find corresponding media.
+   * Replace the image with a <drupal-media> tag.
    *
    * @param \DOMNode $node
    *   Image node.
    */
   public static function handleImage(\DOMNode $node) {
-    static::removeAttributes($node, ['src', 'alt', 'title']);
-    // Ensure the is an alt tag.
-    $node->setAttribute('alt', $node->getAttribute('alt') ?? '');
+    // Skip as it's been added here.
+    if ($node->tagName === 'drupal-media') {
+      return;
+    }
+
+    $src = $node->getAttribute('src');
+    $alt = $node->getAttribute('alt') ?? $node->getAttribute('title') ?? '';
+
+    // All the files in SLT drupal 8 are private so we replace what's needed
+    // to generate the a private URI we can use to find the associated files.
+    $uri = rawurldecode(preg_replace('~.*/default/files/~', 'private://', $src));
+
+    // Get the file ids matching the URI.
+    $fids = \Drupal::entityTypeManager()
+      ->getStorage('file')
+      ->getQuery()
+      ->condition('uri', $uri)
+      ->execute();
+
+    // Get the first media using this image.
+    if (!empty($fids)) {
+      $entities = \Drupal::entityTypeManager()
+        ->getStorage('media')
+        ->loadByProperties(['field_media_image' => $fids]);
+
+      if (!empty($entities)) {
+        $uuid = reset($entities)->uuid();
+      }
+    }
+
+    // Replace the image with a <drupal-media> if a media was found.
+    if (!empty($uuid)) {
+      $element = $node->ownerDocument->createElement('drupal-media');
+      $element->setAttribute('alt', $alt);
+      $element->setAttribute('data-align', 'center');
+      $element->setAttribute('data-entity-type', 'media');
+      $element->setAttribute('data-entity-uuid', $uuid);
+      $node->parentNode->replaceChild($element, $node);
+    }
+    // Otherwise, if we have some text, replace the image with it.
+    elseif (!empty($alt)) {
+      $element = $node->ownerDocument->createTextNode($alt);
+      $node->parentNode->replaceChild($element, $node);
+    }
+    // Else remove the image.
+    else {
+      $node->parentNode->removeChild($node);
+    }
   }
 
   /**

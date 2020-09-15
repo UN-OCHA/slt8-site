@@ -1,5 +1,5 @@
-fivecol_section:
+grid:
   version: VERSION
   css:
     theme:
-      layouts/fivecol_section/fivecol_section.css: {}
+      layouts/grid/grid.css: {}
