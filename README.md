@@ -34,17 +34,17 @@ the [notes.md](notes.md) file.
 Todo
 ----
 
-- [ ] Allow anonymous access to media that are least referenced by one publicly
+- [x] Allow anonymous access to media that are least referenced by one publicly
       accessible entity. See https://www.drupal.org/project/media_private_access
       and https://www.drupal.org/project/entity_usage.
-- [ ] Allow embedding image media via CKEditor and allow selection of view mode
+- [x] Allow embedding image media via CKEditor and allow selection of view mode
       to handle image size and responsiveness.
-- [ ] Convert images in HTML blobs to `<drupal-media>` during migration.
+- [x] Convert images in HTML blobs to `<drupal-media>` during migration.
 - [ ] Evaluate preserving the Hero image size and crop it instead on smaller
       screen (`object-fit: cover` etc.).
-- [ ] Add styles for twocol and treecol layouts.
-- [ ] Review access to content, media and admin pages.
-- [ ] Fix `z-index` for autocomplete widgets in paragraphs.
+- [x] Add styles for twocol and threecol layouts.
+- [x] Review access to content, media and admin pages.
+- [x] Fix `z-index` for autocomplete widgets in paragraphs.
 - [ ] Create sort plugin for the contacts view to handle the custom order by
       security title
 - [ ] Check `optimize_image_binaries` module and if `pngquant` is available
