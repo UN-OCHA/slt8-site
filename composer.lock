@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01770bcb383bf4f2d41be538d4da2d69",
+    "content-hash": "99bf7f4ee64a59b3100205b72fe43cf5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8317,35 +8317,6 @@
             "time": "2020-08-20T12:46:02+00:00"
         },
         {
-            "name": "unocha/ocha_media_content",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/UN-OCHA/ocha_media_content.git",
-                "reference": "ab5e34f6757b3d952b85fa6eb53bbe8f51ce71f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/ocha_media_content/zipball/ab5e34f6757b3d952b85fa6eb53bbe8f51ce71f4",
-                "reference": "ab5e34f6757b3d952b85fa6eb53bbe8f51ce71f4",
-                "shasum": ""
-            },
-            "require": {
-                "composer/installers": "^1.2",
-                "drupal/paragraphs": "^1.12"
-            },
-            "require-dev": {
-                "drupal/coder": "^8.3",
-                "sebastian/phpcpd": "^4.1"
-            },
-            "type": "drupal-module",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-only"
-            ],
-            "time": "2020-08-26T15:10:24+00:00"
-        },
-        {
             "name": "webflo/drupal-finder",
             "version": "1.2.0",
             "source": {
@@ -11555,7 +11526,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "unocha/ocha_media_content": 20,
         "drupal/yaml_content": 15
     },
     "prefer-stable": true,
