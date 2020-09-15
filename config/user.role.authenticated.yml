@@ -14,3 +14,4 @@ permissions:
   - 'view media'
   - 'view published contact content'
   - 'view published private_page content'
+  - 'view published public_page content'
