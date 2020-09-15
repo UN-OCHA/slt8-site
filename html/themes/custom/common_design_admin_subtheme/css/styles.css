@@ -1,6 +1,20 @@
-/**
+/*------------------------------------------------------------------------------
+ * Forms
+ *----------------------------------------------------------------------------*/
+
+/* Prevent overflow due to size attribute. */
+.field--name-title .form-text {
+  width: 100%;
+}
+/* Ensure the autocomplete suggestions appear above the rest. */
+.ui-widget.ui-autocomplete {
+  z-index: 10000;
+}
+
+/*------------------------------------------------------------------------------
  * Styling of the SLT contact import form.
- */
+ *----------------------------------------------------------------------------*/
+
 .slt-contacts-import-contacts-form .seven-details__wrapper {
   max-height: 400px;
   overflow-y: auto;
