@@ -57,7 +57,7 @@ function common_design_subtheme_preprocess_field(&$variables) {
 }
 
 /**
- * Add component classes to tags.
+ * Add component classes to HTML tags.
  *
  * @param string $html
  *   Html output.
@@ -75,7 +75,7 @@ function common_design_subtheme_add_component_classes($html, array $element) {
 
   $dom = Html::load($html);
 
-  // Add the classes to the tags for each component.
+  // Add the classes to the HTML tags for each component.
   foreach ($components as $tags) {
     foreach ($tags as $tag => $classes) {
       $nodes = $dom->getElementsByTagName($tag);
@@ -94,49 +94,86 @@ function common_design_subtheme_add_component_classes($html, array $element) {
 /**
  * Implements hook_preprocess_paragraph__page_title().
  *
- * We want to display the local tasks links between the hero image and the
- * page title which are paragraphs of the node. To do so, we render the
- * local tasks block and pass it to the paragraphs--page-title template.
- * This assumes that the visibility of the local tasks (Tabs) has been disabled
- * for the node type on the local tasks block configuration page.
+ * Use the page title block for the title and display the local tasks below it.
+ * We use common_design_subtheme_get_block_render_array() that will cache the
+ * render array of the blocks so that they are not re-rendered and displayed
+ * if displayed by the paragraph title.
  *
+ * This assumes that the visibility of the local tasks (Tabs) and the page title
+ * blocks has been disabled for content type(s) expected to use page title
+ * paragraphs.
+ *
+ * @see /admin/structure/block/manage/common_design_subtheme_page_title
  * @see /admin/structure/block/manage/common_design_subtheme_local_tasks
  */
 function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
-  $variables['local_tasks'] = common_design_subtheme_get_local_tasks_render_array();
+  // If we are in a form, then the '#id' will be set. In that case, we don't
+  // want to show the page title as it would not be updated when chaging the
+  // title field. We will display a placeholder instead, which is handled by
+  // paragraphs_page_title_preprocess_paragraph__page_title().
+  if (!isset($variables['elements']['#id'])) {
+    $variables['content']['title'] = common_design_subtheme_get_block_render_array('page_title_block');
+    $variables['content']['local_tasks'] = common_design_subtheme_get_block_render_array('local_tasks_block');
+  }
 }
 
 /**
  * Implements hook_preprocess_page().
  *
- * Ensure we display the local tasks (edit etc.) on node pages.
+ * Make sure the title and the local tasks (edit etc.) are displayed on node
+ * pages.
+ *
+ * If those were displayed by a page title block, then the calls to
+ * common_design_subtheme_get_block_render_array() would return empty arrays,
+ * ensuring they are not displayed twice.
+ *
+ * @see common_design_subtheme_preprocess_paragraph__page_title()
  */
 function common_design_subtheme_preprocess_page(&$variables) {
-  if (isset($variables['node']) && !isset($variables['page']['content']['common_design_subtheme_local_tasks'])) {
-    $block = common_design_subtheme_get_local_tasks_render_array();
-    $variables['page']['content']['common_design_subtheme_local_tasks'] = $block;
+  if (isset($variables['node'])) {
+    if (!isset($variables['page']['content']['common_design_subtheme_page_title'])) {
+      $blocks['common_design_subtheme_page_title'] = common_design_subtheme_get_block_render_array('page_title_block');
+    }
+    if (!isset($variables['page']['content']['common_design_subtheme_local_tasks'])) {
+      $blocks['common_design_subtheme_local_tasks'] = common_design_subtheme_get_block_render_array('local_tasks_block');
+    }
+    if (!empty($blocks)) {
+      $variables['page']['content'] = $blocks + $variables['page']['content'];
+    }
   }
 }
 
 /**
- * Render the local tasks block.
+ * Render a block.
  *
- * @see https://drupal.stackexchange.com/a/171733
+ * We cache a flag indicating the block has already been redendered and return
+ * an empty array in that case to ensure that the block is displayed only one
+ * on the page.
+ *
+ * @param string $id
+ *   Block ID.
  *
  * @return array
- *   Renderable array of the local tasks block. Empty array if this was already
- *   called before to avoid displaying the block several times.
+ *   Renderable array of the block. Empty array if this was already called
+ *   before to avoid displaying the block several times.
+ *
+ * @see https://drupal.stackexchange.com/a/171733
  */
-function common_design_subtheme_get_local_tasks_render_array() {
-  static $rendered = FALSE;
+function common_design_subtheme_get_block_render_array($id) {
+  static $rendered = [];
 
-  if (!$rendered) {
+  if (!isset($rendered[$id])) {
     // Prevent rendering the block several times.
-    $rendered = TRUE;
+    $rendered[$id] = TRUE;
 
-    // Generate an instance of the local tasks plugin block.
+    // Generate an instance of the plugin block.
     $block_manager = \Drupal::service('plugin.manager.block');
-    $plugin_block = $block_manager->createInstance('local_tasks_block', []);
+    $plugin_block = $block_manager->createInstance($id, []);
+
+    // Skip if there is no block matching the id.
+    if (empty($plugin_block)) {
+      return [];
+    }
 
     // Check if the block is accessible to the current user.
     $access = $plugin_block->access(\Drupal::currentUser());

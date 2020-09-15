@@ -3,6 +3,8 @@
  * @file
  * Paragraph template override for the page title paragraphs.
  *
+ * This displays the paragraph only if the title is present and non empty.
+ *
  * Available variables:
  * - paragraph: Full paragraph entity.
  *   Only method names starting with "get", "has", or "is" and a few common
@@ -39,13 +41,20 @@
  */
 #}
 {%
-set classes = [
-'paragraph',
-'paragraph--page-title',
-'page-title'
-]
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished',
+  ]
 %}
-{% block paragraph %}
-  <h1{{ attributes.addClass(classes) }}>{{ title }}</h1>
-{% endblock paragraph %}
+{% if content.title %}
+  {% block paragraph %}
+    <div{{ attributes.addClass(classes) }}>
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+    </div>
+  {% endblock paragraph %}
+{% endif %}
 
