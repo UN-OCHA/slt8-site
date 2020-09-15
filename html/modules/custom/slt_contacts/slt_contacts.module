@@ -53,3 +53,21 @@ function slt_contacts_reset_country_default_filter(array $element, FormStateInte
   }
   return $element;
 }
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Change the sort handler for the seurity title field so that they can
+ * be sorted according to a predefined order (title hierarchy) [SLT-14].
+ */
+function slt_contacts_views_data_alter(array &$data) {
+  $data['node__field_security_title']['hierarchical_security_title_sort'] = [
+    'title' => t('Hierarchical security title sort'),
+    'group' => t('Content'),
+    'help' => t('Sort contacts by security title hierarchically.'),
+    'sort' => [
+      'field' => 'field_security_title_value',
+      'id' => 'hierarchical_security_title_sort',
+    ],
+  ];
+}

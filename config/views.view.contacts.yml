@@ -13,6 +13,7 @@ dependencies:
     - taxonomy.vocabulary.country
   module:
     - node
+    - slt_contacts
     - taxonomy
     - telephone_type
     - user
@@ -74,22 +75,22 @@ display:
           summary: ''
           description: ''
           columns:
-            field_duty_station_country: field_duty_station_country
             title: title
+            field_duty_station_country: field_duty_station_country
             field_security_title: field_security_title
             field_email: field_email
             field_agency: field_agency
             field_phone: field_phone
             edit_node: edit_node
           info:
-            field_duty_station_country:
+            title:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            title:
+            field_duty_station_country:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -129,7 +130,7 @@ display:
               separator: ''
               empty_column: true
               responsive: ''
-          default: title
+          default: '-1'
           empty_table: false
       row:
         type: fields
@@ -851,31 +852,31 @@ display:
           error_message: false
           plugin_id: taxonomy_index_tid
       sorts:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          order: ASC
-          entity_type: node
-          entity_field: title
-          plugin_id: standard
-          relationship: none
-          group_type: group
-          admin_label: ''
-          exposed: false
-          expose:
-            label: ''
-        field_security_title_value:
-          id: field_security_title_value
+        hierarchical_security_title_sort:
+          id: hierarchical_security_title_sort
           table: node__field_security_title
-          field: field_security_title_value
+          field: hierarchical_security_title_sort
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Security title'
           order: DESC
           exposed: false
           expose:
             label: ''
+          plugin_id: hierarchical_security_title_sort
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: Name
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: node
+          entity_field: title
           plugin_id: standard
       title: Contacts
       header:
