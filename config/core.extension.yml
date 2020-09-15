@@ -36,7 +36,6 @@ module:
   migrate_plus: 0
   migrate_tools: 0
   node: 0
-  ocha_media_content: 0
   page_cache: 0
   paragraphs_page_title: 0
   paragraphs_viewmode: 0
