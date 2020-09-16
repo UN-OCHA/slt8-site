@@ -119,18 +119,37 @@ class SltNode extends Node {
     $dom = Html::load($html);
     $xpath = new \DomXPath($dom);
     $nodes = $xpath->query("//*[@class='col-sm-6 col-md-3']");
+    $count = $nodes->count();
 
-    if ($nodes === FALSE || $nodes->count() === 0) {
+    if ($nodes === FALSE || $count === 0) {
       return [];
     }
 
-    // Create the layout paragraph.
-    $paragraphs = [
-      static::createLayoutParagraph('layout_image_grid_four_columns', [
-        'grid_size' => count($nodes),
-      ]),
+    $layouts = [
+      'layout_onecol',
+      'layout_twocol_section',
+      'layout_threecol_section',
+      'layout_fourcol_section',
     ];
 
+    $layout = 'layout_image_grid_four_columns';
+    $config = ['grid_size' => $count];
+    $regions = [];
+
+    if ($count <= 4) {
+      // Get a sample of the content to determine what layout to use.
+      // If we don't have a list of links, we use a column based layout instead
+      // of the grid.
+      $child = static::getFirstChildElement($nodes->item(0));
+      if ($child->tagName !== 'a') {
+        $layout = $layouts[$count - 1];
+        $config = [];
+        $regions = ['first', 'second', 'third', 'fourth'];
+      }
+    }
+
+    // Create the layout paragraph.
+    $paragraphs = [static::createLayoutParagraph($layout, $config)];
     $parent_uuid = $paragraphs[0]->uuid();
 
     // Parse the grid elements and generate the appropriate paragraphs.
@@ -144,7 +163,7 @@ class SltNode extends Node {
 
       $behavior_settings = [
         'layout_paragraphs' => [
-          'region' => 'region-' . $index++,
+          'region' => $regions[$index - 1] ?? 'region-' . $index,
           'parent_uuid' => $parent_uuid,
           'layout' => '',
           'config' => [],
@@ -167,6 +186,8 @@ class SltNode extends Node {
         $text = static::getInnerHtml($node);
         $paragraphs[] = static::createTextParagraph($text, 2, $behavior_settings);
       }
+
+      $index++;
     }
 
     return $paragraphs;

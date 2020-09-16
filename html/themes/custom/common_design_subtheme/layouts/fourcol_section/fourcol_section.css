@@ -5,10 +5,21 @@
  * See common_desing/common_design.breakpoints.yml for the breakpoints.
  */
 
+.layout--fourcol-section {
+  /* Compensate for the padding of the regions. */
+  margin: -1rem;
+}
+
+.layout--fourcol-section:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .layout--fourcol-section > .layout__region {
   float: left;
   width: 100%;
-  padding: 16px;
+  padding: 1rem;
 }
 
 /* 2 columns layout on medium screens. */
