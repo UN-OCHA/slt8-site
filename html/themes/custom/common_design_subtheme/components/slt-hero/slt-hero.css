@@ -5,5 +5,32 @@
 
 /* Make sure the image is attached to the botton of the header. */
 .slt-hero {
-  margin-top: -3rem;
+  margin-top: -2rem;
+}
+@media (min-width: 768px) {
+  .slt-hero {
+    margin-top: -3rem;
+  }
+}
+
+@supports (object-fit: cover) {
+  .slt-hero img {
+    height: 100px;
+    object-fit: cover;
+  }
+  @media (min-width: 576px) {
+    .slt-hero img {
+      height: 200px;
+    }
+  }
+  @media (min-width: 768px) {
+    .slt-hero img {
+      height: 250px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .slt-hero img {
+      height: 300px;
+    }
+  }
 }
