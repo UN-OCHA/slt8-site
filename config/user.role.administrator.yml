@@ -4,7 +4,7 @@ status: true
 dependencies: {  }
 id: administrator
 label: Administrator
-weight: 2
+weight: -7
 is_admin: null
 permissions:
   - 'access content overview'
@@ -63,4 +63,5 @@ permissions:
   - 'view own unpublished media'
   - 'view private_page revisions'
   - 'view public_page revisions'
+  - 'view published document media'
   - 'view the administration theme'

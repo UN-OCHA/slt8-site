@@ -8,8 +8,9 @@
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\node\NodeInterface;
 use Drupal\file\FileInterface;
+use Drupal\media\MediaInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_node_access().
@@ -35,18 +36,26 @@ function slt_access_node_access(NodeInterface $node, $operation, AccountInterfac
 }
 
 /**
- * Implements hook_form_FORM_ID_alter() for 'user_form'.
+ * Implements hook_media_access().
  *
- * Change permission to assign roles.
+ * Deny view access to users without the view published 'media type' media
+ * permission.
  *
- * @see Drupal\user\AccountForm::form()
+ * @todo reverse the logic and allow access if the media is published and the
+ * user has the permission to view published content of that type?
  */
-function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Allow managing the account roles if there are roles and the current user
-  // has the correct permission.
-  $roles_access = !empty($form['account']['roles']['#options']) &&
-                  \Drupal::currentUser()->hasPermission('assign user roles');
-  $form['account']['roles']['#access'] = $roles_access;
+function slt_access_media_access(MediaInterface $media, $operation, AccountInterface $account) {
+  $type = $media->bundle();
+  $published = $media->isPublished();
+
+  switch ($operation) {
+    case 'view':
+      if ($published && !$account->hasPermission("view published {$type} media", $account)) {
+        return AccessResult::forbidden()->cachePerPermissions();
+      }
+  }
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
 }
 
 /**
@@ -54,6 +63,15 @@ function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state,
  *
  * Allow access to private files when referenced in published public pages if
  * the user is allowed to view published public pages.
+ *
+ * This requires that files, medias and paragraphs usage tracking is enabled in
+ * /admin/config/entity-usage/settings so that we can follow the usage chain up
+ * to the node referencing the file.
+ *
+ * This is mostly to allow display of images on public pages by enabling
+ * the CKeditor media emnbed and entity reference tracking plugins.
+ *
+ * @todo check the permission on the media type?
  */
 function slt_access_file_access(FileInterface $file, $operation, AccountInterface $account) {
   if ($operation === 'download' && strpos($file->getFileUri(), 'private://') === 0) {
@@ -129,4 +147,19 @@ function slt_access_get_nodes_referencing_entities($entity_type, array $ids) {
   }
 
   return $nodes;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for 'user_form'.
+ *
+ * Change permission to assign roles.
+ *
+ * @see Drupal\user\AccountForm::form()
+ */
+function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Allow managing the account roles if there are roles and the current user
+  // has the correct permission.
+  $roles_access = !empty($form['account']['roles']['#options']) &&
+                  \Drupal::currentUser()->hasPermission('assign user roles');
+  $form['account']['roles']['#access'] = $roles_access;
 }

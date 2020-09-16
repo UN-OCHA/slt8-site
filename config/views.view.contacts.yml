@@ -34,7 +34,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'view published private_page content'
+          perm: 'view published contact content'
       cache:
         type: tag
         options: {  }

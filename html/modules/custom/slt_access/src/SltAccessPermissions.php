@@ -3,6 +3,7 @@
 namespace Drupal\slt_access;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\media\Entity\MediaType;
 use Drupal\node\Entity\NodeType;
 
 /**
@@ -30,6 +31,18 @@ class SltAccessPermissions {
         ]),
       ];
     }
+
+    // Generate view permissions for all media types.
+    foreach (MediaType::loadMultiple() as $type) {
+      $type_id = $type->id();
+
+      $permissions["view published {$type_id} media"] = [
+        'title' => $this->t('%type_name: View published media', [
+          '%type_name' => $type->label(),
+        ]),
+      ];
+    }
+
     return $permissions;
   }
 
