@@ -324,7 +324,9 @@ class HtmlSanitizer {
     }
 
     $src = $node->getAttribute('src');
-    $alt = $node->getAttribute('alt') ?? $node->getAttribute('title') ?? '';
+
+    // Get the alt text, from the attributes.
+    $alt = trim($node->getAttribute('alt') ?? $node->getAttribute('title') ?? '');
 
     // All the files in SLT drupal 8 are private so we replace what's needed
     // to generate the a private URI we can use to find the associated files.
@@ -344,8 +346,19 @@ class HtmlSanitizer {
         ->loadByProperties(['field_media_image' => $fids]);
 
       if (!empty($entities)) {
-        $uuid = reset($entities)->uuid();
+        $media = reset($entities);
+        $uuid = $media->uuid();
+
+        // Try to retrieve the alt tag from the media.
+        if (empty($alt)) {
+          $alt = $media->field_media_image->alt;
+        }
       }
+    }
+
+    // Default to the file name (without extension).
+    if (empty($alt)) {
+      $alt = trim(str_replace('_', ' ', pathinfo($uri, PATHINFO_FILENAME)));
     }
 
     // Replace the image with a <drupal-media> if a media was found.
