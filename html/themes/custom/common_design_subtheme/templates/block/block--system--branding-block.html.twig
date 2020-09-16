@@ -1,0 +1,8 @@
+{#
+  In the case of SLT, the homepage is a node with the site title so we
+  don't need to have a `h1` there. Other non-node pages use the `page-title`
+  block which uses a `h1` tag as well. So that should be fairly consistent.
+#}
+<a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="cd-site-logo">
+  <img src="{{ site_logo }}" alt="{{ site_name }}" aria-label="{{ 'Home'|t }}"/>
+</a>
