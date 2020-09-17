@@ -29,7 +29,7 @@
         "drupal/allowed_formats": "^1.2",
         "drupal/config_split": "^1.4",
         "drupal/components": "^2.0-beta3",
-        "drupal/core": "^8.9.2",
+        "drupal/core": "^8.9.6",
         "drupal/editor_advanced_link": "^1.8",
         "drupal/entity_usage": "2.0-beta3",
         "drupal/google_tag": "1.4",

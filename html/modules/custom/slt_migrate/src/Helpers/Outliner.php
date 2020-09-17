@@ -394,7 +394,7 @@ class Outliner {
     // Flags to load the HTML string.
     $flags = LIBXML_NONET | LIBXML_NOBLANKS | LIBXML_NOERROR | LIBXML_NOWARNING;
 
-    // Adding this meta tag is necessary to tell DOMDocument we are dealing
+    // Adding this meta tag is necessary to tell \DOMDocument we are dealing
     // with UTF-8 encoded html.
     $meta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
     $prefix = '<!DOCTYPE html><html><head>' . $meta . '</head><body>';
@@ -418,7 +418,7 @@ class Outliner {
    *   according to their level in the outline.
    */
   public static function fixNodeHeadingHierarchy(\DOMNode $node, $level = 0, $nogap = TRUE) {
-    if (is_a($node, 'DOMDocument')) {
+    if (is_a($node, '\DOMDocument')) {
       $outline = static::parseNode(static::getBody($node));
     }
     else {
@@ -527,12 +527,12 @@ class Outliner {
   /**
    * Get the nodes matching the tag name.
    *
-   * DOMElement::GetElementsByTagName returns a live collection. We convert it
+   * \DOMElement::GetElementsByTagName returns a live collection. We convert it
    * to a flat array so that the nodes can be manipulated during the iteration
    * without creating infinite loops for example.
    *
    * @param \DOMNode $node
-   *   Node (\DOMDocument or DOMElement)
+   *   Node (\DOMDocument or \DOMElement)
    * @param string $tag
    *   Tag name or `*` for all nodes.
    *
@@ -553,7 +553,7 @@ class Outliner {
    * Get body.
    *
    * @param \DOMNode $node
-   *   Node (\DOMDocument or DOMElement)
+   *   Node (\DOMDocument or \DOMElement)
    *
    * @return \DOMNode
    *   Body node.
