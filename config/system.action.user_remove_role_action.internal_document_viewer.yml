@@ -1,0 +1,14 @@
+uuid: 9aaee137-4fc5-4efd-9151-96fc6bc91e00
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.internal_document_viewer
+  module:
+    - user
+id: user_remove_role_action.internal_document_viewer
+label: 'Remove the Internal Document Viewer role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: internal_document_viewer

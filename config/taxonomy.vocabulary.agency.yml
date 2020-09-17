@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 name: Agency
 vid: agency
-description: ''
+description: 'Contact agencies.'
 weight: 0

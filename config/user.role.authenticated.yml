@@ -10,7 +10,6 @@ weight: -9
 is_admin: false
 permissions:
   - 'access content'
-  - 'change own username'
   - 'view media'
   - 'view published image media'
   - 'view published private_page content'

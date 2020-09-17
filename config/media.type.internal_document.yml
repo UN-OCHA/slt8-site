@@ -1,0 +1,13 @@
+uuid: 331db247-8bce-497c-b5dc-5aed9e36c9ce
+langcode: en
+status: true
+dependencies: {  }
+id: internal_document
+label: 'Internal Document'
+description: 'A <em>Document</em> whose access is restricted to certain roles.'
+source: file
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_file
+field_map: {  }

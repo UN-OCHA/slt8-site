@@ -1,0 +1,14 @@
+uuid: dcfe863b-00c6-41cd-824a-56eaf58dc52a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.internal_document_viewer
+  module:
+    - user
+id: user_add_role_action.internal_document_viewer
+label: 'Add the Internal Document Viewer role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: internal_document_viewer

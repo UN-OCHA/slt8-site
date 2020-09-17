@@ -4,14 +4,16 @@ status: true
 dependencies: {  }
 id: administrator
 label: Administrator
-weight: -7
+weight: -6
 is_admin: null
 permissions:
+  - 'access administration pages'
   - 'access content overview'
   - 'access media overview'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
+  - 'administer taxonomy'
   - 'administer users'
   - 'assign user roles'
   - 'create contact content'
@@ -22,6 +24,7 @@ permissions:
   - 'create terms in country'
   - 'create terms in duty_station_region'
   - 'create terms in security_role_area'
+  - 'create terms in theme'
   - 'delete all revisions'
   - 'delete any contact content'
   - 'delete any media'
@@ -38,6 +41,7 @@ permissions:
   - 'delete terms in country'
   - 'delete terms in duty_station_region'
   - 'delete terms in security_role_area'
+  - 'delete terms in theme'
   - 'edit any contact content'
   - 'edit any private_page content'
   - 'edit any public_page content'
@@ -48,6 +52,7 @@ permissions:
   - 'edit terms in country'
   - 'edit terms in duty_station_region'
   - 'edit terms in security_role_area'
+  - 'edit terms in theme'
   - 'import contacts'
   - 'revert all revisions'
   - 'revert contact revisions'
@@ -63,5 +68,7 @@ permissions:
   - 'view own unpublished media'
   - 'view private_page revisions'
   - 'view public_page revisions'
+  - 'view published contact content'
   - 'view published document media'
+  - 'view published internal_document media'
   - 'view the administration theme'

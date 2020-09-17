@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 name: 'Duty Station Region'
 vid: duty_station_region
-description: ''
+description: 'Regions used for a contact''s duty station region.'
 weight: 0

@@ -1,0 +1,36 @@
+uuid: fbcb3edb-7839-44bc-98e2-4b39fa2426d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.internal_document.field_media_file
+    - field.field.media.internal_document.field_theme
+    - media.type.internal_document
+  module:
+    - file
+id: media.internal_document.default
+targetEntityType: media
+bundle: internal_document
+mode: default
+content:
+  field_media_file:
+    label: visually_hidden
+    weight: 0
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_theme:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
