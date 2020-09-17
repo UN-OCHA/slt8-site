@@ -6,6 +6,7 @@
 /* Make sure the image is attached to the botton of the header. */
 .slt-hero {
   margin-top: -2rem;
+  margin-bottom: 1.5rem;
 }
 @media (min-width: 768px) {
   .slt-hero {

@@ -97,14 +97,7 @@ function common_design_subtheme_add_component_classes($html, array $element) {
  * Use the page title block for the title and display the local tasks below it.
  * We use common_design_subtheme_get_block_render_array() that will cache the
  * render array of the blocks so that they are not re-rendered and displayed
- * if displayed by the paragraph title.
- *
- * This assumes that the visibility of the local tasks (Tabs) and the page title
- * blocks has been disabled for content type(s) expected to use page title
- * paragraphs.
- *
- * @see /admin/structure/block/manage/common_design_subtheme_page_title
- * @see /admin/structure/block/manage/common_design_subtheme_local_tasks
+ * if done by the paragraph title.
  */
 function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
   // If we are in a form, then the '#id' will be set. In that case, we don't
@@ -120,25 +113,24 @@ function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
 /**
  * Implements hook_preprocess_page().
  *
- * Make sure the title and the local tasks (edit etc.) are displayed on node
- * pages.
- *
- * If those were displayed by a page title block, then the calls to
- * common_design_subtheme_get_block_render_array() would return empty arrays,
- * ensuring they are not displayed twice.
+ * Remove the default page title and local tasks blocks if they were already
+ * rendered by a page title paragraph.
  *
  * @see common_design_subtheme_preprocess_paragraph__page_title()
  */
 function common_design_subtheme_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
-    if (!isset($variables['page']['content']['common_design_subtheme_page_title'])) {
-      $blocks['common_design_subtheme_page_title'] = common_design_subtheme_get_block_render_array('page_title_block');
+    $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
+
+    // If the block has already been rendered (from the page title block) then
+    // we remove the default page title block.
+    if (isset($rendered['page_title_block'])) {
+      unset($variables['page']['content']['common_design_subtheme_page_title']);
     }
-    if (!isset($variables['page']['content']['common_design_subtheme_local_tasks'])) {
-      $blocks['common_design_subtheme_local_tasks'] = common_design_subtheme_get_block_render_array('local_tasks_block');
-    }
-    if (!empty($blocks)) {
-      $variables['page']['content'] = $blocks + $variables['page']['content'];
+
+    // Same for the local tasks block.
+    if (isset($rendered['local_tasks_block'])) {
+      unset($variables['page']['content']['common_design_subtheme_local_tasks']);
     }
   }
 }
@@ -160,7 +152,7 @@ function common_design_subtheme_preprocess_page(&$variables) {
  * @see https://drupal.stackexchange.com/a/171733
  */
 function common_design_subtheme_get_block_render_array($id) {
-  static $rendered = [];
+  $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
 
   if (!isset($rendered[$id])) {
     // Prevent rendering the block several times.

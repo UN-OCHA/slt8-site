@@ -29,13 +29,25 @@ Reference: https://www.w3.org/WAI/tutorials/page-structure/headings/
 Notes
 -----
 
+**Site name**
+
 Ensure `site_name` is selected in `/admin/structure/block/manage/sitebranding`
 so that it's available in the `system-branding` block.
 
-The [`cd-table`](components/cd-table) is a temporary averride of the
+**CD table component**
+
+The [`cd-table`](components/cd-table) component is a temporary averride of the
 common design theme's cd-table component while changes/improvements are being
 [discussed](https://humanitarian.atlassian.net/browse/CD-219) and should be
 removed if the modifications are added upstream.
+
+**Page title block**
+
+As described in https://www.drupal.org/project/drupal/issues/2887071, using
+the visibility options on the page title for example to hide it on some node
+pages will cause the page title on views pages and maybe other places to be
+hidden as well... So instead we remove the page title block in a
+hook_preproprecess_page() if it was already rendered by a page title paragraph.
 
 Customizations
 --------------
@@ -47,6 +59,10 @@ The list below contains additions to the default common design subtheme:
 - [Forms](sass/components/_forms.css)
 
   Styling for the drupal inline forms.
+
+- [Page title](sass/components/_page_title.css)
+
+  Styling for the drupal page title.
 
 **Components**
 
