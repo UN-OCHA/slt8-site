@@ -143,7 +143,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
       $container->get('current_user'),
       $container->get('renderer'),
       $container->get('entity_type.manager')->getStorage('media'),
-      $container->get('token'),
+      $container->get('token')
     );
   }
 
