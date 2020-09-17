@@ -9,7 +9,7 @@
   padding: 1rem;
 }
 .layout--image-grid-five-columns .layout__region {
-  min-width: 280px;
+  min-width: 180px;
   max-width: 20%;
   padding: 1rem;
 }
