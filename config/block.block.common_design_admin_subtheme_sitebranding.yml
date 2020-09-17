@@ -1,6 +1,6 @@
 uuid: c0eaa9a7-66c3-4244-bc1c-fe7fe5440e7a
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - common_design_admin_subtheme
 id: common_design_admin_subtheme_sitebranding
 theme: common_design_admin_subtheme
-region: sidebar_first
-weight: 0
+region: header
+weight: -2
 provider: null
 plugin: system_branding_block
 settings:

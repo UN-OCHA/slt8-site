@@ -1,6 +1,6 @@
 uuid: d432daa9-7f18-4674-8e35-7ad898471730
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.main
@@ -10,8 +10,8 @@ dependencies:
     - common_design_admin_subtheme
 id: common_design_admin_subtheme_mainnavigation
 theme: common_design_admin_subtheme
-region: sidebar_first
-weight: 0
+region: header
+weight: -3
 provider: null
 plugin: 'system_menu_block:main'
 settings:
