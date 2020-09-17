@@ -33,6 +33,7 @@
         "drupal/editor_advanced_link": "^1.8",
         "drupal/entity_usage": "2.0-beta3",
         "drupal/google_tag": "1.4",
+        "drupal/imageapi_optimize_binaries": "^1.0-alpha2",
         "drupal/layout_paragraphs": "^1.0.0-beta3",
         "drupal/maintenance200": "^1.0",
         "drupal/migrate_plus": "^4.2",
