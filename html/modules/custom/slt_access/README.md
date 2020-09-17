@@ -33,6 +33,11 @@ This modules only deals with **published** media. Access to unpublished
 media is managed by the `view own unpubished media` permission independently
 of this module.
 
+**Image media**
+
+Image media referenced by public pages (ckeditor embed or entity reference)
+are given access regardless of the other permissions. See private files below.
+
 Private files
 -------------
 
