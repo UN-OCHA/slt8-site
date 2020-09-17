@@ -6,6 +6,7 @@ layout_image_grid_five_columns:
   class: '\Drupal\slt_layouts\Plugin\Layout\GridLayout'
   attributes:
     class:
+      - layout--image-grid
       - layout--image-grid-five-columns
   category: 'Grid'
   icon_map:
@@ -26,6 +27,7 @@ layout_image_grid_four_columns:
   class: '\Drupal\slt_layouts\Plugin\Layout\GridLayout'
   attributes:
     class:
+      - layout--image-grid
       - layout--image-grid-four-columns
   category: 'Grid'
   icon_map:

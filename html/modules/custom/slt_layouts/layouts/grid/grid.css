@@ -1,15 +1,15 @@
-.layout--grid {
+.layout--image-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 .layout--image-grid-four-columns .layout__region {
   min-width: 250px;
-  max-width: calc(25% - 2rem);
-  margin: 1rem;
+  max-width: 25%;
+  padding: 1rem;
 }
 .layout--image-grid-five-columns .layout__region {
-  min-width: 180px;
-  max-width: calc(20% - 2rem);
-  margin: 1rem;
+  min-width: 280px;
+  max-width: 20%;
+  padding: 1rem;
 }

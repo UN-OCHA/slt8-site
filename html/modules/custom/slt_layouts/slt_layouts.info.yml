@@ -1,5 +1,5 @@
 type: module
-name: SlT Layouts
+name: SLT Layouts
 description: 'Provides additional layouts.'
 package: slt
 core_version_requirement: ^8.8 || ^9
