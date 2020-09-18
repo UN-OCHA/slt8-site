@@ -17,6 +17,7 @@
   ]
 %}
 {% if content %}
+{% apply spaceless %}
   <section{{ attributes.addClass(classes) }}>
     {% for key, region in content if key starts with 'region-' and region is not empty %}
       <div {{ region_attributes[key].addClass('layout__region', 'layout__region--' ~ key) }}>
@@ -24,4 +25,5 @@
       </div>
     {% endfor %}
   </section>
+{% endapply %}
 {% endif %}

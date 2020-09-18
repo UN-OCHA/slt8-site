@@ -13,7 +13,7 @@
 /**
  * Link with a background image.
  */
-.slt-image-link--link-with-background-image-small {
+.slt-image-link--link-with-background-image-small .link {
   width: 180px;
   height: 180px;
 }
@@ -21,11 +21,12 @@
 .slt-image-link--link-with-background-image .link {
   display: block;
   position: relative;
+  overflow: hidden;
   background: var(--cd-dark-blue);
 }
 
 .slt-image-link--link-with-background-image picture {
-  width: 100%;
+  display: block;
   opacity: .4;
 }
 
