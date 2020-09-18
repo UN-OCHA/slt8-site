@@ -1,6 +1,13 @@
 //——————————————————————————————————————————————————————————————————————————————
 // Common Design: Header
 //——————————————————————————————————————————————————————————————————————————————
+
+// Ensure the main menu dropdown position is correct when there is also the
+// drupal toolbar.
+.cd-header {
+  position: relative;
+}
+
 .cd-header button:focus {
   outline: 3px solid $implementation-highlight;
 }

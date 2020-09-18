@@ -56,6 +56,16 @@ The list below contains additions to the default common design subtheme:
 
 **Base styling**
 
+- [CD header](sass/cd/cd-header/_cd-header.css)
+
+  Added `position: relative;` to `.cd-header` to fix position of the main menu
+  dropdown. This could/should be added to the `common_design` theme.
+
+- [CD layout](sass/cd/cd-layout/_cd-layout.css)
+
+  Changed the `flex-basis` and `flex-grow` of the `.cd-layout-content` to
+  ensure content spans the entire width of the main content area.
+
 - [Forms](sass/components/_forms.css)
 
   Styling for the drupal inline forms.
