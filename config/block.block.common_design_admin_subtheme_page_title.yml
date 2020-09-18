@@ -2,8 +2,6 @@ uuid: ddcffe76-93b4-4f61-be7c-ef2fc4d85631
 langcode: en
 status: true
 dependencies:
-  module:
-    - ctools
   theme:
     - common_design_admin_subtheme
 _core:
@@ -19,12 +17,4 @@ settings:
   label: 'Page title'
   provider: core
   label_display: '0'
-visibility:
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
-    bundles:
-      private_page: private_page
-      public_page: public_page
-    negate: true
-    context_mapping:
-      node: '@node.node_route_context:node'
+visibility: {  }
