@@ -1,0 +1,16 @@
+uuid: 7b3757ac-cc18-4f9c-bfbf-ba97ac9a4865
+langcode: en
+status: true
+dependencies: {  }
+name: hero_desktop_x2
+label: 'hero desktop x2'
+effects:
+  a50b2bb1-d142-48bb-a1fc-0e6bc4d8d61c:
+    uuid: a50b2bb1-d142-48bb-a1fc-0e6bc4d8d61c
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1952
+      height: 534
+      anchor: center-center
+pipeline: __default__

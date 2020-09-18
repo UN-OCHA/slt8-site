@@ -1,0 +1,60 @@
+uuid: 0ed80159-d3c6-43f2-aa0f-eefa6d230236
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.hero_desktop_x1
+    - image.style.hero_desktop_x2
+    - image.style.hero_mobile_x1
+    - image.style.hero_mobile_x2
+    - image.style.hero_tablet_x1
+    - image.style.hero_tablet_x2
+    - image.style.hero_xlarge_x1
+    - image.style.hero_xlarge_x2
+  theme:
+    - common_design
+id: hero_image
+label: 'Hero Image'
+image_style_mappings:
+  -
+    breakpoint_id: common_design.lg
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: hero_xlarge_x1
+  -
+    breakpoint_id: common_design.lg
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: hero_xlarge_x2
+  -
+    breakpoint_id: common_design.md
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: hero_desktop_x1
+  -
+    breakpoint_id: common_design.md
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: hero_desktop_x2
+  -
+    breakpoint_id: common_design.sm
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: hero_tablet_x1
+  -
+    breakpoint_id: common_design.sm
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: hero_tablet_x2
+  -
+    breakpoint_id: common_design.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: hero_mobile_x1
+  -
+    breakpoint_id: common_design.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: hero_mobile_x2
+breakpoint_group: common_design
+fallback_image_style: hero_xlarge_x1
