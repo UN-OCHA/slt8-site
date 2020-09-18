@@ -6,8 +6,10 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus: {  }
-    parent: ''
+    available_menus:
+      - footer
+      - main
+    parent: 'main:'
 name: 'Public page'
 type: public_page
 description: 'Page that will be accessible to any visitor whether they are logged in or not.'
