@@ -103,26 +103,28 @@ function slt_access_file_access(FileInterface $file, $operation, AccountInterfac
  */
 function slt_access_is_referenced_by_public_page($entity_type, $entity_id, AccountInterface $account) {
   $nodes = slt_access_get_nodes_referencing_entities($entity_type, [$entity_id]);
-  // Check if any of the referencing nodes is a public page in which case
-  // we grant access to the entity.
-  $records = \Drupal::service('entity_type.manager')
-    ->getStorage('node')
-    ->getQuery()
-    ->condition('type', 'public_page')
-    // Published.
-    ->condition('status', 1)
-    ->condition('vid', $nodes, 'IN')
-    // Being referenced by one published public page is enough.
-    ->range(0, 1)
-    ->accessCheck(FALSE)
-    ->execute();
-  if (!empty($records)) {
-    // Allow access to the entity if the user can view published public pages.
-    $permission = 'view published public_page content';
-    return AccessResult::allowedIfHasPermission($account, $permission)
-      // Invalidate the cache when a public page is changed as the entity
-      // may not be referenced anymore then.
-      ->addCacheTags(['node_list:public_page']);
+  if (!empty($nodes)) {
+    // Check if any of the referencing nodes is a public page in which case
+    // we grant access to the entity.
+    $records = \Drupal::service('entity_type.manager')
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('type', 'public_page')
+      // Published.
+      ->condition('status', 1)
+      ->condition('vid', $nodes, 'IN')
+      // Being referenced by one published public page is enough.
+      ->range(0, 1)
+      ->accessCheck(FALSE)
+      ->execute();
+    if (!empty($records)) {
+      // Allow access to the entity if the user can view published public pages.
+      $permission = 'view published public_page content';
+      return AccessResult::allowedIfHasPermission($account, $permission)
+        // Invalidate the cache when a public page is changed as the entity
+        // may not be referenced anymore then.
+        ->addCacheTags(['node_list:public_page']);
+    }
   }
 
   // No opinion, let other modules handle the permissions.
