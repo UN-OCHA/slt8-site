@@ -19,7 +19,6 @@ class HomePageTest extends ExistingSiteBase {
     $this->assertSession()->statusCodeEquals(200);
 
     $this->assertSession()->pageTextContains('Login Required');
-    $this->assertSession()->pageTextContains('Welcome to the Saving Lives Together (SLT) website.');
   }
 
 }
