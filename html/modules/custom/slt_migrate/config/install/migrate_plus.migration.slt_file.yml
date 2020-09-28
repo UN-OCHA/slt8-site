@@ -1,0 +1,40 @@
+id: slt_file
+label: Migrate SLT file entities.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_file
+destination:
+  plugin: entity:file
+process:
+  fid: fid
+  uid: uid
+  uri:
+    # All the files should be private so we change the scheme here and public
+    # files will be copied in the private folder.
+    plugin: str_replace
+    source: uri
+    search: public://
+    replace: private://
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
+  filename: filename
+  filemime: filemime
+  # Filesize is dynamically computed when file entities are saved, so there is
+  # no point in migrating it.
+  # filesize: filesize
+  status: status
+  # Drupal 7 didn't keep track of the file's creation or update time -- all it
+  # had was the vague "timestamp" column. So we'll use it for both.
+  created: timestamp
+  changed: timestamp
+migration_dependencies:
+  required:
+    - slt_user

@@ -1,0 +1,179 @@
+<?php
+
+/**
+ * @file
+ * Theme preprocessors.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Access\AccessResultInterface;
+
+/**
+ * Get the list of components to attach to formatted text fields.
+ *
+ * @return array
+ *   Array with component libraries as keys and list of tags and classes to
+ *   add as values.
+ */
+function common_design_subtheme_get_components() {
+  static $components = [
+    'common_design/cd-table' => [
+      'table' => ['cd-table', 'cd-table--striped', 'cd-table--responsive'],
+    ],
+  ];
+  return $components;
+}
+
+/**
+ * Implements hook_preprocess_field().
+ *
+ * This adds attach component libraries and add necessary classes to filtered
+ * text field.
+ *
+ * Note: other possibilities:
+ * - Target specific fields: `$variables['element']['#field_name']`.
+ * - Target view mode: `$variables['element']['#view_mode']`.
+ *
+ * Note: we could also add the #post_render and libraries to all the
+ * "processed_text" elements via a hook_element_info_alter().
+ *
+ * @todo Do we need to alter the cache somehow?
+ *
+ * @see template_preprocess_field()
+ */
+function common_design_subtheme_preprocess_field(&$variables) {
+  switch ($variables['element']['#formatter']) {
+    case 'text_summary_or_trimmed':
+    case 'text_trimmed':
+    case 'text_default':
+      foreach ($variables['items'] as $key => $item) {
+        $variables['items'][$key]['content']['#post_render'][] = 'common_design_subtheme_add_component_classes';
+      }
+      foreach (common_design_subtheme_get_components() as $component => $dummy) {
+        $variables['#attached']['library'][] = $component;
+      }
+      break;
+  }
+}
+
+/**
+ * Add component classes to HTML tags.
+ *
+ * @param string $html
+ *   Html output.
+ * @param array $element
+ *   Render array.
+ *
+ * @return string
+ *   Modified HTML.
+ */
+function common_design_subtheme_add_component_classes($html, array $element) {
+  $components = common_design_subtheme_get_components();
+  if (empty($components)) {
+    return $html;
+  }
+
+  $dom = Html::load($html);
+
+  // Add the classes to the HTML tags for each component.
+  foreach ($components as $tags) {
+    foreach ($tags as $tag => $classes) {
+      $nodes = $dom->getElementsByTagName($tag);
+      foreach ($nodes as $node) {
+        $existing = $node->getAttribute('class') ?? '';
+        $classes = array_merge(preg_split("/\s+/", $existing), $classes);
+        $node->setAttribute('class', trim(implode(' ', array_unique($classes))));
+      }
+    }
+  }
+
+  $html = Html::serialize($dom);
+  return trim($html);
+}
+
+/**
+ * Implements hook_preprocess_paragraph__page_title().
+ *
+ * Use the page title block for the title and display the local tasks below it.
+ * We use common_design_subtheme_get_block_render_array() that will cache the
+ * render array of the blocks so that they are not re-rendered and displayed
+ * if done by the paragraph title.
+ */
+function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
+  // If we are in a form, then the '#id' will be set. In that case, we don't
+  // want to show the page title as it would not be updated when chaging the
+  // title field. We will display a placeholder instead, which is handled by
+  // paragraphs_page_title_preprocess_paragraph__page_title().
+  if (!isset($variables['elements']['#id'])) {
+    $variables['content']['title'] = common_design_subtheme_get_block_render_array('page_title_block');
+    $variables['content']['local_tasks'] = common_design_subtheme_get_block_render_array('local_tasks_block');
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Remove the default page title and local tasks blocks if they were already
+ * rendered by a page title paragraph.
+ *
+ * @see common_design_subtheme_preprocess_paragraph__page_title()
+ */
+function common_design_subtheme_preprocess_page(&$variables) {
+  if (isset($variables['node'])) {
+    $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
+
+    // If the block has already been rendered (from the page title block) then
+    // we remove the default page title block.
+    if (isset($rendered['page_title_block'])) {
+      unset($variables['page']['content']['common_design_subtheme_page_title']);
+    }
+
+    // Same for the local tasks block.
+    if (isset($rendered['local_tasks_block'])) {
+      unset($variables['page']['content']['common_design_subtheme_local_tasks']);
+    }
+  }
+}
+
+/**
+ * Render a block.
+ *
+ * We cache a flag indicating the block has already been redendered and return
+ * an empty array in that case to ensure that the block is displayed only one
+ * on the page.
+ *
+ * @param string $id
+ *   Block ID.
+ *
+ * @return array
+ *   Renderable array of the block. Empty array if this was already called
+ *   before to avoid displaying the block several times.
+ *
+ * @see https://drupal.stackexchange.com/a/171733
+ */
+function common_design_subtheme_get_block_render_array($id) {
+  $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
+
+  if (!isset($rendered[$id])) {
+    // Prevent rendering the block several times.
+    $rendered[$id] = TRUE;
+
+    // Generate an instance of the plugin block.
+    $block_manager = \Drupal::service('plugin.manager.block');
+    $plugin_block = $block_manager->createInstance($id, []);
+
+    // Skip if there is no block matching the id.
+    if (empty($plugin_block)) {
+      return [];
+    }
+
+    // Check if the block is accessible to the current user.
+    $access = $plugin_block->access(\Drupal::currentUser());
+    // This can be a boolean or an object implementing AccessResultInterface.
+    if ($access === TRUE || ($access instanceof AccessResultInterface && $access->isAllowed())) {
+      return $plugin_block->build();
+    }
+  }
+
+  return [];
+}

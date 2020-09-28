@@ -1,0 +1,16 @@
+uuid: 359cb7f4-1762-46ef-bc5a-01331efd6e90
+langcode: en
+status: true
+dependencies: {  }
+name: hero_xlarge_x2
+label: 'hero xlarge x2'
+effects:
+  09ac5563-29a0-49ff-a0fc-f09d6b781bb5:
+    uuid: 09ac5563-29a0-49ff-a0fc-f09d6b781bb5
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 2280
+      height: 624
+      anchor: center-center
+pipeline: __default__

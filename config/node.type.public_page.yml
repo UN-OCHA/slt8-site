@@ -1,0 +1,19 @@
+uuid: e1c88235-3460-4795-b044-1e8c394d3e38
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - footer
+      - main
+    parent: 'main:'
+name: 'Public page'
+type: public_page
+description: 'Page that will be accessible to any visitor whether they are logged in or not.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,90 @@
+uuid: 482585c5-eecb-491a-b84c-740ae0f6b52a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.contact.field_agency
+    - field.field.node.contact.field_country
+    - field.field.node.contact.field_duty_station_country
+    - field.field.node.contact.field_duty_station_region
+    - field.field.node.contact.field_email
+    - field.field.node.contact.field_functional_title
+    - field.field.node.contact.field_phone
+    - field.field.node.contact.field_security_title
+    - node.type.contact
+  module:
+    - telephone_type
+    - user
+id: node.contact.default
+targetEntityType: node
+bundle: contact
+mode: default
+content:
+  field_agency:
+    weight: 7
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_country:
+    weight: 3
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_duty_station_country:
+    weight: 2
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_duty_station_region:
+    weight: 1
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_email:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_functional_title:
+    weight: 4
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: telephone_type_default
+    region: content
+  field_security_title:
+    weight: 5
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

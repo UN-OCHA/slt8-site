@@ -1,0 +1,37 @@
+uuid: d55ba1af-a32e-476a-a6f1-3ca12718068e
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+_core:
+  default_config_hash: yi6WMOe2mWdGloQ9cusOVMrbim3SjnfxD9TXS7zqo0w
+id: slt_media_image
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: slt
+label: 'Migrate SLT media images.'
+source:
+  plugin: slt_file
+  type: image
+  constants:
+    bundle: image
+process:
+  mid: fid
+  uid: uid
+  name: filename
+  bundle: constants/bundle
+  status: status
+  created: timestamp
+  changed: timestamp
+  field_media_image/target_id: fid
+  field_media_image/alt: field_file_image_alt_text/0/value
+  field_media_image/title: field_file_image_title_text/0/value
+destination:
+  plugin: 'entity:media'
+migration_dependencies:
+  required:
+    - slt_file

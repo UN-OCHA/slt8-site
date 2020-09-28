@@ -1,0 +1,19 @@
+uuid: 7d66e04b-e91d-49af-9bae-06a8fb49ee2d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - footer
+      - main
+    parent: 'main:'
+name: 'Private page'
+type: private_page
+description: 'Page only accessible to authenticated (logged in) users.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

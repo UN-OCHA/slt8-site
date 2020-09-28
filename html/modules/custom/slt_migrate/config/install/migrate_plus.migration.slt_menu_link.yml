@@ -1,0 +1,66 @@
+id: slt_menu_link
+label: Migrate SLT menu links.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+audit: true
+migration_tags:
+  - Drupal 7
+  - Content
+source:
+  plugin: slt_menu_link
+  constants:
+    bundle: menu_link_content
+destination:
+  plugin: entity:menu_link_content
+  no_stub: true
+process:
+  id: mlid
+  bundle: constants/bundle
+  title: link_title
+  description: description
+  menu_name:
+    plugin: static_map
+    bypass: false
+    source: menu_name
+    map:
+      main-menu: main
+      menu-footer: footer
+  link/uri:
+    plugin: link_uri
+    source: link_path
+  # We don't migrate the options as they can be quite invalid, like
+  # all the menu entries using the same 'about_us' ID...
+  # link/options: options
+  route:
+    plugin: route
+    source:
+      - link_path
+      - options
+  route_name: '@route/route_name'
+  route_parameters: '@route/route_parameters'
+  url: '@route/url'
+  options: '@route/options'
+  external: external
+  weight: weight
+  expanded: expanded
+  enabled: enabled
+  parent:
+    plugin: menu_link_parent
+    source:
+      - plid
+      - '@menu_name'
+      - parent_link_path
+  changed: updated
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
+migration_dependencies:
+  required:
+    - slt_node_private_page
+    - slt_node_public_page

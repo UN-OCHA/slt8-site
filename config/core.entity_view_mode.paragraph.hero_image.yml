@@ -1,0 +1,10 @@
+uuid: 41ce67e6-1d6d-47f1-a1e1-464e67169562
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.hero_image
+label: 'Hero image'
+targetEntityType: paragraph
+cache: true

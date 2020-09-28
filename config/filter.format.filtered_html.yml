@@ -1,0 +1,54 @@
+uuid: e98caca0-6fa9-4a2c-9086-e6dda23ca7f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.full_width
+    - core.entity_view_mode.media.thumbnail_medium
+    - core.entity_view_mode.media.thumbnail_small
+  module:
+    - media
+name: 'Filtered Html'
+format: filtered_html
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<a href target="_blank"> <em> <strong> <cite> <blockquote cite> <ul type> <ol start type=''''1 A I''''> <li> <dl> <dt> <dd> <h2 id=''''jump-*''''> <h3 id=''''jump-*''''> <h4 id=''''jump-*''''> <h5 id=''''jump-*''''> <h6 id=''''jump-*''''> <table> <caption> <thead> <tbody> <tr> <th colspan> <td colspan> <p> <br> <drupal-media data-entity-type data-entity-uuid alt data-align>'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: 100
+    settings:
+      default_view_mode: thumbnail_small
+      allowed_media_types:
+        image: image
+      allowed_view_modes:
+        full_width: full_width
+        thumbnail_medium: thumbnail_medium
+        thumbnail_small: thumbnail_small
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: true
+    weight: 9
+    settings: {  }
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }

@@ -1,0 +1,36 @@
+uuid: 309d8589-a05a-4399-8db2-3696b4d02e5a
+langcode: en
+status: true
+dependencies:
+  module:
+    - layout_paragraphs
+    - paragraphs_viewmode
+_core:
+  default_config_hash: ft-OB7bf-6J5fng-Xs9PDXpqIpcpnDd5GZl9ssIbFVA
+id: image
+label: Image
+icon_uuid: null
+icon_default: null
+description: 'A paragraph to display an image.'
+behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }
+  paragraphs_viewmode_behavior:
+    enabled: true
+    override_mode: default
+    override_available:
+      hero_image: hero_image
+      default: '0'
+      link_with_background_image: '0'
+      link_with_background_image_medium: '0'
+      link_with_background_image_small: '0'
+      linked_image: '0'
+      linked_image_medium: '0'
+      linked_image_small: '0'
+      preview: '0'
+      responsive_image: '0'
+      responsive_thumbnail: '0'
+      thumbnail_medium: '0'
+      thumbnail_small: '0'
+    override_default: hero_image

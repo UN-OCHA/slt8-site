@@ -1,0 +1,32 @@
+uuid: 8e337277-102c-44fb-a4ce-14a811bac175
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.internal_document.field_media_file
+    - field.field.media.internal_document.field_theme
+    - image.style.medium
+    - media.type.internal_document
+  module:
+    - image
+id: media.internal_document.media_library
+targetEntityType: media
+bundle: internal_document
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_file: true
+  field_theme: true
+  name: true
+  uid: true

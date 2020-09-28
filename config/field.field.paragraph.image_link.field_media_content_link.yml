@@ -1,0 +1,23 @@
+uuid: ac553bce-a152-47bc-956a-f9bdefbb60bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_media_content_link
+    - paragraphs.paragraphs_type.image_link
+  module:
+    - link
+id: paragraph.image_link.field_media_content_link
+field_name: field_media_content_link
+entity_type: paragraph
+bundle: image_link
+label: Link
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

@@ -1,0 +1,15 @@
+uuid: 03f9f7d3-c262-41c4-96a0-523e3e25c9a5
+langcode: en
+status: true
+dependencies:
+  module:
+    - layout_paragraphs
+id: text
+label: Text
+icon_uuid: null
+icon_default: null
+description: 'Paragraph text with a rich editor to allow the creation of lists, tables etc.'
+behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }

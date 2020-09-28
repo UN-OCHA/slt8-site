@@ -1,0 +1,26 @@
+.layout--image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -1rem;
+}
+.layout--image-grid .layout__region {
+  /* Failover when flex is not supported. */
+  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+.layout--image-grid-four-columns .layout__region {
+  /* Failover when calc is not supported. */
+  min-width: 250px;
+  min-width: calc(250px + 2rem);
+  max-width: 25%;
+}
+.layout--image-grid-five-columns .layout__region {
+  /* Failover when calc is not supported. */
+  min-width: 180px;
+  min-width: calc(180px + 2rem);
+  max-width: 20%;
+}

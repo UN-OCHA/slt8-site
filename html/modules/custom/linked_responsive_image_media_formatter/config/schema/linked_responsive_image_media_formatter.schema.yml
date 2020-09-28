@@ -1,0 +1,22 @@
+field.formatter.settings.linked_responsive_image_media_formatter:
+  type: mapping
+  label: 'Linked responsive image media formatter settings'
+  mapping:
+    responsive_image_style:
+      type: string
+      label: 'Responsive image style'
+    image_link:
+      type: string
+      label: 'Link image to'
+    image_link_url:
+      type: string
+      label: 'Custom URL to link to'
+    image_alt:
+      type: string
+      label: 'Alt attribute to use'
+    image_alt_value:
+      type: string
+      label: 'Custom image alt text'
+    image_as_background:
+      type: boolean
+      label: 'Use the image as background'

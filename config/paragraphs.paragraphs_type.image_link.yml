@@ -1,0 +1,34 @@
+uuid: e48449d5-091f-4504-91ed-131879a11a6e
+langcode: en
+status: true
+dependencies:
+  module:
+    - layout_paragraphs
+    - paragraphs_viewmode
+id: image_link
+label: 'Image link'
+icon_uuid: null
+icon_default: null
+description: 'A paragraph to display a <em>linked image</em> or a <em>link with a background image</em>.'
+behavior_plugins:
+  layout_paragraphs:
+    enabled: false
+    available_layouts: {  }
+  paragraphs_viewmode_behavior:
+    enabled: true
+    override_mode: default
+    override_available:
+      linked_image_medium: linked_image_medium
+      linked_image_small: linked_image_small
+      link_with_background_image_medium: link_with_background_image_medium
+      link_with_background_image_small: link_with_background_image_small
+      default: '0'
+      hero_image: '0'
+      linked_image: '0'
+      link_with_background_image: '0'
+      preview: '0'
+      responsive_image: '0'
+      responsive_thumbnail: '0'
+      thumbnail_medium: '0'
+      thumbnail_small: '0'
+    override_default: linked_image_medium

@@ -1,0 +1,25 @@
+uuid: 8f853f60-f6dc-467a-af38-40cf56a87096
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.text.field_media_content_text
+    - paragraphs.paragraphs_type.text
+  module:
+    - text
+id: paragraph.text.default
+targetEntityType: paragraph
+bundle: text
+mode: default
+content:
+  field_media_content_text:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  status: true

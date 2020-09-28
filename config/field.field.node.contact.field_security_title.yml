@@ -1,0 +1,19 @@
+uuid: a640f270-7304-409e-bc7e-c710a4420984
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_security_title
+    - node.type.contact
+id: node.contact.field_security_title
+field_name: field_security_title
+entity_type: node
+bundle: contact
+label: 'Security Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

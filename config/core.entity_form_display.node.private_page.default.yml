@@ -1,0 +1,51 @@
+uuid: a5dd56c5-8fdc-4507-8329-2fa5bd21673f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.private_page.field_paragraphs
+    - node.type.private_page
+  module:
+    - layout_paragraphs
+    - path
+id: node.private_page.default
+targetEntityType: node
+bundle: private_page
+mode: default
+content:
+  field_paragraphs:
+    type: layout_paragraphs
+    weight: 2
+    settings:
+      preview_view_mode: default
+      nesting_depth: '0'
+      require_layouts: 0
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 1
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 255
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true
+  url_redirects: true

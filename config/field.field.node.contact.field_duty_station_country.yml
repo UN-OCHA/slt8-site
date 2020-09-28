@@ -1,0 +1,29 @@
+uuid: 3148c3b7-dd8f-47b3-9d9e-a59b97d53478
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duty_station_country
+    - node.type.contact
+    - taxonomy.vocabulary.country
+id: node.contact.field_duty_station_country
+field_name: field_duty_station_country
+entity_type: node
+bundle: contact
+label: 'Duty Station Country'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      country: country
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

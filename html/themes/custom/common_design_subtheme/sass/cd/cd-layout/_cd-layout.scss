@@ -1,0 +1,12 @@
+//——————————————————————————————————————————————————————————————————————————————
+// Common Design: Layout
+//——————————————————————————————————————————————————————————————————————————————
+
+// Disable flex attributes that prevents notably hero image to span the full
+// width of the main content area.
+.cd-layout-content {
+  @include tablet {
+    flex-basis: 100%;
+    flex-grow: 1;
+  }
+}

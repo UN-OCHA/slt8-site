@@ -1,0 +1,20 @@
+uuid: 8596081b-03cf-4604-8875-9508b7934420
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - common_design_admin_subtheme
+id: breadcrumbs_2
+theme: common_design_admin_subtheme
+region: breadcrumb
+weight: -3
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

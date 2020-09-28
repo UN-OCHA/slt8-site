@@ -1,0 +1,15 @@
+//——————————————————————————————————————————————————————————————————————————————
+// Forms
+//——————————————————————————————————————————————————————————————————————————————
+
+// Display inline forms inline.
+.form--inline .form-item {
+  float: left;
+  margin-top: 0;
+  margin-right: 0.5em;
+}
+
+.form--inline .form-actions {
+  float: left;
+  margin-top: 0;
+}

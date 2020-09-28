@@ -1,0 +1,18 @@
+diff --git a/core/lib/Drupal/Component/Utility/Xss.php b/core/lib/Drupal/Component/Utility/Xss.php
+index 4bb8bbd16f..45f0bc031d 100644
+--- a/core/lib/Drupal/Component/Utility/Xss.php
++++ b/core/lib/Drupal/Component/Utility/Xss.php
+@@ -223,11 +223,13 @@ protected static function attributes($attributes) {
+             // such attributes.
+             // @see \Drupal\Component\Utility\UrlHelper::filterBadProtocol()
+             // @see http://www.w3.org/TR/html4/index/attributes.html
++            // @see https://www.drupal.org/node/2544110
+             $skip_protocol_filtering = substr($attribute_name, 0, 5) === 'data-' || in_array($attribute_name, [
+               'title',
+               'alt',
+               'rel',
+               'property',
++              'datetime',
+             ]);
+ 
+             $working = $mode = 1;

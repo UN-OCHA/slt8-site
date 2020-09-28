@@ -1,0 +1,30 @@
+uuid: 0c1a0084-3a6f-4d4d-a37d-f97cd5ae92ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.private_page.field_paragraphs
+    - node.type.private_page
+  module:
+    - layout_paragraphs
+    - user
+id: node.private_page.default
+targetEntityType: node
+bundle: private_page
+mode: default
+content:
+  field_paragraphs:
+    type: layout_paragraphs
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

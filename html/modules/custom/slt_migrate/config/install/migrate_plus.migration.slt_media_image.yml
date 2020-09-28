@@ -1,0 +1,37 @@
+id: slt_media_image
+label: Migrate SLT media images.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_file
+  type: image
+  constants:
+    bundle: 'image'
+destination:
+  plugin: entity:media
+process:
+  mid: fid
+  uid: uid
+  name: filename
+  bundle: constants/bundle
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
+  status: status
+  # Drupal 7 didn't keep track of the file's creation or update time -- all it
+  # had was the vague "timestamp" column. So we'll use it for both.
+  created: timestamp
+  changed: timestamp
+  # Image field see media_entity.bundle.image.yml.
+  field_media_image/target_id: fid
+  field_media_image/alt: field_file_image_alt_text/0/value
+  field_media_image/title: field_file_image_title_text/0/value
+migration_dependencies:
+  required:
+    - slt_file

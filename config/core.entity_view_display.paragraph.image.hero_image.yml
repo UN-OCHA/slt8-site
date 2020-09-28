@@ -1,0 +1,31 @@
+uuid: a17e8e7e-98b4-4a35-8396-80669647770e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.hero_image
+    - field.field.paragraph.image.field_media_content_image
+    - paragraphs.paragraphs_type.image
+  module:
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+_core:
+  default_config_hash: w0IhNBq9HrlrzQkO3kBOQWlHnn2lBrLBDitp1cLvvGI
+id: paragraph.image.hero_image
+targetEntityType: paragraph
+bundle: image
+mode: hero_image
+content:
+  field_media_content_image:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: hero_image
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden: {  }

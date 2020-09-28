@@ -1,0 +1,10 @@
+uuid: 0a2a8933-530c-4b96-babc-9c0ced0cb93b
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.link_with_background_image_medium
+label: 'Link with background image - Medium'
+targetEntityType: paragraph
+cache: true

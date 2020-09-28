@@ -1,0 +1,83 @@
+dist: trusty
+language: php
+cache:
+  - composer
+
+addons:
+  chrome: stable
+
+php:
+  - 7.3
+
+mysql:
+  database: drupal
+  username: root
+  encoding: utf8
+
+env:
+  global:
+     - DRUPAL_REPO='git://drupalcode.org/project/drupal.git'
+     - DRUPAL_VERSION='8.x'
+     - DRUSH_VERSION='8.*'
+     - PHPCS_VERSION='2.9.*@dev'
+     - CODER_VERSION='dev-8.x-2.x'
+     - DB=sqlite
+
+install:
+  ssh-agent -k
+
+before_script:
+  # Composer.
+  - sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
+  - source $HOME/.bashrc
+  - composer self-update
+
+  # Ensure the PHP environment is ready.
+  - phpenv rehash
+
+  # Code sniff
+  - cd $TRAVIS_BUILD_DIR
+  - composer install
+
+script:
+  # PHP linting
+  - test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+  - test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+
+  # PHP CS
+  - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
+  - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
+
+  # Drupal install
+  - mysql -e "CREATE DATABASE drupal;"
+  - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1 IDENTIFIED BY 'drupal';"
+
+  - cd ${TRAVIS_BUILD_DIR}
+  - mkdir -p ./html/sites/default
+  - cp .travis/default.se* ./html/sites/default/
+
+  - cd ${TRAVIS_BUILD_DIR}/html
+  - ../vendor/bin/drush -y si --db-url=mysql://drupal:drupal@127.0.0.1/drupal minimal
+  - ../vendor/bin/drush -y cset system.site uuid $(grep uuid ${TRAVIS_BUILD_DIR}/config/system.site.yml | awk '{print $2}')
+  - ../vendor/bin/drush -y cim --source=${TRAVIS_BUILD_DIR}/config
+  - ../vendor/bin/drush rs 127.0.0.1:8080 >/dev/null 2>&1 &
+  - ../vendor/bin/drush php-eval 'node_access_rebuild();'
+  - ../vendor/bin/drush cr
+  - sleep 5
+
+  - ../vendor/bin/drush en yaml_content -y
+  - ../vendor/bin/drush yaml-content-import ${TRAVIS_BUILD_DIR}/.travis/
+
+  # Chrome headless
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - sleep 5
+
+  # Test
+  - cd $TRAVIS_BUILD_DIR
+  - DTT_BASE_URL=http://127.0.0.1:8080 DTT_API_URL=http://localhost:9222 ./vendor/bin/phpunit --debug --colors --testsuite=existing-site,existing-site-javascript
+
+after_success:
+  - echo "The tests completed without errors."
+
+after_failure:
+  - echo "The tests failed. Please check the output above for problems."

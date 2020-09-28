@@ -1,0 +1,29 @@
+/*
+ * @file
+ * Provides the layout styles for two columns layout section.
+ *
+ * See common_desing/common_design.breakpoints.yml for the breakpoints.
+ */
+
+.layout--twocol-section {
+  /* Compensate for the padding of the regions. */
+  margin: -1rem;
+}
+
+.layout--twocol-section:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.layout--twocol-section > .layout__region {
+  float: left;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* 2 columns layout on larger screens. */
+@media screen and (min-width: 768px) {
+  .layout--twocol-section > .layout__region {
+    max-width: 50%;
+  }
+}

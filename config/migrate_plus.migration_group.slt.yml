@@ -1,0 +1,17 @@
+uuid: 727e2961-e715-4e5f-93c2-de416ed4993b
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+_core:
+  default_config_hash: WP-bNCKNw6W5EkppNvj020a7i4C-4FQA_0j0sqIVdE4
+id: slt
+label: 'SLT Imports'
+description: 'Import SLT content from Drupal 7 to Drupal 8.'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: slt7

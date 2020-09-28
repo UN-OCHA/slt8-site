@@ -1,0 +1,41 @@
+uuid: b27c0a16-876d-4dc5-a986-46dceef19181
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+_core:
+  default_config_hash: _So58IIczV_YM6Oej7OzTYLRTxHgrPPfhXTY9rXIZvE
+id: slt_url_alias
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: slt
+label: 'Migrate SLT URL aliases'
+source:
+  plugin: d7_url_alias
+  constants:
+    slash: /
+process:
+  id: pid
+  path:
+    plugin: concat
+    source:
+      - constants/slash
+      - source
+  alias:
+    -
+      plugin: concat
+      source:
+        - constants/slash
+        - alias
+    -
+      plugin: static_map
+      bypass: true
+      map:
+        /access-denied: /welcome
+destination:
+  plugin: 'entity:path_alias'
+migration_dependencies: null

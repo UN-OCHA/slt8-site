@@ -1,0 +1,16 @@
+uuid: 5a58305e-0e19-4cdc-be24-1ae3b93c6b0a
+langcode: en
+status: true
+dependencies: {  }
+name: hero_mobile_x2
+label: 'hero mobile x2'
+effects:
+  dd163147-d383-469b-99ea-060f626d6d3b:
+    uuid: dd163147-d383-469b-99ea-060f626d6d3b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1152
+      height: 316
+      anchor: center-center
+pipeline: __default__

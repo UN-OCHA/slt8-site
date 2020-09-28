@@ -1,0 +1,5 @@
+slt_contacts.import_contacts:
+  title: 'Import contacts'
+  route_name: slt_contacts.import_contacts
+  appears_on:
+    - view.content.page_contacts

@@ -1,0 +1,30 @@
+uuid: e4c00f6d-cec3-4c49-885e-671e4df88612
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.public_page.field_paragraphs
+    - node.type.public_page
+  module:
+    - layout_paragraphs
+    - user
+id: node.public_page.default
+targetEntityType: node
+bundle: public_page
+mode: default
+content:
+  field_paragraphs:
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: layout_paragraphs
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

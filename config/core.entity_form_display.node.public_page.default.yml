@@ -1,0 +1,51 @@
+uuid: 5153805e-06df-4784-b3d4-113cb1d47f22
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.public_page.field_paragraphs
+    - node.type.public_page
+  module:
+    - layout_paragraphs
+    - path
+id: node.public_page.default
+targetEntityType: node
+bundle: public_page
+mode: default
+content:
+  field_paragraphs:
+    weight: 2
+    settings:
+      preview_view_mode: default
+      nesting_depth: 0
+      require_layouts: 0
+    third_party_settings: {  }
+    type: layout_paragraphs
+    region: content
+  path:
+    type: path
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 1
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 255
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true
+  url_redirects: true

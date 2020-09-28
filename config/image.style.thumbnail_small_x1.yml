@@ -1,0 +1,15 @@
+uuid: 196463ab-41eb-4aff-9b56-9bedeeb6618b
+langcode: en
+status: true
+dependencies: {  }
+name: thumbnail_small_x1
+label: 'thumbnail small x1'
+effects:
+  fd3db368-55eb-4fba-8276-22d4445fce12:
+    uuid: fd3db368-55eb-4fba-8276-22d4445fce12
+    id: image_scale
+    weight: 1
+    data:
+      width: 180
+      height: null
+      upscale: true

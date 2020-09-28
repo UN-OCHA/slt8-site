@@ -1,0 +1,16 @@
+uuid: bbdb04bf-75e1-460b-a11a-68833af8f355
+langcode: en
+status: true
+dependencies: {  }
+name: hero_tablet_x2
+label: 'hero tablet x2'
+effects:
+  1f008dcb-2a27-4492-b76d-c8a06cdfdc87:
+    uuid: 1f008dcb-2a27-4492-b76d-c8a06cdfdc87
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1536
+      height: 420
+      anchor: center-center
+pipeline: __default__

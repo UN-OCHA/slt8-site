@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a grid layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'layout',
+    'layout--grid',
+  ]
+%}
+{% if content %}
+{% apply spaceless %}
+  <section{{ attributes.addClass(classes) }}>
+    {% for key, region in content if key starts with 'region-' and region is not empty %}
+      <div {{ region_attributes[key].addClass('layout__region', 'layout__region--' ~ key) }}>
+        {{ region }}
+      </div>
+    {% endfor %}
+  </section>
+{% endapply %}
+{% endif %}

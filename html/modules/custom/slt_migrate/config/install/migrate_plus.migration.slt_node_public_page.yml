@@ -1,0 +1,58 @@
+id: slt_node_public_page
+label: Migrate SLT public pages.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_node
+  node_type: basic_page
+  bundle: public_page
+  constants:
+    bundle: 'public_page'
+destination:
+  plugin: entity:node
+  bundle: public_page
+process:
+  # Base properties.
+  nid: nid
+  vid: vid
+  uid: uid
+  type: constants/bundle
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
+  # We skip the sticky and promote values as they are not used. They will be
+  # resetted to 0.
+  # sticky: sticky
+  # promote: promote
+  title: title
+  created: created
+  changed: changed
+  status: status
+  # Revision fields.
+  revision_uid: revision_uid
+  revision_log: log
+  revision_timestamp: timestamp
+  # Fields.
+  field_paragraphs: field_paragraphs
+  # Disable path alias generation as aliases are already imported.
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+  path/alias:
+    -
+      plugin: default_value
+      default_value: ''
+    -
+      plugin: skip_on_empty
+      method: process
+migration_dependencies:
+  required:
+    - slt_user
+    # Not really a dependency but it's to ensure it's run later.
+    - slt_node_contact

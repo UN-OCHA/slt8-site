@@ -1,0 +1,10 @@
+uuid: 784af7e6-a05f-4d3d-ba6b-970e98496205
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.linked_image_medium
+label: 'Linked image - Medium'
+targetEntityType: paragraph
+cache: true

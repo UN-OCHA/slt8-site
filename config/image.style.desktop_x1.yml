@@ -1,0 +1,17 @@
+uuid: 2b46b49b-97e2-47eb-b9ca-782b9946a925
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: h7JLcCGPcfmlW45EoO3TCP65vGjLAdNr_cQY7FNeOHM
+name: desktop_x1
+label: 'desktop x1'
+effects:
+  d6ea2825-4f4d-4bb0-b7d1-8b07bf75aaef:
+    uuid: d6ea2825-4f4d-4bb0-b7d1-8b07bf75aaef
+    id: image_scale
+    weight: 1
+    data:
+      width: 976
+      height: null
+      upscale: true

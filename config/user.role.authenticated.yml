@@ -1,0 +1,18 @@
+uuid: f8cb9190-13d0-48dd-932f-f895761c42b7
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: -9
+is_admin: false
+permissions:
+  - 'access content'
+  - 'cancel account'
+  - 'change own username'
+  - 'view media'
+  - 'view published image media'
+  - 'view published private_page content'
+  - 'view published public_page content'

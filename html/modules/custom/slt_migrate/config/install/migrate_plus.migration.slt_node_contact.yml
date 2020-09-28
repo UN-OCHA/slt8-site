@@ -1,0 +1,94 @@
+id: slt_node_contact
+label: Migrate SLT contacts.
+migration_group: slt
+dependencies:
+  enforced:
+    module:
+      - slt_migrate
+source:
+  plugin: slt_node
+  node_type: contact
+  bundle: contact
+  constants:
+    bundle: contact
+destination:
+  plugin: entity:node
+  bundle: contact
+  # Run entity and fields validation before saving an entity.
+  # This is to prevent importing contacts with an invalid email address.
+  # @see \Drupal\Core\Entity\FieldableEntityInterface::validate()
+  validate: true
+process:
+  # Base properties.
+  nid: nid
+  vid: vid
+  uid: uid
+  type: constants/bundle
+  # Skip the langcode, it will be set to the default language for the entity
+  # and bundle, which is "en" in our case.
+  #langcode:
+  #  plugin: default_value
+  #  source: language
+  #  default_value: 'en'
+  # We skip the sticky and promote values as they are not used. They will be
+  # resetted to 0.
+  # sticky: sticky
+  # promote: promote
+  title: title
+  created: created
+  changed: changed
+  status: status
+  # Revision fields.
+  revision_uid: revision_uid
+  revision_log: log
+  revision_timestamp: timestamp
+  # Fields.
+  field_agency/target_id:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_agency/0/tid
+  field_country/target_id:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_country/0/tid
+  field_duty_station_country/target_id:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_duty_station_country/0/tid
+  field_duty_station_region/target_id:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_duty_station_region/0/tid
+  field_email/value:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_email/0/email
+  field_functional_title/value:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_functional_title/0/value
+  field_phone:
+    plugin: sub_process
+    source: field_c_phone
+    process:
+      type: linklabel
+      number: phonenumber
+  field_security_title/value:
+    plugin: skip_on_empty
+    method: process
+    source: field_c_security_title/0/value
+  # Disable path alias generation as aliases are already imported.
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+  path/alias:
+    -
+      plugin: default_value
+      default_value: ''
+    -
+      plugin: skip_on_empty
+      method: process
+migration_dependencies:
+  required:
+    - slt_user
+    - slt_taxonomy_term

@@ -1,0 +1,18 @@
+uuid: 02f5d255-3e38-4f37-bbc6-9530d7a72e2f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.private_page.field_paragraphs
+    - node.type.private_page
+  module:
+    - user
+id: node.private_page.teaser
+targetEntityType: node
+bundle: private_page
+mode: teaser
+content: {  }
+hidden:
+  field_paragraphs: true
+  links: true

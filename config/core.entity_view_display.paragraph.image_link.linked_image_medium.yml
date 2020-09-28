@@ -1,0 +1,37 @@
+uuid: 577fccef-e362-4cf3-88c6-375aff99caa1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.linked_image_medium
+    - field.field.paragraph.image_link.field_media_content_image
+    - field.field.paragraph.image_link.field_media_content_link
+    - paragraphs.paragraphs_type.image_link
+    - responsive_image.styles.thumbnail_medium
+  module:
+    - layout_builder
+    - linked_responsive_image_media_formatter
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+id: paragraph.image_link.linked_image_medium
+targetEntityType: paragraph
+bundle: image_link
+mode: linked_image_medium
+content:
+  field_media_content_image:
+    weight: 0
+    label: hidden
+    settings:
+      responsive_image_style: thumbnail_medium
+      image_link: custom
+      image_link_url: '[paragraph:field_media_content_link:uri]'
+      image_alt: custom
+      image_alt_value: '[paragraph:field_media_content_link:title]'
+      image_as_background: false
+    third_party_settings: {  }
+    type: linked_responsive_image_media_formatter
+    region: content
+hidden:
+  field_media_content_link: true

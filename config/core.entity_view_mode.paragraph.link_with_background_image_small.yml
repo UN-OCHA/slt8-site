@@ -1,0 +1,10 @@
+uuid: bacba1d9-bc46-4b08-bc61-aef1f5ee8f41
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.link_with_background_image_small
+label: 'Link with background image - Small'
+targetEntityType: paragraph
+cache: true

@@ -1,0 +1,27 @@
+uuid: b8c1e1e7-269a-49dd-a777-6eb003c2f73b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_file
+    - media.type.internal_document
+  module:
+    - file
+id: media.internal_document.field_media_file
+field_name: field_media_file
+entity_type: media
+bundle: internal_document
+label: File
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: internal-documents
+  file_extensions: 'txt doc docx pdf xls xlsx csv zip png jpg jpeg'
+  max_filesize: ''
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

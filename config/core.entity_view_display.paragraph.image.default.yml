@@ -1,0 +1,24 @@
+uuid: c99f08b6-6021-40db-8586-b2ab77d98a25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.image.field_media_content_image
+    - paragraphs.paragraphs_type.image
+_core:
+  default_config_hash: w0IhNBq9HrlrzQkO3kBOQWlHnn2lBrLBDitp1cLvvGI
+id: paragraph.image.default
+targetEntityType: paragraph
+bundle: image
+mode: default
+content:
+  field_media_content_image:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: hero_image
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden: {  }

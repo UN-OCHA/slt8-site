@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Uninstall SLT migration files.
+ */
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Uninstall the migration configuration.
+ */
+function slt_migrate_uninstall() {
+  \Drupal::service('config.manager')->uninstall('module', 'slt_migrate');
+
+  drupal_flush_all_caches();
+}

@@ -1,0 +1,20 @@
+uuid: 9065a8fe-3279-4b47-a9eb-a61b4bdfa556
+langcode: en
+status: true
+dependencies:
+  theme:
+    - common_design_admin_subtheme
+_core:
+  default_config_hash: PffmQ-ABSz5tFjWmVsR7NesunDnEivvopnJnBjl8KNE
+id: common_design_admin_subtheme_local_actions
+theme: common_design_admin_subtheme
+region: content
+weight: -1
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

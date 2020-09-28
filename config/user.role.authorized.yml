@@ -1,0 +1,11 @@
+uuid: 21b3df71-911f-41d4-9fc3-423d9119804e
+langcode: en
+status: true
+dependencies: {  }
+id: authorized
+label: 'Authorized user'
+weight: -8
+is_admin: null
+permissions:
+  - 'view published contact content'
+  - 'view published document media'
