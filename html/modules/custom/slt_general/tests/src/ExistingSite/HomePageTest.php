@@ -15,10 +15,9 @@ class HomePageTest extends ExistingSiteBase {
    * @throws \Behat\Mink\Exception\ExpectationException
    */
   public function testHomePage() {
-    $this->drupalGet('/login-required');
+    $this->drupalGet('/welcome');
     $this->assertSession()->statusCodeEquals(200);
-
-    $this->assertSession()->pageTextContains('Login Required');
+    $this->assertSession()->pageTextContains('Saving Lives Together');
   }
 
 }
