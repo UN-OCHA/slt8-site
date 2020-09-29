@@ -35,9 +35,6 @@ process:
   link/uri:
     plugin: link_uri
     source: link_path
-  # We don't migrate the options as they can be quite invalid, like
-  # all the menu entries using the same 'about_us' ID...
-  # link/options: options
   route:
     plugin: route
     source:
