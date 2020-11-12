@@ -11,6 +11,7 @@ dependencies:
     - node.type.contact
     - system.menu.main
     - taxonomy.vocabulary.country
+    - user.role.administrator
   module:
     - node
     - slt_contacts
@@ -32,9 +33,10 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
+        type: role
         options:
-          perm: 'view published contact content'
+          -  crole:
+            - administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -908,7 +910,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_agency'
         - 'config:field.storage.node.field_duty_station_country'
@@ -941,7 +943,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_agency'
         - 'config:field.storage.node.field_duty_station_country'
