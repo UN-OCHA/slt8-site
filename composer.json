@@ -21,15 +21,16 @@
     ],
     "require": {
         "php": ">=7.3",
-        "composer/installers": "^1.9.0",
+        "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.7",
-        "drupal-composer/drupal-scaffold": "^2.6.1",
         "drupal-composer/preserve-paths": "^0.1.5",
         "drupal/admin_denied": "^1.0",
         "drupal/allowed_formats": "^1.2",
-        "drupal/config_split": "^1.4",
         "drupal/components": "^2.0-beta3",
-        "drupal/core": "^8.9.6",
+        "drupal/config_split": "^1.4",
+        "drupal/core-composer-scaffold": "^8.8",
+        "drupal/core-dev": "^8.8",
+        "drupal/core-recommended": "^8.8",
         "drupal/editor_advanced_link": "^1.8",
         "drupal/entity_usage": "2.0-beta3",
         "drupal/google_tag": "1.4",
@@ -38,8 +39,8 @@
         "drupal/maintenance200": "^1.0",
         "drupal/migrate_plus": "^4.2",
         "drupal/migrate_tools": "^4.5",
-        "drupal/paragraphs_viewmode": "^1.0-alpha2",
         "drupal/paragraphs": "^1.12",
+        "drupal/paragraphs_viewmode": "^1.0-alpha2",
         "drupal/pathauto": "^1.8",
         "drupal/r4032login": "1.1",
         "drupal/redirect": "^1.6",
@@ -47,6 +48,7 @@
         "drush/drush": "^10.2.2",
         "oomphinc/composer-installers-extender": "^1.1.2",
         "phpoffice/phpspreadsheet": "^1.14.1",
+        "symfony/flex": "^1.10",
         "unocha/common_design": "^2.8.3",
         "webflo/drupal-finder": "^1.0.0",
         "zaporylie/composer-drupal-optimizations": "^1.1.1"
@@ -135,7 +137,18 @@
                 ".editorconfig": "../.editorconfig",
                 ".gitattributes": "../.gitattributes"
             },
-            "omit-defaults": false
+            "omit-defaults": false,
+             "locations": {
+                "web-root": "html/"
+            }
+        },
+        "merge-plugin": {
+            "include": [
+                "html/core/composer.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "merge-extra": false
         }
     }
 }
