@@ -1,0 +1,140 @@
+{
+    "behat/mink-selenium2-driver": {
+        "version": "v1.4.0"
+    },
+    "composer/ca-bundle": {
+        "version": "1.2.8"
+    },
+    "composer/composer": {
+        "version": "1.10.17"
+    },
+    "composer/spdx-licenses": {
+        "version": "1.5.4"
+    },
+    "drupal/config_filter": {
+        "version": "1.8.0"
+    },
+    "drupal/config_split": {
+        "version": "1.7.0"
+    },
+    "drupal/core": {
+        "version": "8.9.10"
+    },
+    "drupal/core-composer-scaffold": {
+        "version": "8.9.10"
+    },
+    "drupal/core-dev": {
+        "version": "8.9.10"
+    },
+    "drupal/core-recommended": {
+        "version": "8.9.10"
+    },
+    "drupal/editor_advanced_link": {
+        "version": "1.8.0"
+    },
+    "drupal/entity_reference_revisions": {
+        "version": "1.8.0"
+    },
+    "drupal/entity_usage": {
+        "version": "2.0.0-beta3"
+    },
+    "drupal/imageapi_optimize": {
+        "version": "4.0.0-beta1"
+    },
+    "drupal/imageapi_optimize_binaries": {
+        "version": "1.0.0-alpha2"
+    },
+    "drupal/layout_paragraphs": {
+        "version": "1.0.0-beta3"
+    },
+    "drupal/paragraphs": {
+        "version": "1.12.0"
+    },
+    "drupal/paragraphs_viewmode": {
+        "version": "1.0.0"
+    },
+    "drupal/r4032login": {
+        "version": "1.1.0"
+    },
+    "instaclick/php-webdriver": {
+        "version": "1.4.7"
+    },
+    "jcalderonzumba/gastonjs": {
+        "version": "v1.2.0"
+    },
+    "jcalderonzumba/mink-phantomjs-driver": {
+        "version": "v0.3.3"
+    },
+    "justinrainbow/json-schema": {
+        "version": "5.2.10"
+    },
+    "maennchen/zipstream-php": {
+        "version": "2.1.0"
+    },
+    "markbaker/complex": {
+        "version": "2.0.0"
+    },
+    "markbaker/matrix": {
+        "version": "2.0.0"
+    },
+    "mikey179/vfsstream": {
+        "version": "v1.6.8"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.7"
+    },
+    "php": {
+        "version": "7.3"
+    },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.15.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "seld/jsonlint": {
+        "version": "1.8.3"
+    },
+    "seld/phar-utils": {
+        "version": "1.1.1"
+    },
+    "sirbrillig/phpcs-variable-analysis": {
+        "version": "v2.9.0"
+    },
+    "symfony/flex": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
+        },
+        "files": [
+            ".env"
+        ]
+    },
+    "symfony/lock": {
+        "version": "v3.4.47"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "7e941371431f5245d05c6490ada44c17eb0d27ed"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
+    }
+}
