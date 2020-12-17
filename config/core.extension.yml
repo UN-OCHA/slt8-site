@@ -1,6 +1,7 @@
 module:
   admin_denied: 0
   allowed_formats: 0
+  bcc: 0
   block: 0
   breakpoint: 0
   ckeditor: 0
