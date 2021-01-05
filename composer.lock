@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d81283d329bb662394629f792b2c0b71",
+    "content-hash": "6ccef738aea7168207bad0930110d1e2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2368,6 +2368,58 @@
             }
         },
         {
+            "name": "drupal/bcc",
+            "version": "3.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/bcc.git",
+                "reference": "8.x-3.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/bcc-8.x-3.0-beta1.zip",
+                "reference": "8.x-3.0-beta1",
+                "shasum": "0747816aff5f3f4f7c8949693e59a5aeb0823f00"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0-beta1",
+                    "datestamp": "1603384327",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Anybody",
+                    "homepage": "https://www.drupal.org/user/291091"
+                },
+                {
+                    "name": "cafuego",
+                    "homepage": "https://www.drupal.org/user/218525"
+                },
+                {
+                    "name": "devkinetic",
+                    "homepage": "https://www.drupal.org/user/114708"
+                }
+            ],
+            "description": "Adds a BCC address to all e-mails sent by the website.",
+            "homepage": "https://www.drupal.org/project/bcc",
+            "support": {
+                "source": "https://git.drupalcode.org/project/bcc"
+            }
+        },
+        {
             "name": "drupal/coder",
             "version": "8.3.11",
             "source": {
@@ -4137,6 +4189,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "https://www.drupal.org/project/social_auth_hid/issues/3188805": "https://www.drupal.org/files/issues/2020-12-17/3188805-user-notification-mail-2.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -12139,6 +12194,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "drupal/bcc": 10,
         "drupal/yaml_content": 15
     },
     "prefer-stable": true,

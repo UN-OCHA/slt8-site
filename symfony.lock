@@ -11,6 +11,9 @@
     "composer/spdx-licenses": {
         "version": "1.5.4"
     },
+    "drupal/bcc": {
+        "version": "3.0.0-beta1"
+    },
     "drupal/config_filter": {
         "version": "1.8.0"
     },
@@ -55,6 +58,9 @@
     },
     "drupal/r4032login": {
         "version": "1.1.0"
+    },
+    "drupal/social_auth_hid": {
+        "version": "2.5.0"
     },
     "instaclick/php-webdriver": {
         "version": "1.4.7"
