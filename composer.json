@@ -50,7 +50,7 @@
         "oomphinc/composer-installers-extender": "^1.1.2",
         "phpoffice/phpspreadsheet": "^1.14.1",
         "symfony/flex": "^1.10",
-        "unocha/common_design": "^2.8.3",
+        "unocha/common_design": "^2.8.9",
         "webflo/drupal-finder": "^1.0.0",
         "zaporylie/composer-drupal-optimizations": "^1.1.1"
     },
