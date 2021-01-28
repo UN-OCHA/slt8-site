@@ -24,7 +24,7 @@ env:
      - DB=sqlite
 
 install:
-  ssh-agent -k
+  ssh-agent -k || true
 
 before_script:
   # Composer.
