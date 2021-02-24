@@ -2,7 +2,7 @@ Common Design Table Component
 =============================
 
 This component provides styling of the common design tables and handle
-responsivity by displayin tables with the `cd-table--responsive` class in
+responsivity by displaying tables with the `cd-table--responsive` class in
 a single column format on small viewports.
 
 This component has a javascript component that adds a `data-content` attribute
@@ -16,7 +16,7 @@ of such tables in the DOM.
 The javascript is not mandatory and adding the `data-content` attributes in the
 template directly works as well.
 
-To avoid including the javascript, override the libary in the `theme.info.yml`:
+To avoid including the javascript, override the library in the `theme.info.yml`:
 
 ```yaml
 libraries-override:

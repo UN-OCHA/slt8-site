@@ -26,3 +26,19 @@
     }
   }
 }
+
+
+// Set widths of menu items, depending on content.
+
+.cd-site-header__nav-holder nav > ul {
+  > li,
+  .cd-nav__item {
+    @include desktop {
+      max-width: 112px;
+    }
+
+    @include xlarge {
+      max-width: 160px;
+    }
+  }
+}

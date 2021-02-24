@@ -5,7 +5,7 @@
 }
 
 .cd-table caption {
-  background: var(--cd-site-bg-color);
+  background: var(--cd-blue-grey);
   padding: 0.25rem 0.5rem;
 }
 
@@ -25,7 +25,7 @@
   text-align: left;
   color: var(--cd-ocha-blue);
   border-bottom: 1px solid white;
-  background: var(--cd-site-bg-color);
+  background: var(--cd-blue-grey);
 }
 
 .cd-table a {
@@ -70,7 +70,7 @@
 }
 
 .cd-table--striped tr:nth-child(even) {
-  background: var(--cd-light-grey);
+  background: var(--cd-grey--light);
 }
 
 /* The breakpoint has been changed to handle the large SLT tables.
@@ -99,7 +99,7 @@
   }
 
   .cd-table--responsive tr {
-    border-bottom: 1px solid var(--cd-light-grey);
+    border-bottom: 1px solid var(--cd-grey--light);
     padding: 0 !important;
   }
 
@@ -108,7 +108,7 @@
     display: flex;
     align-items: center;
     border: none;
-    border-bottom: 1px solid var(--cd-site-bg-color);
+    border-bottom: 1px solid var(--cd-blue-grey);
     position: relative;
     padding: 0.5rem;
     min-height: 2rem; /* label should wrap */
