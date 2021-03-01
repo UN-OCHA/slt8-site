@@ -22,7 +22,7 @@
   display: block;
   position: relative;
   overflow: hidden;
-  background: var(--cd-dark-blue);
+  background: var(--cd-blue--dark);
 }
 
 .slt-image-link--link-with-background-image picture {
