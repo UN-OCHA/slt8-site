@@ -13,7 +13,7 @@ const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const notify = browserSync.notify;
 const rename = require('gulp-rename');
-const sass = require('gulp-sass');
+const sass = require('gulp-dart-sass');
 const cssnano = require('cssnano');
 const postcss = require('gulp-postcss');
 const prefix = require('autoprefixer');
@@ -73,10 +73,10 @@ function sassCompileTask() {
   return gulp.src(['sass/styles.scss'])
     .pipe(plumber())
     .pipe(gulpif(process.env.NODE_ENV !== 'production', sourcemaps.init()))
-    .pipe(sass({outputStyle: 'nested'}).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
     .pipe(postcss([
       prefix({
-        browsers: ['>1%', 'iOS 9'],
+        browsers: ['>1%', 'last 3 versions'],
         cascade: false,
       }),
       cssnano(),
@@ -86,35 +86,6 @@ function sassCompileTask() {
     .pipe(reload({stream: true}));
 };
 
-//——————————————————————————————————————————————————————————————————————————————
-// Components
-//——————————————————————————————————————————————————————————————————————————————
-function componentCompileTask() {
-  browserSync.notify(`Compiling Components...`);
-
-  return gulp.src('./components/*/*.scss')
-    .pipe(plumber())
-    .pipe(gulpif(process.env.NODE_ENV !== 'production', sourcemaps.init()))
-    .pipe(sass({outputStyle: 'nested'}).on('error', sass.logError))
-    .pipe(postcss([
-      prefix({
-        browsers: ['>1%', 'iOS 9'],
-        cascade: false,
-      }),
-      cssnano(),
-    ]))
-    .pipe(gulpif(process.env.NODE_ENV !== 'production', sourcemaps.write('./')))
-    // rename the current file's parent directory
-    .pipe(rename(function (file) {
-      // file.dirname = current folder, your "scss"
-      // then get the parent of the current folder, e.g., "folder1", "folder2", etc.
-      let parentFolder = path.dirname(file.dirname)
-      // set each file's folder to "folder1/css", "folder2/css", etc.
-      file.dirname = path.join(parentFolder, 'components/' + file.dirname + '/');
-    }))
-
-    .pipe(gulp.dest('.'));
-};
 
 //——————————————————————————————————————————————————————————————————————————————
 // Sass Linting
@@ -130,7 +101,7 @@ function sassLintTask() {
 //——————————————————————————————————————————————————————————————————————————————
 // Sass
 //——————————————————————————————————————————————————————————————————————————————
-const sassTask = gulp.series(sassLintTask, sassCompileTask, componentCompileTask);
+const sassTask = gulp.series(sassLintTask, sassCompileTask);
 exports.sass = sassTask;
 
 
@@ -189,8 +160,8 @@ function jsLintTask() {
 //——————————————————————————————————————————————————————————————————————————————
 function jsBundleTask() {
   return gulp.src([
-      'js/*.js',
-    ])
+    'js/*.js',
+  ])
     .pipe(concat('ocha_bundle.js'))
     .pipe(gulpif(process.env.NODE_ENV === 'production', uglify()))
     .pipe(gulp.dest('js'))
@@ -210,7 +181,7 @@ exports.js = jsTask;
 //——————————————————————————————————————————————————————————————————————————————
 function watchTask() {
   gulp.watch(['js/cd-*.js'], jsTask);
-  gulp.watch(['sass/**/*.scss', 'components/**/*.scss'], sassTask);
+  gulp.watch(['sass/**/*.scss'], sassTask);
 };
 exports.watch = watchTask;
 
