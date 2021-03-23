@@ -6,7 +6,6 @@
  */
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Access\AccessResultInterface;
 
 /**
  * Get the list of components to attach to formatted text fields.
@@ -89,4 +88,23 @@ function common_design_subtheme_add_component_classes($html, array $element) {
 
   $html = Html::serialize($dom);
   return trim($html);
+}
+
+/**
+ * Implements hook_preprocess_paragraph__page_title().
+ *
+ * Use the page title block for the title and display the local tasks below it.
+ * We use common_design_subtheme_get_block_render_array() that will cache the
+ * render array of the blocks so that they are not re-rendered and displayed
+ * if done by the paragraph title.
+ */
+function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
+  // If we are in a form, then the '#id' will be set. In that case, we don't
+  // want to show the page title as it would not be updated when chaging the
+  // title field. We will display a placeholder instead, which is handled by
+  // paragraphs_page_title_preprocess_paragraph__page_title().
+  if (!isset($variables['elements']['#id'])) {
+    $variables['content']['title'] = common_design_get_block_render_array('page_title_block');
+    $variables['content']['local_tasks'] = common_design_get_block_render_array('local_tasks_block');
+  }
 }
