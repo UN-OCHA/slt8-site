@@ -1,12 +1,12 @@
 .cd-table {
+  width: 100%;
   margin: 0 auto 1rem;
   border-collapse: collapse;
-  width: 100%;
 }
 
 .cd-table caption {
-  background: var(--cd-blue-grey);
   padding: 0.25rem 0.5rem;
+  background: var(--cd-blue-grey);
 }
 
 .cd-table--caption--bottom caption {
@@ -33,7 +33,7 @@
 }
 
 .cd-table td.is-active {
-  background-color: rgba(0,0,0,0.02);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 @media (min-width: 576px) {
@@ -58,9 +58,9 @@
 }
 
 .cd-table--row-numbers tbody tr td.cd-table--row-num:first-child::before {
-  content: counter(rowNumber);
   min-width: 1em;
   margin-right: 0.5em;
+  content: counter(rowNumber);
   font-weight: normal;
 }
 
@@ -99,21 +99,21 @@
   }
 
   .cd-table--responsive tr {
-    border-bottom: 1px solid var(--cd-grey--light);
     padding: 0 !important;
+    border-bottom: 1px solid var(--cd-grey--light);
   }
 
   .cd-table--responsive td {
+    position: relative;
     /* Behave  like a "row" */
     display: flex;
     align-items: center;
+    min-height: 2rem; /* label should wrap */
+    padding: 0.5rem;
+    text-align: left;
+    white-space: normal !important;
     border: none;
     border-bottom: 1px solid var(--cd-blue-grey);
-    position: relative;
-    padding: 0.5rem;
-    min-height: 2rem; /* label should wrap */
-    white-space: normal !important;
-    text-align: left;
   }
 
   .cd-table--responsive td:before {
@@ -121,12 +121,12 @@
     width: 40%;
     min-width: 40%;
     padding-right: 1rem;
-    text-align: left;
-    font-weight: bold;
-    font-size: 0.85rem;
-    color: var(--cd-ocha-blue);
     /* Label the data */
     content: attr(data-content);
+    text-align: left;
+    color: var(--cd-ocha-blue);
+    font-size: 0.85rem;
+    font-weight: bold;
   }
 
   .cd-table--responsive tfoot td {
@@ -138,8 +138,8 @@
   }
 
   .cd-table--row-numbers tbody tr td.cd-table--row-num::before {
-    font-weight: bold;
     font-size: 1.5rem;
+    font-weight: bold;
   }
 }
 

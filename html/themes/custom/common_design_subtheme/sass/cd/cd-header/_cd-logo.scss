@@ -10,7 +10,7 @@
   // Logo for mobile.
   // sass-lint:disable no-duplicate-properties
   @include max-width(md) {
-    background: url('../img/logos/slt-compact.svg') center no-repeat;
+    background: url("../img/logos/slt-compact.svg") center no-repeat;
   }
 
   @include tablet {
