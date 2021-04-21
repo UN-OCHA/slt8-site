@@ -1,8 +1,7 @@
 name:  OCHA Common Design sub theme
 type: theme
 description: OCHA Common Design sub theme
-core: 8.x
-# Defines the base theme
+core_version_requirement: ^8.8 || ^9
 base theme: common_design
 logo: 'img/logos/slt-full.svg'
 
