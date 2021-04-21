@@ -2377,17 +2377,17 @@
         },
         {
             "name": "drupal/components",
-            "version": "2.2.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/components.git",
-                "reference": "8.x-2.2"
+                "reference": "8.x-2.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/components-8.x-2.2.zip",
-                "reference": "8.x-2.2",
-                "shasum": "02a57b2274348c7b9c14800c1bc5f5954d64df88"
+                "url": "https://ftp.drupal.org/files/projects/components-8.x-2.4.zip",
+                "reference": "8.x-2.4",
+                "shasum": "9b083c2f845ff2e1a1632efcf24f88cecd7479cc"
             },
             "require": {
                 "drupal/core": "^8.7.7 || ^9"
@@ -2395,8 +2395,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.2",
-                    "datestamp": "1611799702",
+                    "version": "8.x-2.4",
+                    "datestamp": "1618861606",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -10479,16 +10479,16 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v3.0.3",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "2229d1e33013e97712aa75871b0123069ea28883"
+                "reference": "65c2fc09ece417113dd8915d11c63d004de4ad32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/2229d1e33013e97712aa75871b0123069ea28883",
-                "reference": "2229d1e33013e97712aa75871b0123069ea28883",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/65c2fc09ece417113dd8915d11c63d004de4ad32",
+                "reference": "65c2fc09ece417113dd8915d11c63d004de4ad32",
                 "shasum": ""
             },
             "require": {
@@ -10500,7 +10500,7 @@
                 "GPL-2.0-only"
             ],
             "description": "OCHA Common Design base theme for Drupal 8",
-            "time": "2021-03-22T12:52:14+00:00"
+            "time": "2021-04-20T15:35:55+00:00"
         },
         {
             "name": "webflo/drupal-finder",
