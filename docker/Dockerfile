@@ -22,7 +22,7 @@ RUN rm -rf ./vendor && \
 RUN cd html/themes/custom/common_design_subtheme && \
     rm -rf ./node_modules && \
     npm install && \
-    ./node_modules/.bin/gulp build && \
+    ./node_modules/.bin/sass sass:build && \
     rm -rf ./node_modules
 
 # Copy settings to default site location.
