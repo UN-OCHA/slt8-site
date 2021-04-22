@@ -9,6 +9,9 @@ addons:
 php:
   - 7.4
 
+services:
+  - mysql
+
 mysql:
   database: drupal
   username: root
