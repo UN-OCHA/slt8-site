@@ -1,4 +1,4 @@
-dist: trusty
+dist: bionic
 language: php
 cache:
   - composer
@@ -8,6 +8,9 @@ addons:
 
 php:
   - 7.3
+
+services:
+  - mysql
 
 mysql:
   database: drupal
