@@ -1,8 +1,7 @@
 {
     "patches": {
         "drupal/core" : {
-            "https://www.drupal.org/project/drupal/issues/2544110": "patches/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch",
-            "https://www.drupal.org/project/drupal/issues/2938129": "https://www.drupal.org/files/issues/2019-01-18/2938129-pagetitle-11.patch"
+            "https://www.drupal.org/project/drupal/issues/2544110": "patches/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch"
         },
         "drupal/entity_usage": {
             "https://www.drupal.org/project/entity_usage/issues/2955078": "https://www.drupal.org/files/issues/2018-04-06/2955078-5.patch"

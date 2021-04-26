@@ -48,6 +48,9 @@ script:
   - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
   - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
 
+  # Theme build.
+  - composer run sass
+
   # Drupal install
   - mysql -e "CREATE DATABASE drupal;"
   - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1 IDENTIFIED BY 'drupal';"

@@ -6,7 +6,6 @@
  */
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Access\AccessResultInterface;
 
 /**
  * Get the list of components to attach to formatted text fields.
@@ -105,75 +104,7 @@ function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
   // title field. We will display a placeholder instead, which is handled by
   // paragraphs_page_title_preprocess_paragraph__page_title().
   if (!isset($variables['elements']['#id'])) {
-    $variables['content']['title'] = common_design_subtheme_get_block_render_array('page_title_block');
-    $variables['content']['local_tasks'] = common_design_subtheme_get_block_render_array('local_tasks_block');
+    $variables['content']['title'] = common_design_get_block_render_array('page_title_block');
+    $variables['content']['local_tasks'] = common_design_get_block_render_array('local_tasks_block');
   }
-}
-
-/**
- * Implements hook_preprocess_page().
- *
- * Remove the default page title and local tasks blocks if they were already
- * rendered by a page title paragraph.
- *
- * @see common_design_subtheme_preprocess_paragraph__page_title()
- */
-function common_design_subtheme_preprocess_page(&$variables) {
-  if (isset($variables['node'])) {
-    $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
-
-    // If the block has already been rendered (from the page title block) then
-    // we remove the default page title block.
-    if (isset($rendered['page_title_block'])) {
-      unset($variables['page']['content']['common_design_subtheme_page_title']);
-    }
-
-    // Same for the local tasks block.
-    if (isset($rendered['local_tasks_block'])) {
-      unset($variables['page']['content']['common_design_subtheme_local_tasks']);
-    }
-  }
-}
-
-/**
- * Render a block.
- *
- * We cache a flag indicating the block has already been redendered and return
- * an empty array in that case to ensure that the block is displayed only one
- * on the page.
- *
- * @param string $id
- *   Block ID.
- *
- * @return array
- *   Renderable array of the block. Empty array if this was already called
- *   before to avoid displaying the block several times.
- *
- * @see https://drupal.stackexchange.com/a/171733
- */
-function common_design_subtheme_get_block_render_array($id) {
-  $rendered = &drupal_static('common_design_subtheme_rendered_blocks');
-
-  if (!isset($rendered[$id])) {
-    // Prevent rendering the block several times.
-    $rendered[$id] = TRUE;
-
-    // Generate an instance of the plugin block.
-    $block_manager = \Drupal::service('plugin.manager.block');
-    $plugin_block = $block_manager->createInstance($id, []);
-
-    // Skip if there is no block matching the id.
-    if (empty($plugin_block)) {
-      return [];
-    }
-
-    // Check if the block is accessible to the current user.
-    $access = $plugin_block->access(\Drupal::currentUser());
-    // This can be a boolean or an object implementing AccessResultInterface.
-    if ($access === TRUE || ($access instanceof AccessResultInterface && $access->isAllowed())) {
-      return $plugin_block->build();
-    }
-  }
-
-  return [];
 }
