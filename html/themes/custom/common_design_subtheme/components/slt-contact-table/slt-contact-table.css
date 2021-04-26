@@ -11,8 +11,8 @@ td.slt-contact-table__phones ul {
 }
 
 td.slt-contact-table__phones li {
-  list-style: none;
   margin-left: 0;
+  list-style: none;
 }
 
 /* Remove the edit label on small screen as it's redundant with the
