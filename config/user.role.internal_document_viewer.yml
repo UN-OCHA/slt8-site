@@ -7,6 +7,5 @@ label: 'Internal Document Viewer'
 weight: -7
 is_admin: null
 permissions:
-  - 'view published contact content'
   - 'view published document media'
   - 'view published internal_document media'

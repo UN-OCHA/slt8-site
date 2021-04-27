@@ -1,28 +1,27 @@
 //——————————————————————————————————————————————————————————————————————————————
 // Common Design: Header
 //——————————————————————————————————————————————————————————————————————————————
-
-// Ensure the main menu dropdown position is correct when there is also the
-// drupal toolbar.
-.cd-header {
-  position: relative;
-}
-
-.cd-header button:focus {
-  outline: 3px solid $implementation-highlight;
-}
-
-.cd-global-header {
-  background: $implementation-primary;
-  background-image: linear-gradient(-180deg, $implementation-primary 67%, $implementation-primary-dark 97%);
-}
-
 .cd-site-header__inner {
-  @supports(display: grid) {
+  @supports (display: grid) {
     grid-template-columns: 52px 1fr;
 
     @include tablet {
-      grid-template-columns: 186px 1fr;
+      grid-template-columns: 121px 1fr;
+    }
+  }
+}
+
+// Set widths of menu items, depending on content.
+
+.cd-site-header__nav-holder nav > ul {
+  > li,
+  .cd-nav__item {
+    @include desktop {
+      max-width: 120px;
+    }
+
+    @include xlarge {
+      max-width: 160px;
     }
   }
 }
