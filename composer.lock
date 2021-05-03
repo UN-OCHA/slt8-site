@@ -475,20 +475,6 @@
                 "dependency",
                 "package"
             ],
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2021-04-01T07:16:35+00:00"
         },
         {
@@ -619,17 +605,7 @@
                 "zend",
                 "zikula"
             ],
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-04-07T06:57:05+00:00"
+            "time": "2021-01-14T11:07:16+00:00"
         },
         {
             "name": "composer/semver",
@@ -794,20 +770,6 @@
             "keywords": [
                 "Xdebug",
                 "performance"
-            ],
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
             ],
             "time": "2021-03-25T17:01:18+00:00"
         },
@@ -3497,7 +3459,7 @@
             "extra": {
                 "drupal": {
                     "version": "8.x-1.1",
-                    "datestamp": "1597142372",
+                    "datestamp": "1597142482",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3915,7 +3877,7 @@
                     "homepage": "https://www.drupal.org/user/216580"
                 },
                 {
-                    "name": "mikesmullin",
+                    "name": "ms2011",
                     "homepage": "https://www.drupal.org/user/108440"
                 },
                 {
@@ -10350,12 +10312,6 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "funding": [
-                {
-                    "url": "https://github.com/theseer",
-                    "type": "github"
-                }
-            ],
             "time": "2020-07-12T23:59:07+00:00"
         },
         {
@@ -10528,16 +10484,16 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v4.0.2",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "f3c0961766d62e9b95893ca83386f55cc396c7d3"
+                "reference": "58c2bcb96eaab0ee298e95224237c1f277c00370"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/f3c0961766d62e9b95893ca83386f55cc396c7d3",
-                "reference": "f3c0961766d62e9b95893ca83386f55cc396c7d3",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/58c2bcb96eaab0ee298e95224237c1f277c00370",
+                "reference": "58c2bcb96eaab0ee298e95224237c1f277c00370",
                 "shasum": ""
             },
             "require": {
@@ -10549,7 +10505,7 @@
                 "GPL-2.0-only"
             ],
             "description": "OCHA Common Design base theme for Drupal 8",
-            "time": "2021-04-26T09:56:32+00:00"
+            "time": "2021-05-03T11:41:26+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -11277,6 +11233,9 @@
                     "services": {
                         "drush.services.yml": "^9"
                     }
+                },
+                "patches_applied": {
+                    "https://www.drupal.org/project/yaml_content/issues/3084161": "https://www.drupal.org/files/issues/2020-04-10/yaml_content-layout-builder-support-3084161-8.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -11348,12 +11307,6 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/pdepend/pdepend",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-06-20T10:53:13+00:00"
         },
         {
