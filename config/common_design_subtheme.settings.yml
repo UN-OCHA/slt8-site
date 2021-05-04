@@ -8,7 +8,7 @@ logo:
 favicon:
   use_default: 1
 common_design_node_title:
-  full: full
+  full: 0
   rss: 0
   search_index: 0
   search_result: 0
