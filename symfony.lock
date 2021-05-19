@@ -62,6 +62,9 @@
     "drupal/social_auth_hid": {
         "version": "2.5.0"
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
     "instaclick/php-webdriver": {
         "version": "1.4.7"
     },
