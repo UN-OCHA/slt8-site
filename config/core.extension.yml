@@ -36,6 +36,8 @@ module:
   menu_ui: 0
   migrate: 0
   migrate_drupal: 0
+  migrate_plus: 0
+  migrate_tools: 0
   node: 0
   page_cache: 0
   paragraphs_page_title: 0
@@ -49,6 +51,7 @@ module:
   slt_contacts: 0
   slt_general: 0
   slt_layouts: 0
+  slt_migrate: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0

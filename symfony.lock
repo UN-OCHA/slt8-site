@@ -53,6 +53,12 @@
     "drupal/layout_paragraphs": {
         "version": "1.0.0-beta3"
     },
+    "drupal/migrate_plus": {
+        "version": "5.1.0"
+    },
+    "drupal/migrate_tools": {
+        "version": "5.x-dev"
+    },
     "drupal/paragraphs": {
         "version": "1.12.0"
     },
