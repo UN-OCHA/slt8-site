@@ -10,7 +10,7 @@ use Drupal\Core\Security\TrustedCallbackInterface;
  *
  * @see common_design_subtheme_process_field().
  */
-class CommonDesignSubthemeComponentClasses implements TrustedCallbackInterface {
+class CommonDesignSubthemeCallbacks implements TrustedCallbackInterface {
 
   /**
    * {@inheritdoc}

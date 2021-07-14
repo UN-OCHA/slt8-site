@@ -5,7 +5,7 @@
  * Theme preprocessors.
  */
 
-use Drupal\common_design_subtheme\CommonDesignSubthemeComponentClasses;
+use Drupal\common_design_subtheme\CommonDesignSubthemeCallbacks;
 
 /**
  * Get the list of components to attach to formatted text fields.
@@ -47,7 +47,7 @@ function common_design_subtheme_preprocess_field(&$variables) {
     case 'text_default':
       foreach ($variables['items'] as $key => $item) {
         $variables['items'][$key]['content']['#post_render'][] = [
-          CommonDesignSubthemeComponentClasses::class, 'postRender',
+          CommonDesignSubthemeCallbacks::class, 'postRender',
         ];
       }
       foreach (common_design_subtheme_get_components() as $component => $dummy) {
