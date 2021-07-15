@@ -7,7 +7,7 @@ addons:
   chrome: stable
 
 php:
-  - 7.3
+  - 7.4
 
 services:
   - mysql
@@ -17,15 +17,6 @@ mysql:
   username: root
   encoding: utf8
 
-env:
-  global:
-     - DRUPAL_REPO='git://drupalcode.org/project/drupal.git'
-     - DRUPAL_VERSION='8.x'
-     - DRUSH_VERSION='8.*'
-     - PHPCS_VERSION='2.9.*@dev'
-     - CODER_VERSION='dev-8.x-2.x'
-     - DB=sqlite
-
 install:
   ssh-agent -k || true
 
@@ -33,7 +24,7 @@ before_script:
   # Composer.
   - sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
   - source $HOME/.bashrc
-  - composer self-update --1
+  - composer self-update --2
 
   # Ensure the PHP environment is ready.
   - phpenv rehash
