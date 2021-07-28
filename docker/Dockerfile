@@ -1,5 +1,5 @@
 # Build the code.
-FROM unocha/unified-builder:${TAG:-7.3-stable} as builder
+FROM unocha/unified-builder:${TAG:-7.4-develop} as builder
 
 ARG  BRANCH_ENVIRONMENT
 
@@ -14,7 +14,7 @@ WORKDIR /srv/www
 RUN rm -rf ./vendor && \
     # Update composer to avoid issues with missing drupal files.
     # @see https://github.com/drupal-composer/drupal-project/issues/282
-    composer selfupdate --1 && \
+    composer self-update --2 && \
     COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist
 
 # Clean up previous npm installation and run new one. Those commands correspond
@@ -31,7 +31,7 @@ RUN cp -a docker/settings.php docker/services.yml html/sites/default
 ################################################################################
 
 # Generate the image.
-FROM unocha/php7-k8s:${TAG:-7.3-NR-stable}
+FROM unocha/php-k8s:${TAG:-7.4-NR-develop}
 
 ARG VCS_REF
 ARG VCS_URL

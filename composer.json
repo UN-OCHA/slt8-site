@@ -20,18 +20,18 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "composer/installers": "^1.7",
-        "cweagans/composer-patches": "^1.6.7",
-        "drupal-composer/preserve-paths": "^0.1.5",
+        "cweagans/composer-patches": "^1.7",
+        "drupal-composer/preserve-paths": "^0.1.6",
         "drupal/admin_denied": "^1.0",
         "drupal/allowed_formats": "^1.2",
         "drupal/bcc": "^3.0@beta",
         "drupal/components": "^2.4",
         "drupal/config_split": "^1.4",
-        "drupal/core-composer-scaffold": "^8.8",
-        "drupal/core-dev": "^8.8",
-        "drupal/core-recommended": "^8.8",
+        "drupal/core-composer-scaffold": "^8.9",
+        "drupal/core-dev": "^8.9",
+        "drupal/core-recommended": "^8.9",
         "drupal/ctools": "^3.7",
         "drupal/editor_advanced_link": "^1.8",
         "drupal/entity_usage": "2.0-beta3",
@@ -48,12 +48,11 @@
         "drupal/redirect": "^1.6",
         "drupal/social_auth_hid": "^2.5",
         "drush/drush": "^10.2.2",
-        "oomphinc/composer-installers-extender": "^1.1.2",
+        "oomphinc/composer-installers-extender": "^2.0",
         "phpoffice/phpspreadsheet": "^1.14.1",
         "symfony/flex": "^1.10",
         "unocha/common_design": "^4.0.0",
-        "webflo/drupal-finder": "^1.0.0",
-        "zaporylie/composer-drupal-optimizations": "^1.1.1"
+        "webflo/drupal-finder": "^1.0.0"
     },
     "require-dev": {
         "drupal/coder": "^8.3.9",
@@ -140,7 +139,7 @@
                 ".gitattributes": "../.gitattributes"
             },
             "omit-defaults": false,
-             "locations": {
+            "locations": {
                 "web-root": "html/"
             }
         },

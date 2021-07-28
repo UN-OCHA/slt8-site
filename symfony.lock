@@ -1,4 +1,7 @@
 {
+    "behat/mink-browserkit-driver": {
+        "version": "v1.3.4"
+    },
     "behat/mink-selenium2-driver": {
         "version": "v1.4.0"
     },
@@ -10,6 +13,9 @@
     },
     "composer/spdx-licenses": {
         "version": "1.5.4"
+    },
+    "dnoegel/php-xdg-base-dir": {
+        "version": "v0.1.1"
     },
     "drupal/bcc": {
         "version": "3.0.0-beta1"
@@ -116,6 +122,9 @@
     "sirbrillig/phpcs-variable-analysis": {
         "version": "v2.9.0"
     },
+    "symfony/class-loader": {
+        "version": "v3.4.41"
+    },
     "symfony/flex": {
         "version": "1.0",
         "recipe": {
@@ -145,5 +154,14 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
+    },
+    "symfony/polyfill-php56": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-php70": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-util": {
+        "version": "v1.17.0"
     }
 }
