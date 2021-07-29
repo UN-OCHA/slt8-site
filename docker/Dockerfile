@@ -14,7 +14,7 @@ WORKDIR /srv/www
 RUN rm -rf ./vendor && \
     # Update composer to avoid issues with missing drupal files.
     # @see https://github.com/drupal-composer/drupal-project/issues/282
-    composer selfupdate --2 && \
+    composer self-update --2 && \
     COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist
 
 # Clean up previous npm installation and run new one. Those commands correspond
