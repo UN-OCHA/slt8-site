@@ -89,10 +89,12 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "DrupalProject\\composer\\ScriptHandler::removeUnnecessaryFiles",
             "git config core.hooksPath git-hooks || true"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "DrupalProject\\composer\\ScriptHandler::removeUnnecessaryFiles",
             "git config core.hooksPath git-hooks || true"
         ],
         "sass-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
@@ -130,13 +132,18 @@
             "html/themes/custom"
         ],
         "drupal-scaffold": {
-            "initial": {
-                "sites/default/default.services.yml": "sites/default/services.yml",
-                "sites/default/default.settings.php": "sites/default/settings.php",
-                ".editorconfig": "../.editorconfig",
-                ".gitattributes": "../.gitattributes"
+            "file-mapping": {
+                "[web-root]/sites/default/default.services.yml": {
+                  "mode": "replace",
+                  "path": "html/core/assets/scaffold/files/default.services.yml",
+                  "overwrite": false
+                },
+                "[web-root]/sites/default/default.settings.php": {
+                  "mode": "replace",
+                  "path": "html/core/assets/scaffold/files/default.settings.php",
+                  "overwrite": false
+                }
             },
-            "omit-defaults": false,
             "locations": {
                 "web-root": "html/"
             }
