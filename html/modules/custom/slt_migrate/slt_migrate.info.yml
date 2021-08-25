@@ -1,8 +1,0 @@
-type: module
-name: SLT Migration to Drupal 8
-description: 'Migrate SLT content from Drupal 7 to Drupal 8.'
-package: slt
-core_version_requirement: ^8.9 || ^9
-dependencies:
-  - drupal:migrate
-  - migrate_plus:migrate_plus
