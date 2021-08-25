@@ -1,5 +1,5 @@
 # Build the code.
-FROM unocha/unified-builder:${TAG:-7.4-develop} as builder
+FROM public.ecr.aws/unocha/unified-builder:${TAG:-8.0-stable} as builder
 
 ARG  BRANCH_ENVIRONMENT
 
@@ -31,7 +31,7 @@ RUN cp -a docker/settings.php docker/services.yml html/sites/default
 ################################################################################
 
 # Generate the image.
-FROM unocha/php-k8s:${TAG:-7.4-NR-develop}
+FROM public.ecr.aws/unocha/php-k8s:${TAG:-8.0-NR-stable}
 
 ARG VCS_REF
 ARG VCS_URL
@@ -60,4 +60,7 @@ COPY --from=builder /srv/www/vendor /srv/www/vendor/
 COPY --from=builder /srv/www/composer.json /srv/www/composer.json
 COPY --from=builder /srv/www/composer.patches.json /srv/www/composer.patches.json
 COPY --from=builder /srv/www/composer.lock /srv/www/composer.lock
+COPY --from=builder /srv/www/symfony.lock /srv/www/symfony.lock
+COPY --from=builder /srv/www/patches /srv/www/patches
+COPY --from=builder /srv/www/scripts /srv/www/scripts
 COPY --from=builder /srv/www/docker/fastcgi_drupal.conf /etc/nginx/apps/drupal/fastcgi_drupal.conf
