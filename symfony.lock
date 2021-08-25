@@ -11,11 +11,23 @@
     "composer/composer": {
         "version": "1.10.17"
     },
+    "composer/metadata-minifier": {
+        "version": "1.0.0"
+    },
     "composer/spdx-licenses": {
         "version": "1.5.4"
     },
     "dnoegel/php-xdg-base-dir": {
         "version": "v0.1.1"
+    },
+    "doctrine/event-manager": {
+        "version": "1.1.1"
+    },
+    "doctrine/persistence": {
+        "version": "1.3.8"
+    },
+    "doctrine/reflection": {
+        "version": "1.2.2"
     },
     "drupal/bcc": {
         "version": "3.0.0-beta1"
@@ -56,6 +68,12 @@
     "drupal/layout_paragraphs": {
         "version": "1.0.0-beta3"
     },
+    "drupal/migrate_plus": {
+        "version": "4.2.0"
+    },
+    "drupal/migrate_tools": {
+        "version": "4.5.0"
+    },
     "drupal/paragraphs": {
         "version": "1.12.0"
     },
@@ -73,6 +91,9 @@
     },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
+    },
+    "friends-of-behat/mink-browserkit-driver": {
+        "version": "v1.5.0"
     },
     "instaclick/php-webdriver": {
         "version": "1.4.7"
@@ -107,6 +128,9 @@
     "phpoffice/phpspreadsheet": {
         "version": "1.15.0"
     },
+    "psr/cache": {
+        "version": "1.0.1"
+    },
     "psr/http-client": {
         "version": "1.0.1"
     },
@@ -115,6 +139,12 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "react/promise": {
+        "version": "v2.8.0"
+    },
+    "sebastian/type": {
+        "version": "1.1.4"
     },
     "seld/jsonlint": {
         "version": "1.8.3"
@@ -128,6 +158,15 @@
     "symfony/class-loader": {
         "version": "v3.4.41"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.4.0"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.25"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.9"
+    },
     "symfony/flex": {
         "version": "1.0",
         "recipe": {
@@ -140,8 +179,14 @@
             ".env"
         ]
     },
+    "symfony/http-client-contracts": {
+        "version": "v2.4.0"
+    },
     "symfony/lock": {
         "version": "v3.4.47"
+    },
+    "symfony/mime": {
+        "version": "v5.3.0"
     },
     "symfony/phpunit-bridge": {
         "version": "3.3",
@@ -158,13 +203,28 @@
             "tests/bootstrap.php"
         ]
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.23.0"
+    },
     "symfony/polyfill-php56": {
         "version": "v1.17.0"
     },
     "symfony/polyfill-php70": {
         "version": "v1.17.0"
     },
+    "symfony/polyfill-php73": {
+        "version": "v1.23.0"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
+    },
     "symfony/polyfill-util": {
         "version": "v1.17.0"
+    },
+    "symfony/service-contracts": {
+        "version": "v2.4.0"
+    },
+    "symfony/translation-contracts": {
+        "version": "v2.4.0"
     }
 }
