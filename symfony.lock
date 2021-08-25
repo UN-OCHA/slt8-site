@@ -68,12 +68,6 @@
     "drupal/layout_paragraphs": {
         "version": "1.0.0-beta3"
     },
-    "drupal/migrate_plus": {
-        "version": "4.2.0"
-    },
-    "drupal/migrate_tools": {
-        "version": "4.5.0"
-    },
     "drupal/paragraphs": {
         "version": "1.12.0"
     },
