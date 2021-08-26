@@ -60,7 +60,4 @@ COPY --from=builder /srv/www/vendor /srv/www/vendor/
 COPY --from=builder /srv/www/composer.json /srv/www/composer.json
 COPY --from=builder /srv/www/composer.patches.json /srv/www/composer.patches.json
 COPY --from=builder /srv/www/composer.lock /srv/www/composer.lock
-COPY --from=builder /srv/www/symfony.lock /srv/www/symfony.lock
-COPY --from=builder /srv/www/patches /srv/www/patches
-COPY --from=builder /srv/www/scripts /srv/www/scripts
 COPY --from=builder /srv/www/docker/fastcgi_drupal.conf /etc/nginx/apps/drupal/fastcgi_drupal.conf
