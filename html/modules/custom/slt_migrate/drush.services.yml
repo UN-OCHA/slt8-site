@@ -1,6 +1,0 @@
-services:
-  slt_migrate.commands:
-    class: \Drupal\slt_migrate\Commands\SltMigrateCommands
-    arguments: ['@config.installer', '@config.manager']
-    tags:
-      - { name: drush.command }
