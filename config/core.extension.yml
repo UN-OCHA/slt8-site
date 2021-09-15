@@ -45,6 +45,7 @@ module:
   r4032login: 0
   redirect: 0
   responsive_image: 0
+  seckit: 0
   slt_access: 0
   slt_contacts: 0
   slt_general: 0
