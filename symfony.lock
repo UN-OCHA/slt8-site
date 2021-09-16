@@ -1,7 +1,4 @@
 {
-    "behat/mink-browserkit-driver": {
-        "version": "v1.3.4"
-    },
     "behat/mink-selenium2-driver": {
         "version": "v1.4.0"
     },
