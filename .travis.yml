@@ -17,6 +17,12 @@ mysql:
   username: root
   encoding: utf8
 
+before_install:
+  # Drupal database setup.
+  - mysql -e "CREATE DATABASE IF NOT EXISTS drupal;"
+  - mysql -e "CREATE USER 'drupal'@'127.0.0.1' IDENTIFIED BY 'drupal';"
+  - mysql -e "GRANT ALL PRIVILEGES ON drupal.* to 'drupal'@'127.0.0.1';"
+
 install:
   ssh-agent -k || true
 
@@ -48,10 +54,6 @@ script:
 
   # Theme build.
   - composer run sass
-
-  # Drupal install
-  - mysql -e "CREATE DATABASE drupal;"
-  - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1 IDENTIFIED BY 'drupal';"
 
   - cd ${TRAVIS_BUILD_DIR}
   - mkdir -p ./html/sites/default
