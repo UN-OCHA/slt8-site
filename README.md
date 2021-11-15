@@ -143,6 +143,15 @@ Todo
 - [ ] Review responsiveness of image grids.
 - [ ] Check `optimize_image_binaries` module and if `pngquant` is available
 
+
+Local development
+-------------
+
+For local development, add this line to settings.local.php:
+`$config['config_split.config_split.config_dev']['status'] = TRUE;`
+After importing a fresh database, run `drush cim` to enable devel, database log
+stage_file_proxy and views_ui.
+
 Local testing
 -------------
 
