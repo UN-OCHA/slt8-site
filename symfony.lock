@@ -74,8 +74,14 @@
     "drupal/r4032login": {
         "version": "1.1.0"
     },
+    "drupal/seckit": {
+        "version": "2.0.0"
+    },
     "drupal/social_auth_hid": {
         "version": "2.5.0"
+    },
+    "drupal/stage_file_proxy": {
+        "version": "1.1.0"
     },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
@@ -94,6 +100,9 @@
     },
     "justinrainbow/json-schema": {
         "version": "5.2.10"
+    },
+    "kint-php/kint": {
+        "version": "3.3"
     },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
