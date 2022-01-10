@@ -86,6 +86,9 @@
     "drupal/user_expire": {
         "version": "1.0.0"
     },
+    "enlightn/security-checker": {
+        "version": "v1.9.0"
+    },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
