@@ -47,6 +47,7 @@
         "drupal/redirect": "^1.6",
         "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^2.6",
+        "drupal/user_expire": "^1.0",
         "drush/drush": "^10.2.2",
         "oomphinc/composer-installers-extender": "^2.0",
         "phpoffice/phpspreadsheet": "^1.14.1",
@@ -83,12 +84,6 @@
         ]
     },
     "scripts": {
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "DrupalProject\\composer\\ScriptHandler::removeUnnecessaryFiles",
