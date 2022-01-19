@@ -34,7 +34,7 @@
         "drupal/core-project-message": "^9.2.6",
         "drupal/core-recommended": "^9.2.6",
         "drupal/ctools": "^3.7",
-        "drupal/editor_advanced_link": "^1.9",
+        "drupal/editor_advanced_link": "^2.0",
         "drupal/entity_usage": "^2.0-beta3",
         "drupal/google_tag": "^1.4",
         "drupal/imageapi_optimize_binaries": "^1.0-alpha2",
