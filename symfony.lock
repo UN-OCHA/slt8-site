@@ -11,6 +11,9 @@
     "composer/metadata-minifier": {
         "version": "1.0.0"
     },
+    "composer/pcre": {
+        "version": "1.0.0"
+    },
     "composer/spdx-licenses": {
         "version": "1.5.4"
     },

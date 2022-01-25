@@ -29,10 +29,10 @@
         "drupal/bcc": "^3.0@beta",
         "drupal/components": "^2.4",
         "drupal/config_split": "^2.0.0-beta4",
-        "drupal/core-composer-scaffold": "^9.2.6",
-        "drupal/core-dev": "^9.2.6",
-        "drupal/core-project-message": "^9.2.6",
-        "drupal/core-recommended": "^9.2.6",
+        "drupal/core-composer-scaffold": "^9.3",
+        "drupal/core-dev": "^9.3",
+        "drupal/core-project-message": "^9.3",
+        "drupal/core-recommended": "^9.3",
         "drupal/ctools": "^3.7",
         "drupal/editor_advanced_link": "^2.0",
         "drupal/entity_usage": "^2.0-beta3",
@@ -76,7 +76,17 @@
     "prefer-stable": true,
     "config": {
         "bin-dir": "vendor/bin/",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal-composer/preserve-paths": true,
+            "drupal/core-composer-scaffold": true,
+            "drupal/core-project-message": true,
+            "drupal/console-extend-plugin": true,
+            "oomphinc/composer-installers-extender": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "classmap": [
