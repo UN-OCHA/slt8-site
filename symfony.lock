@@ -11,6 +11,9 @@
     "composer/metadata-minifier": {
         "version": "1.0.0"
     },
+    "composer/pcre": {
+        "version": "1.0.0"
+    },
     "composer/spdx-licenses": {
         "version": "1.5.4"
     },
@@ -82,6 +85,12 @@
     },
     "drupal/stage_file_proxy": {
         "version": "1.1.0"
+    },
+    "drupal/user_expire": {
+        "version": "1.0.0"
+    },
+    "enlightn/security-checker": {
+        "version": "v1.9.0"
     },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
