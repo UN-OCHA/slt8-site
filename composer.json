@@ -46,7 +46,7 @@
         "drupal/r4032login": "^2.1",
         "drupal/redirect": "^1.6",
         "drupal/seckit": "^2.0",
-        "drupal/social_auth_hid": "^2.6",
+        "drupal/social_auth_hid": "^3.0",
         "drupal/user_expire": "^1.0",
         "drush/drush": "^10.2.2",
         "oomphinc/composer-installers-extender": "^2.0",
