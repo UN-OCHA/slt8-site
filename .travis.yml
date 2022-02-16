@@ -1,13 +1,17 @@
-dist: bionic
+dist: focal
 language: php
 cache:
   - composer
 
-addons:
-  chrome: stable
-
 php:
   - 8.0
+
+# Make sure we have a recent version of docker-compose and chrome.
+addons:
+  apt:
+    packages:
+      - docker-compose
+  chrome: stable
 
 services:
   - mysql
@@ -39,15 +43,15 @@ script:
   - test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
 
   # PHP CS
-  # - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer,vendor/slevomat/coding-standard
   - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
 
   # Theme build.
   - composer run sass
 
   # Drupal install
+  - mysql -e "CREATE USER drupal127.0.0.1 IDENTIFIED BY 'drupal';"
   - mysql -e "CREATE DATABASE drupal;"
-  - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1 IDENTIFIED BY 'drupal';"
+  - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1;"
 
   - cd ${TRAVIS_BUILD_DIR}
   - mkdir -p ./html/sites/default
