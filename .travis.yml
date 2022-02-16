@@ -39,7 +39,7 @@ script:
   - test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
 
   # PHP CS
-  - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
+  - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer,vendor/slevomat/coding-standard
   - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
 
   # Theme build.
