@@ -49,7 +49,7 @@ script:
   - composer run sass
 
   # Drupal install
-  - mysql -e "CREATE USER drupal127.0.0.1 IDENTIFIED BY 'drupal';"
+  - mysql -e "CREATE USER drupal@127.0.0.1 IDENTIFIED BY 'drupal';"
   - mysql -e "CREATE DATABASE drupal;"
   - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1;"
 
