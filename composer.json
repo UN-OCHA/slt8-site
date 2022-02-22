@@ -46,7 +46,7 @@
         "drupal/r4032login": "^2.1",
         "drupal/redirect": "^1.6",
         "drupal/seckit": "^2.0",
-        "drupal/social_auth_hid": "^2.6",
+        "drupal/social_auth_hid": "^3.0",
         "drupal/user_expire": "^1.0",
         "drush/drush": "^10.2.2",
         "oomphinc/composer-installers-extender": "^2.0",
@@ -67,6 +67,7 @@
         "phpcompatibility/php-compatibility": "^9.3.5",
         "phpmd/phpmd": "^2.8.2",
         "phpunit/phpunit": "^8.4.1",
+        "slevomat/coding-standard": "^7.0",
         "weitzman/drupal-test-traits": "^1.5"
     },
     "conflict": {
@@ -80,6 +81,7 @@
         "allow-plugins": {
             "composer/installers": true,
             "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal-composer/preserve-paths": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
@@ -114,6 +116,11 @@
         ]
     },
     "extra": {
+        "drush": {
+          "services": {
+            "drush.services.yml": "^10"
+          }
+        },
         "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patchLevel": {

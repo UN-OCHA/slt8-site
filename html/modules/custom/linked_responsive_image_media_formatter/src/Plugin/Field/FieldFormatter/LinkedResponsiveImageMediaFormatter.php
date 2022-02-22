@@ -498,7 +498,7 @@ class LinkedResponsiveImageMediaFormatter extends ImageFormatterBase implements 
 
     // Try to grab the href attribute if the replaced token is a link.
     preg_match('/<a[^>]* href="([^"]+)"[^>]*>/', $url, $match);
-    $url = isset($match[1]) ? $match[1] : $url;
+    $url = $match[1] ?? $url;
 
     // The URL maybe an internal url to an entity like entity:node/123 etc.
     // so we need to get the computed url. If the url is external we check its

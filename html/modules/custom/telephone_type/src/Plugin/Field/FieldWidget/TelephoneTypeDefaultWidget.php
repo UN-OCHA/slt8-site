@@ -82,13 +82,13 @@ class TelephoneTypeDefaultWidget extends WidgetBase {
     $element['type'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Type'),
-      '#default_value' => isset($items[$delta]->type) ? $items[$delta]->type : NULL,
+      '#default_value' => $items[$delta]->type ?? NULL,
       '#placeholder' => $this->getSetting('placeholder_type'),
     ];
     $element['number'] = [
       '#type' => 'tel',
       '#title' => $this->t('Number'),
-      '#default_value' => isset($items[$delta]->number) ? $items[$delta]->number : NULL,
+      '#default_value' => $items[$delta]->number ?? NULL,
       '#placeholder' => $this->getSetting('placeholder_number'),
     ];
     return $element;
