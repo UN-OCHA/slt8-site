@@ -17,44 +17,44 @@ id: full_width
 label: 'Full Width'
 image_style_mappings:
   -
-    breakpoint_id: common_design.lg
-    multiplier: 1x
     image_mapping_type: image_style
     image_mapping: xlarge_x1
-  -
     breakpoint_id: common_design.lg
-    multiplier: 2x
+    multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: xlarge_x2
+    breakpoint_id: common_design.lg
+    multiplier: 2x
   -
-    breakpoint_id: common_design.md
-    multiplier: 1x
     image_mapping_type: image_style
     image_mapping: desktop_x1
-  -
     breakpoint_id: common_design.md
-    multiplier: 2x
+    multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: desktop_x2
+    breakpoint_id: common_design.md
+    multiplier: 2x
   -
-    breakpoint_id: common_design.sm
-    multiplier: 1x
     image_mapping_type: image_style
     image_mapping: tablet_x1
-  -
     breakpoint_id: common_design.sm
-    multiplier: 2x
+    multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: tablet_x2
+    breakpoint_id: common_design.sm
+    multiplier: 2x
   -
-    breakpoint_id: common_design.xs
-    multiplier: 1x
     image_mapping_type: image_style
     image_mapping: mobile_x1
-  -
     breakpoint_id: common_design.xs
-    multiplier: 2x
+    multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: mobile_x2
+    breakpoint_id: common_design.xs
+    multiplier: 2x
 breakpoint_group: common_design
 fallback_image_style: mobile_x1
