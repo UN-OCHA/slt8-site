@@ -21,119 +21,12 @@ base_table: media_field_data
 base_field: mid
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'view published internal_document media'
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 50
-          offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            filename: filename
-            filemime: filemime
-            filesize: filesize
-            created: created
-            field_theme: field_theme
-          info:
-            filename:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            filemime:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            filesize:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            created:
-              sortable: true
-              default_sort_order: desc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_theme:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options:
-          default_field_elements: false
-          inline: {  }
-          separator: ''
-          hide_empty: false
+      title: 'Internal Documents'
       fields:
         field_theme:
           id: field_theme
@@ -142,6 +35,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Theme
           exclude: false
           alter:
@@ -197,7 +91,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         filename:
           id: filename
           table: file_managed
@@ -205,6 +98,9 @@ display:
           relationship: field_media_file_target_id
           group_type: group
           admin_label: ''
+          entity_type: file
+          entity_field: filename
+          plugin_id: field
           label: Name
           exclude: false
           alter:
@@ -314,9 +210,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: file
-          entity_field: filename
-          plugin_id: field
         filemime:
           id: filemime
           table: file_managed
@@ -324,6 +217,9 @@ display:
           relationship: field_media_file_target_id
           group_type: group
           admin_label: ''
+          entity_type: file
+          entity_field: filemime
+          plugin_id: field
           label: Type
           exclude: false
           alter:
@@ -380,9 +276,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: file
-          entity_field: filemime
-          plugin_id: field
         filesize:
           id: filesize
           table: file_managed
@@ -390,6 +283,9 @@ display:
           relationship: field_media_file_target_id
           group_type: group
           admin_label: ''
+          entity_type: file
+          entity_field: filesize
+          plugin_id: field
           label: Size
           exclude: false
           alter:
@@ -444,9 +340,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: file
-          entity_field: filesize
-          plugin_id: field
         created:
           id: created
           table: media_field_data
@@ -454,6 +347,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: media
+          entity_field: created
+          plugin_id: field
           label: Added
           exclude: false
           alter:
@@ -511,23 +407,105 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 50
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'view published internal_document media'
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
+      sorts:
+        weight:
+          id: weight
+          table: taxonomy_term_field_data
+          field: weight
+          relationship: field_theme
+          group_type: group
+          admin_label: ''
+          entity_type: taxonomy_term
+          entity_field: weight
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+        field_theme_target_id:
+          id: field_theme_target_id
+          table: media__field_theme
+          field: field_theme_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_theme_target_id
+          exposed: false
+        created:
+          id: created
+          table: media_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
           entity_type: media
           entity_field: created
-          plugin_id: field
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: created
+          exposed: false
+          granularity: second
+      arguments: {  }
       filters:
         status:
-          value: '1'
+          id: status
           table: media_field_data
           field: status
-          plugin_id: boolean
           entity_type: media
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         bundle:
           id: bundle
           table: media_field_data
@@ -535,6 +513,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: media
+          entity_field: bundle
+          plugin_id: bundle
           operator: in
           value:
             internal_document: internal_document
@@ -567,9 +548,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: media
-          entity_field: bundle
-          plugin_id: bundle
         field_theme_target_id:
           id: field_theme_target_id
           table: media__field_theme
@@ -577,6 +555,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: taxonomy_index_tid
           operator: or
           value: {  }
           group: 1
@@ -612,58 +591,81 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-          type: select
-          limit: true
           vid: theme
+          type: select
           hierarchy: false
+          limit: true
           error_message: false
-          plugin_id: taxonomy_index_tid
-      sorts:
-        weight:
-          id: weight
-          table: taxonomy_term_field_data
-          field: weight
-          relationship: field_theme
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: taxonomy_term
-          entity_field: weight
-          plugin_id: standard
-        field_theme_target_id:
-          id: field_theme_target_id
-          table: media__field_theme
-          field: field_theme_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
-        created:
-          id: created
-          table: media_field_data
-          field: created
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          granularity: second
-          entity_type: media
-          entity_field: created
-          plugin_id: date
-      title: 'Internal Documents'
-      header: {  }
-      footer: {  }
-      empty: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            filename: filename
+            filemime: filemime
+            filesize: filesize
+            created: created
+            field_theme: field_theme
+          default: '-1'
+          info:
+            filename:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            filemime:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            filesize:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            created:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_theme:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
       relationships:
         field_media_file_target_id:
           id: field_media_file_target_id
@@ -672,8 +674,8 @@ display:
           relationship: none
           group_type: group
           admin_label: File
-          required: true
           plugin_id: standard
+          required: true
         field_theme:
           id: field_theme
           table: media__field_theme
@@ -681,11 +683,12 @@ display:
           relationship: none
           group_type: group
           admin_label: Theme
-          required: true
           plugin_id: standard
-      arguments: {  }
-      display_extenders: {  }
+          required: true
       use_ajax: true
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -698,9 +701,9 @@ display:
       tags:
         - 'config:field.storage.media.field_theme'
   page_internal_documents:
-    display_plugin: page
     id: page_internal_documents
     display_title: Page
+    display_plugin: page
     position: 1
     display_options:
       display_extenders: {  }
@@ -709,11 +712,11 @@ display:
         type: normal
         title: 'Internal Documents'
         description: ''
-        expanded: false
-        parent: ''
         weight: 10
-        context: '0'
+        expanded: false
         menu_name: main
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
