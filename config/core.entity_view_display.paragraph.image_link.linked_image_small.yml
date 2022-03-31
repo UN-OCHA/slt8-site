@@ -13,15 +13,15 @@ dependencies:
     - linked_responsive_image_media_formatter
 third_party_settings:
   layout_builder:
-    allow_custom: false
     enabled: false
+    allow_custom: false
 id: paragraph.image_link.linked_image_small
 targetEntityType: paragraph
 bundle: image_link
 mode: linked_image_small
 content:
   field_media_content_image:
-    weight: 0
+    type: linked_responsive_image_media_formatter
     label: hidden
     settings:
       responsive_image_style: thumbnail_small
@@ -31,7 +31,7 @@ content:
       image_alt_value: '[paragraph:field_media_content_link:title]'
       image_as_background: false
     third_party_settings: {  }
-    type: linked_responsive_image_media_formatter
+    weight: 0
     region: content
 hidden:
   field_media_content_link: true
