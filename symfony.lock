@@ -705,6 +705,9 @@
     "unocha/common_design": {
         "version": "v4.1.1"
     },
+    "unocha/ocha_security": {
+        "version": "v1.0.1"
+    },
     "webflo/drupal-finder": {
         "version": "1.2.2"
     },
