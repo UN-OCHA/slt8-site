@@ -1,7 +1,10 @@
 {
     "patches": {
         "drupal/core" : {
-            "https://www.drupal.org/project/drupal/issues/2544110": "patches/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch"
+            "https://www.drupal.org/project/drupal/issues/2544110": "PATCHES/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch"
+        },
+        "drupal/csp": {
+            "Simplify log format": "PATCHES/csp-log-format.patch"
         },
         "drupal/entity_usage": {
             "https://www.drupal.org/project/entity_usage/issues/2955078": "https://www.drupal.org/files/issues/2018-04-06/2955078-5.patch"

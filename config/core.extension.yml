@@ -11,6 +11,7 @@ module:
   config: 0
   config_split: 0
   contextual: 0
+  csp: 0
   ctools: 0
   dynamic_page_cache: 0
   editor: 0
@@ -44,11 +45,9 @@ module:
   paragraphs_viewmode: 0
   path: 0
   path_alias: 0
-  ocha_security: 0
   r4032login: 0
   redirect: 0
   responsive_image: 0
-  seckit: 0
   slt_access: 0
   slt_contacts: 0
   slt_general: 0
