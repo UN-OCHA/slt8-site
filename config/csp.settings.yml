@@ -1,0 +1,53 @@
+_core:
+  default_config_hash: yOPH6uEZYRHbg2OFP-bze0jGr06fI-Gr_66W-vA8Faw
+report-only:
+  enable: true
+  directives:
+    connect-src:
+      base: self
+      sources:
+        - www.google-analytics.com
+    font-src:
+      base: self
+      sources:
+        - 'data:'
+        - fonts.gstatic.com
+    img-src:
+      base: self
+      sources:
+        - 'data:'
+        - www.google-analytics.com
+        - www.gstatic.com
+    object-src:
+      base: none
+    script-src:
+      base: self
+      sources:
+        - fonts.googleapis.com
+        - www.gstatic.com
+        - www.google.com
+        - www.google-analytics.com
+        - www.googletagmanager.com
+    script-src-attr:
+      base: self
+    script-src-elem:
+      base: self
+    style-src:
+      base: self
+    style-src-attr:
+      base: self
+    style-src-elem:
+      base: self
+    frame-ancestors:
+      base: self
+  reporting:
+    plugin: sitelog
+enforce:
+  enable: true
+  directives:
+    object-src:
+      base: none
+    frame-ancestors:
+      base: self
+  reporting:
+    plugin: sitelog
