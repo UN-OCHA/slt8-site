@@ -37,7 +37,8 @@
         "drupal/core-dev": "^9.3",
         "drupal/core-project-message": "^9.3",
         "drupal/core-recommended": "^9.3",
-        "drupal/ctools": "^3.7",
+        "drupal/csp": "^1.16",
+        "drupal/ctools": "^4.0",
         "drupal/editor_advanced_link": "^2.0",
         "drupal/entity_usage": "^2.0-beta3",
         "drupal/google_tag": "^1.4",
@@ -49,7 +50,6 @@
         "drupal/pathauto": "^1.8",
         "drupal/r4032login": "^2.1",
         "drupal/redirect": "^1.6",
-        "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^3.1",
         "drupal/user_expire": "^1.0",
         "drush/drush": "^10.2.2",
@@ -57,7 +57,6 @@
         "phpoffice/phpspreadsheet": "^1.14.1",
         "symfony/flex": "^1.10",
         "unocha/common_design": "^4.0.0",
-        "unocha/ocha_security": "^1.0",
         "webflo/drupal-finder": "^1.0.0"
     },
     "require-dev": {

@@ -1,13 +1,13 @@
 {
     "patches": {
         "drupal/core" : {
-            "https://www.drupal.org/project/drupal/issues/2544110": "patches/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch"
+            "https://www.drupal.org/project/drupal/issues/2544110": "PATCHES/core--drupal--xss-prevent-protocol-stripping-on-datetime-attribute.patch"
+        },
+        "drupal/csp": {
+            "Simplify log format": "PATCHES/csp-log-format.patch"
         },
         "drupal/entity_usage": {
             "https://www.drupal.org/project/entity_usage/issues/2955078": "https://www.drupal.org/files/issues/2018-04-06/2955078-5.patch"
-        },
-        "drupal/seckit": {
-            "https://www.drupal.org/project/seckit/issues/2844205#comment-14455849": "https://www.drupal.org/files/issues/2021-09-13/2844205-alter-csp-directives-10.patch"
         },
         "drupal/user_expire": {
             "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
