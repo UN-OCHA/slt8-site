@@ -22,6 +22,8 @@ report-only:
       base: none
     script-src:
       base: self
+      flags:
+        - unsafe-inline
       sources:
         - fonts.googleapis.com
         - www.gstatic.com
@@ -32,6 +34,8 @@ report-only:
       base: self
     script-src-elem:
       base: self
+      flags:
+        - unsafe-inline
     style-src:
       base: self
     style-src-attr:
