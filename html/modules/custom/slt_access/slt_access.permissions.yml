@@ -1,5 +1,0 @@
-assign user roles:
-  title: 'Assign user roles'
-  restrict access: true
-permission_callbacks:
-  - \Drupal\slt_access\SltAccessPermissions::buildPermissions

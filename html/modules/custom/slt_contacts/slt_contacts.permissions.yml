@@ -1,3 +1,0 @@
-import contacts:
-  title: 'Import contacts'
-  description: "Allow access to the form to upload a spreadsheet with new contacts"

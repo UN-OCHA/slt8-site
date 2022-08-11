@@ -1,8 +1,0 @@
-name: Telephone number with type
-type: module
-description: 'Defines a field type for telephone numbers with a telephone type.'
-package: Field types
-version: VERSION
-core_version_requirement: ^8 || ^9
-dependencies:
-  - drupal:field

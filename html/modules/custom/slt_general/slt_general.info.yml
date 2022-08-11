@@ -1,5 +1,0 @@
-type: module
-name: SLT General
-description: 'Provides customizations and tests for the SLT site.'
-package: slt
-core_version_requirement: ^8.9 || ^9

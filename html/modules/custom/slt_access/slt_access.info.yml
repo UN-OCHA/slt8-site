@@ -1,5 +1,0 @@
-type: module
-name: SLT Access
-description: 'SLT permissions to access content.'
-package: slt
-core_version_requirement: ^8.9 || ^9

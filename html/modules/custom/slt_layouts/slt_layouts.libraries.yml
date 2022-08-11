@@ -1,5 +1,0 @@
-grid:
-  version: VERSION
-  css:
-    theme:
-      layouts/grid/grid.css: {}
