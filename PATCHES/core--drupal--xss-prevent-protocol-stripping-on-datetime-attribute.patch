@@ -1,8 +1,8 @@
 diff --git a/core/lib/Drupal/Component/Utility/Xss.php b/core/lib/Drupal/Component/Utility/Xss.php
-index 1f1690d11c..c85a026fbc 100644
+index 6d461d3f02..c85a026fbc 100644
 --- a/core/lib/Drupal/Component/Utility/Xss.php
 +++ b/core/lib/Drupal/Component/Utility/Xss.php
-@@ -232,11 +232,14 @@ protected static function attributes($attributes) {
+@@ -232,12 +232,14 @@ protected static function attributes($attributes) {
              // such attributes.
              // @see \Drupal\Component\Utility\UrlHelper::filterBadProtocol()
              // @see http://www.w3.org/TR/html4/index/attributes.html
@@ -12,7 +12,7 @@ index 1f1690d11c..c85a026fbc 100644
                'alt',
                'rel',
                'property',
-+              'class',
+               'class',
 +              'datetime',
              ]);
  
