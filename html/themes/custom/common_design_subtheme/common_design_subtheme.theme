@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @file
+ * Theme preprocessors.
+ */
+
+use Drupal\common_design_subtheme\CommonDesignSubthemeCallbacks;
+
+/**
+ * Get the list of components to attach to formatted text fields.
+ *
+ * @return array
+ *   Array with component libraries as keys and list of tags and classes to
+ *   add as values.
+ */
+function common_design_subtheme_get_components() {
+  static $components = [
+    'common_design/cd-table' => [
+      'table' => ['cd-table', 'cd-table--striped', 'cd-table--responsive'],
+    ],
+  ];
+  return $components;
+}
+
+/**
+ * Implements hook_preprocess_field().
+ *
+ * This adds attach component libraries and add necessary classes to filtered
+ * text field.
+ *
+ * Note: other possibilities:
+ * - Target specific fields: `$variables['element']['#field_name']`.
+ * - Target view mode: `$variables['element']['#view_mode']`.
+ *
+ * Note: we could also add the #post_render and libraries to all the
+ * "processed_text" elements via a hook_element_info_alter().
+ *
+ * @todo Do we need to alter the cache somehow?
+ *
+ * @see template_preprocess_field()
+ */
+function common_design_subtheme_preprocess_field(&$variables) {
+  switch ($variables['element']['#formatter']) {
+    case 'text_summary_or_trimmed':
+    case 'text_trimmed':
+    case 'text_default':
+      foreach ($variables['items'] as $key => $item) {
+        $variables['items'][$key]['content']['#post_render'][] = [
+          CommonDesignSubthemeCallbacks::class, 'postRender',
+        ];
+      }
+      foreach (common_design_subtheme_get_components() as $component => $dummy) {
+        $variables['#attached']['library'][] = $component;
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph__page_title().
+ *
+ * Use the page title block for the title and display the local tasks below it.
+ * We use common_design_subtheme_get_block_render_array() that will cache the
+ * render array of the blocks so that they are not re-rendered and displayed
+ * if done by the paragraph title.
+ */
+function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
+  // If we are in a form, then the '#id' will be set. In that case, we don't
+  // want to show the page title as it would not be updated when chaging the
+  // title field. We will display a placeholder instead, which is handled by
+  // paragraphs_page_title_preprocess_paragraph__page_title().
+  if (!isset($variables['elements']['#id'])) {
+    $variables['content']['title'] = common_design_get_block_render_array('page_title_block');
+    $variables['content']['local_tasks'] = common_design_get_block_render_array('local_tasks_block');
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Remove the default page title and local tasks blocks if they were already
+ * rendered by a page title paragraph or when viewing full article nodes.
+ */
+function common_design_subtheme_preprocess_page(&$variables) {
+  // If the node variable is defined then we assume we are on a node page.
+  // We check if the node has a page title paragraph in which case we hide
+  // the page title and local tasks blocks in their original regions.
+  if (isset($variables['node']) && is_a($variables['node'], '\Drupal\node\NodeInterface')) {
+    $node = $variables['node'];
+    if (isset($node->field_paragraphs)) {
+      foreach ($node->field_paragraphs as $item) {
+        $paragraph = $item->entity;
+        if (!empty($paragraph) && $paragraph->bundle() === 'page_title') {
+          common_design_hide_rendered_blocks_from_page($variables, [
+            'page_title_block',
+            'local_tasks_block',
+          ]);
+          break;
+        }
+      }
+    }
+  }
+}

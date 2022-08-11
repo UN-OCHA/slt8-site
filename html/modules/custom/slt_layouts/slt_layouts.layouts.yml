@@ -1,0 +1,41 @@
+layout_image_grid_five_columns:
+  label: 'Image grid (up to 5 columns)'
+  path: layouts/grid
+  template: layout--grid
+  library: slt_layouts/grid
+  class: '\Drupal\slt_layouts\Plugin\Layout\GridLayout'
+  attributes:
+    class:
+      - layout--image-grid
+      - layout--image-grid-five-columns
+  category: 'Grid'
+  icon_map:
+    - [1, 2, 3, 4, 5]
+    - [6, 7, 8, 9, 10]
+    - [11, 12, 13, 14, 15]
+    - [16, 17, 18, 19, 20]
+  regions:
+    # We need a default region to avoid the LayoutPluginManager from crashing.
+    region-1:
+      label: 'Region 1'
+
+layout_image_grid_four_columns:
+  label: 'Image grid (up to 4 columns)'
+  path: layouts/grid
+  template: layout--grid
+  library: slt_layouts/grid
+  class: '\Drupal\slt_layouts\Plugin\Layout\GridLayout'
+  attributes:
+    class:
+      - layout--image-grid
+      - layout--image-grid-four-columns
+  category: 'Grid'
+  icon_map:
+    - [1, 2, 3, 4]
+    - [5, 6, 7, 8]
+    - [9, 10, 11, 12]
+    - [13, 14, 15, 16]
+  regions:
+    # We need a default region to avoid the LayoutPluginManager from crashing.
+    region-1:
+      label: 'Region 1'

@@ -1,0 +1,191 @@
+<?php
+
+/**
+ * @file
+ * SLT access module file.
+ */
+
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\file\FileInterface;
+use Drupal\media\MediaInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_access().
+ *
+ * Deny view access to users without the view published 'node bundle' content
+ * permission.
+ *
+ * @todo reverse the logic and allow access if the node is published and the
+ * user has the permission to view published content of that type?
+ */
+function slt_access_node_access(NodeInterface $node, $operation, AccountInterface $account) {
+  $type = $node->bundle();
+  $published = $node->isPublished();
+
+  switch ($operation) {
+    case 'view':
+      if ($published && !$account->hasPermission("view published {$type} content")) {
+        return AccessResult::forbidden()->cachePerPermissions();
+      }
+  }
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_media_access().
+ *
+ * Deny view access to users without the view published 'media type' media
+ * permission unless the media is an image referenced by a public page in which
+ * case we grant access.
+ */
+function slt_access_media_access(MediaInterface $media, $operation, AccountInterface $account) {
+  // We only deal with the view of published media.
+  if ($operation === 'view' && $media->isPublished()) {
+    $type = $media->bundle();
+
+    // If the user doesn't have access to the media and the media is an image,
+    // then we check if it is referenced by a public page in which case we grant
+    // access regardless of the permission; otherwise we deny access.
+    if (!$account->hasPermission("view published {$type} media")) {
+      if ($type === 'image') {
+        $access = slt_access_is_referenced_by_public_page('media', $media->id(), $account);
+        if ($access->isAllowed()) {
+          return $access;
+        }
+      }
+      return AccessResult::forbidden()->cachePerPermissions();
+    }
+  }
+
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_file_access().
+ *
+ * Allow access to private files when referenced in published public pages if
+ * the user is allowed to view published public pages.
+ *
+ * This requires that files, medias and paragraphs usage tracking is enabled in
+ * /admin/config/entity-usage/settings so that we can follow the usage chain up
+ * to the node referencing the file.
+ *
+ * This is mostly to allow display of images on public pages by enabling
+ * the CKeditor media embed and entity reference tracking plugins.
+ */
+function slt_access_file_access(FileInterface $file, $operation, AccountInterface $account) {
+  if ($operation === 'download' && strpos($file->getFileUri(), 'private://') === 0) {
+    // Allow access if the file is referenced by a public page.
+    return slt_access_is_referenced_by_public_page('file', $file->id(), $account);
+  }
+
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
+}
+
+/**
+ * Check if the entity is referenced by a public page.
+ *
+ * @param string $entity_type
+ *   Type of the entity to check if it is referenced by a public page.
+ * @param int $entity_id
+ *   Entity id.
+ * @param \Drupal\Core\Session\AccountInterface $account
+ *   Account to check access against.
+ *
+ * @return \Drupal\Core\Access\AccessResult
+ *   Allowed if the entity is referenced by a public page, Neutral otherwise.
+ */
+function slt_access_is_referenced_by_public_page($entity_type, $entity_id, AccountInterface $account) {
+  $nodes = slt_access_get_nodes_referencing_entities($entity_type, [$entity_id]);
+  if (!empty($nodes)) {
+    // Check if any of the referencing nodes is a public page in which case
+    // we grant access to the entity.
+    $records = \Drupal::service('entity_type.manager')
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('type', 'public_page')
+      // Published.
+      ->condition('status', 1)
+      ->condition('vid', $nodes, 'IN')
+      // Being referenced by one published public page is enough.
+      ->range(0, 1)
+      ->accessCheck(FALSE)
+      ->execute();
+    if (!empty($records)) {
+      // Allow access to the entity if the user can view published public pages.
+      $permission = 'view published public_page content';
+      return AccessResult::allowedIfHasPermission($account, $permission)
+        // Invalidate the cache when a public page is changed as the entity
+        // may not be referenced anymore then.
+        ->addCacheTags(['node_list:public_page']);
+    }
+  }
+
+  // No opinion, let other modules handle the permissions.
+  return AccessResult::neutral();
+}
+
+/**
+ * Get the list of nodes referencing the given entities.
+ *
+ * @param string $entity_type
+ *   Type of the entities.
+ * @param array $ids
+ *   Entity ids.
+ *
+ * @return array
+ *   List of nodes (revision id) referencing the entities.
+ */
+function slt_access_get_nodes_referencing_entities($entity_type, array $ids) {
+  $nodes = [];
+
+  $records = \Drupal::database()->select('entity_usage', 'eu')
+    ->fields('eu', [
+      'source_id',
+      'source_type',
+      'source_vid',
+    ])
+    ->condition('eu.target_id', $ids, 'IN')
+    ->condition('eu.target_type', $entity_type)
+    ->condition('eu.count', 0, '>')
+    ->execute();
+
+  if (!empty($records)) {
+    $sources = [];
+    foreach ($records as $record) {
+      if ($record->source_type === 'node') {
+        $nodes[$record->source_id . '-' . $record->source_vid] = $record->source_vid;
+      }
+      else {
+        $sources[$record->source_type][] = $record->source_id;
+      }
+    }
+
+    foreach ($sources as $source_type => $source_ids) {
+      $nodes += slt_access_get_nodes_referencing_entities($source_type, $source_ids);
+    }
+  }
+
+  return $nodes;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for 'user_form'.
+ *
+ * Change permission to assign roles.
+ *
+ * @see Drupal\user\AccountForm::form()
+ */
+function slt_access_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Allow managing the account roles if there are roles and the current user
+  // has the correct permission.
+  $roles_access = !empty($form['account']['roles']['#options']) &&
+                  \Drupal::currentUser()->hasPermission('assign user roles');
+  $form['account']['roles']['#access'] = $roles_access;
+}

@@ -1,0 +1,7 @@
+slt_contacts.import_contacts:
+  path: '/admin/content/contacts/import'
+  defaults:
+    _form: '\Drupal\slt_contacts\Form\SltContactsImportContactsForm'
+    _title: 'Import contacts'
+  requirements:
+    _permission: 'import contacts'

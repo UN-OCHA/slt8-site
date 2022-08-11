@@ -1,0 +1,7 @@
+langcode: en
+status: true
+id: page_title
+label: Page title
+icon_uuid: null
+icon_default: null
+description: 'Placeholder paragraph that will display the page title.'

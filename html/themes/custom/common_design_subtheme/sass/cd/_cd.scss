@@ -1,0 +1,12 @@
+//——————————————————————————————————————————————————————————————————————————————
+// Common Design: root file
+//——————————————————————————————————————————————————————————————————————————————
+
+// Sass utilities
+@import "cd-variables";
+@import "cd-mixins";
+
+// Header
+@import "cd-header/cd-header";
+@import "cd-header/cd-logo";
+@import "cd-header/cd-user-menu";

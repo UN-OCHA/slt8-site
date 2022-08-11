@@ -1,0 +1,37 @@
+/*
+ * @file
+ * Provides the layout styles for four columns layout section.
+ *
+ * See common_desing/common_design.breakpoints.yml for the breakpoints.
+ */
+
+.layout--fourcol-section {
+  /* Compensate for the padding of the regions. */
+  margin: -1rem;
+}
+
+.layout--fourcol-section:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.layout--fourcol-section > .layout__region {
+  float: left;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* 2 columns layout on medium screens. */
+@media screen and (min-width: 576px) {
+  .layout--fourcol-section > .layout__region {
+    max-width: 50%;
+  }
+}
+
+/* 4 columns layout on larger screens. */
+@media screen and (min-width: 768px) {
+  .layout--fourcol-section > .layout__region {
+    max-width: 25%;
+  }
+}

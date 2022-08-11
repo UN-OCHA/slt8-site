@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Linked Responsive Image Media formatter default theme implementation.
+ *
+ * Available variables:
+ * - responsive_image: A collection of responsive image data.
+ * - item_attributes: A list of attributes.
+ * - url: An optional URL the image can be linked to.
+ * - url_title: An optional link title.
+ *
+ * @see template_preprocess_responsive_image_formatter()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if url %}
+  {% if link_title %}
+    <a href="{{ url }}"{{ link_attributes.addClass('link') }}>{{ responsive_image }}<span class="link__title">{{ link_title }}</span></a>
+  {% else %}
+    <a href="{{ url }}"{{ link_attributes.addClass('link') }}>{{ responsive_image }}</a>
+  {% endif %}
+{% else %}
+  {{ responsive_image }}
+{% endif %}

@@ -1,0 +1,9 @@
+name: 'Linked Responsive Image Media Formatter'
+type: module
+description: 'Provides a formatter for image media that uses responsive images and allow to specify a custom alt text and URL to link to.'
+core_version_requirement: ^8 || ^9
+package: Media
+dependencies:
+  - drupal:media
+  - drupal:responsive_image
+  - drupal:token
