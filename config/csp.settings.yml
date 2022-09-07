@@ -7,6 +7,7 @@ report-only:
       base: self
       sources:
         - www.google-analytics.com
+        - analytics.google.com
     font-src:
       base: self
       sources:
@@ -36,6 +37,12 @@ report-only:
       base: self
       flags:
         - unsafe-inline
+      sources:
+        - fonts.googleapis.com
+        - www.gstatic.com
+        - www.google.com
+        - www.google-analytics.com
+        - www.googletagmanager.com
     style-src:
       base: self
     style-src-attr:
