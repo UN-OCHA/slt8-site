@@ -269,9 +269,6 @@
     "grasmash/expander": {
         "version": "1.0.0"
     },
-    "grasmash/yaml-expander": {
-        "version": "1.4.0"
-    },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
     },
