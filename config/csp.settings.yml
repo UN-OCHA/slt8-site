@@ -7,7 +7,6 @@ report-only:
       base: self
       sources:
         - www.google-analytics.com
-        - analytics.google.com
         - '*.analytics.google.com'
     font-src:
       base: self
@@ -30,8 +29,8 @@ report-only:
         - fonts.googleapis.com
         - www.gstatic.com
         - www.google.com
-        - www.google-analytics.com
         - www.googletagmanager.com
+        - '*.google-analytics.com'
     script-src-attr:
       base: self
     script-src-elem:
@@ -42,8 +41,8 @@ report-only:
         - fonts.googleapis.com
         - www.gstatic.com
         - www.google.com
-        - www.google-analytics.com
         - www.googletagmanager.com
+        - '*.google-analytics.com'
     style-src:
       base: self
     style-src-attr:
