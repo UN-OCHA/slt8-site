@@ -6,8 +6,10 @@ report-only:
     connect-src:
       base: self
       sources:
-        - www.google-analytics.com
-        - analytics.google.com
+        - 'https://*.google-analytics.com'
+        - 'https://analytics.google.com'
+        - 'https://*.analytics.google.com'
+        - 'https://*.googletagmanager.com'
     font-src:
       base: self
       sources:
@@ -17,7 +19,8 @@ report-only:
       base: self
       sources:
         - 'data:'
-        - www.google-analytics.com
+        - 'https://*.google-analytics.com'
+        - 'https://*.googletagmanager.com'
         - www.gstatic.com
     object-src:
       base: none
@@ -28,8 +31,8 @@ report-only:
       sources:
         - fonts.googleapis.com
         - www.gstatic.com
-        - www.google.com
-        - www.googletagmanager.com
+        - 'https://*.google.com'
+        - 'https://*.googletagmanager.com'
         - '*.google-analytics.com'
     script-src-attr:
       base: self
@@ -40,15 +43,25 @@ report-only:
       sources:
         - fonts.googleapis.com
         - www.gstatic.com
-        - www.google.com
-        - www.googletagmanager.com
+        - 'https://*.google.com'
+        - 'https://*.googletagmanager.com'
         - '*.google-analytics.com'
     style-src:
       base: self
+      flags:
+        - unsafe-inline
+      sources:
+        - fonts.googleapis.com
     style-src-attr:
       base: self
+      flags:
+        - unsafe-inline
     style-src-elem:
       base: self
+      flags:
+        - unsafe-inline
+      sources:
+        - fonts.googleapis.com
     frame-ancestors:
       base: self
   reporting:
