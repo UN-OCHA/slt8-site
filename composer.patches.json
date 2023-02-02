@@ -7,9 +7,6 @@
         "drupal/csp": {
             "Simplify log format": "PATCHES/csp-log-format.patch"
         },
-        "drupal/entity_usage": {
-            "https://www.drupal.org/project/entity_usage/issues/2955078": "https://www.drupal.org/files/issues/2018-04-06/2955078-5.patch"
-        },
         "drupal/user_expire": {
             "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
             "Reset expiration when user is reactivated": "https://git.drupalcode.org/project/user_expire/-/merge_requests/6.diff"
