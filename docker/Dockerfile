@@ -1,5 +1,5 @@
 # Build the code.
-FROM public.ecr.aws/unocha/unified-builder:${TAG:-8.0-stable} as builder
+FROM public.ecr.aws/unocha/unified-builder:8.0-stable as builder
 
 ARG  BRANCH_ENVIRONMENT
 
@@ -12,10 +12,7 @@ WORKDIR /srv/www
 
 # Clean up previous composer installation and run new one.
 RUN rm -rf ./vendor && \
-    # Update composer to avoid issues with missing drupal files.
-    # @see https://github.com/drupal-composer/drupal-project/issues/282
-    composer self-update && \
-    COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist
+    composer install --no-interaction --prefer-dist
 
 # Clean up previous npm installation and run new one. Those commands correspond
 # to running `composer gulp` but without hitting the PHP timeout.
@@ -31,7 +28,7 @@ RUN cp -a docker/settings.php docker/services.yml html/sites/default
 ################################################################################
 
 # Generate the image.
-FROM public.ecr.aws/unocha/php-k8s:${TAG:-8.0-NR-stable}
+FROM public.ecr.aws/unocha/php-k8s:8.0-stable
 
 ARG VCS_REF
 ARG VCS_URL
@@ -59,5 +56,6 @@ COPY --from=builder /srv/www/html /srv/www/html/
 COPY --from=builder /srv/www/vendor /srv/www/vendor/
 COPY --from=builder /srv/www/composer.json /srv/www/composer.json
 COPY --from=builder /srv/www/composer.patches.json /srv/www/composer.patches.json
+COPY --from=builder /srv/www/PATCHES /srv/www/PATCHES
 COPY --from=builder /srv/www/composer.lock /srv/www/composer.lock
 COPY --from=builder /srv/www/docker/fastcgi_drupal.conf /etc/nginx/apps/drupal/fastcgi_drupal.conf
