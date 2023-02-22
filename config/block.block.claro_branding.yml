@@ -5,11 +5,11 @@ dependencies:
   module:
     - system
   theme:
-    - seven
+    - claro
 _core:
   default_config_hash: fRKXNB91UxDvEMkzCR8ZBsawfC6Fqbme2gtobei3gu4
-id: seven_branding
-theme: seven
+id: claro_branding
+theme: claro
 region: header
 weight: 0
 provider: null
