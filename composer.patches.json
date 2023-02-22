@@ -1,5 +1,8 @@
 {
     "patches": {
+        "drupal/bcc": {
+            "Drupal 10 compatibility": "PATCHES/bcc-drupal-10-compatibility.patch"
+        },
         "drupal/core" : {
             "https://www.drupal.org/project/drupal/issues/2544110": "https://www.drupal.org/files/issues/2022-12-01/2544110-146.patch",
             "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
@@ -7,12 +10,21 @@
         "drupal/csp": {
             "Simplify log format": "PATCHES/csp-log-format.patch"
         },
+        "drupal/maintenance200": {
+            "Drupal 10 compatibility": "PATCHES/maintenance200-drupal-10-compatibility.patch"
+        },
+        "drupal/pathauto": {
+            "PHP 8.2 compatibility": "PATCHES/pathauto-php-82-compatibility.patch"
+        },
         "drupal/user_expire": {
             "Allow the notification email to be customised": "PATCHES/user_expire-customize-notification-email.patch",
             "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
         },
         "drupal/yaml_content" : {
             "https://www.drupal.org/project/yaml_content/issues/3084161": "https://www.drupal.org/files/issues/2020-04-10/yaml_content-layout-builder-support-3084161-8.patch"
+        },
+        "unocha/common_design": {
+            "Drupal 10 compatibility": "PATCHES/common_design-drupal-10-compatibility.patch"
         }
     }
 }
