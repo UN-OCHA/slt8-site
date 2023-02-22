@@ -1,9 +1,9 @@
 name: OCHA Common Design admin sub theme
 type: theme
 description: OCHA Common Design admin sub theme
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 # Defines the base theme
-base theme: seven
+base theme: claro
 
 # Defines libraries group in which we can add css/js.
 libraries:
