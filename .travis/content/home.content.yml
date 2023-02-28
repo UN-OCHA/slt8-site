@@ -1,8 +1,0 @@
-- entity: 'node'
-  nid: 200
-  type: 'public_page'
-  title: 'Login Required'
-  status: 1
-  path:
-    - alias: '/welcome'
-      pathauto: false

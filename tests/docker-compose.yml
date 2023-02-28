@@ -1,0 +1,72 @@
+version: "2.2"
+
+networks:
+  default:
+
+volumes:
+  slt-test-site-database:
+  slt-test-site-public:
+  slt-test-site-private:
+
+services:
+  memcache:
+    restart: always
+    image: public.ecr.aws/unocha/memcache:1.6
+    hostname: slt-test-memcache
+    container_name: slt-test-memcache
+    environment:
+      MEMCACHE_MAX_MEMORY: 64
+    ports:
+      - "11211"
+    networks:
+      - default
+
+  mysql:
+    image: public.ecr.aws/unocha/mysql:10.6
+    hostname: slt-test-mysql
+    container_name: slt-test-mysql
+    environment:
+      - MYSQL_DB=slt
+      - MYSQL_USER=slt
+      - MYSQL_PASS=slt
+    volumes:
+      - "slt-test-site-database:/var/lib/mysql:rw"
+    networks:
+      - default
+
+  drupal:
+    image: public.ecr.aws/unocha/slt-site:local
+    hostname: slt-test-site
+    container_name: slt-test-site
+    depends_on:
+      - memcache
+      - mysql
+    volumes:
+      - "./settings:/srv/www/shared/settings:ro"
+      # Mount volumes for the private and public files.
+      - "slt-test-site-public:/srv/www/html/sites/default/files:rw"
+      - "slt-test-site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folders needed for the tests.
+      - "../phpcs.xml:/srv/www/phpcs.xml:ro"
+      - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      # Mount local custom code.
+      - "../html/modules/custom:/srv/www/html/modules/custom:ro"
+      - "../html/themes/custom:/srv/www/html/themes/custom:ro"
+    environment:
+      - TERM=xterm
+      - ENVIRONMENT=dev
+      - NGINX_SERVERNAME=slt-test-site,localhost,127.0.0.1
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,slt-test-site,localhost,127.0.0.1
+      - DRUSH_OPTIONS_URI=http://slt-test-site
+      - DRUPAL_DB_DATABASE=slt
+      - DRUPAL_DB_USERNAME=slt
+      - DRUPAL_DB_PASSWORD=slt
+      - DRUPAL_DB_HOST=mysql
+      - DRUPAL_DB_DRIVER=mysql
+      - PHP_ENVIRONMENT=dev
+      - PHP_XDEBUG=true
+      - XDEBUG_MODE=coverage
+      - BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output
+      - DTT_BASE_URL=http://127.0.0.1
+    networks:
+      - default
