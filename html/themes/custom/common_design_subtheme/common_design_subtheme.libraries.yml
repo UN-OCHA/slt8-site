@@ -1,8 +1,3 @@
-global-styling:
-  css:
-    theme:
-      css/styles.css: {}
-
 # Custom components
 slt-contact-table:
   css:
