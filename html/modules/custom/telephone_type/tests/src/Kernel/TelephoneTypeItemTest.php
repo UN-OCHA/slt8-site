@@ -28,7 +28,7 @@ class TelephoneTypeItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a telephone field storage and field for validation.
@@ -68,26 +68,26 @@ class TelephoneTypeItemTest extends FieldKernelTestBase {
     $entity = EntityTest::load($id);
     $this->assertInstanceOf(FieldItemListInterface::class, $entity->field_test);
     $this->assertInstanceOf(FieldItemInterface::class, $entity->field_test[0]);
-    $this->assertEqual($entity->field_test->type, $type);
-    $this->assertEqual($entity->field_test[0]->type, $type);
-    $this->assertEqual($entity->field_test->number, $number);
-    $this->assertEqual($entity->field_test[0]->number, $number);
+    $this->assertEquals($entity->field_test->type, $type);
+    $this->assertEquals($entity->field_test[0]->type, $type);
+    $this->assertEquals($entity->field_test->number, $number);
+    $this->assertEquals($entity->field_test[0]->number, $number);
 
     // Verify changing the field type.
     $new_type = 'Test' . rand(1000000, 9999999);
     $entity->field_test->type = $new_type;
-    $this->assertEqual($entity->field_test->type, $new_type);
+    $this->assertEquals($entity->field_test->type, $new_type);
 
     // Verify changing the field number.
     $new_number = '+41' . rand(1000000, 9999999);
     $entity->field_test->number = $new_number;
-    $this->assertEqual($entity->field_test->number, $new_number);
+    $this->assertEquals($entity->field_test->number, $new_number);
 
     // Read changed entity and assert changed values.
     $entity->save();
     $entity = EntityTest::load($id);
-    $this->assertEqual($entity->field_test->type, $new_type);
-    $this->assertEqual($entity->field_test->number, $new_number);
+    $this->assertEquals($entity->field_test->type, $new_type);
+    $this->assertEquals($entity->field_test->number, $new_number);
 
     // Test sample item generation.
     $entity = EntityTest::create();
