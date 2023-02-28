@@ -46,7 +46,7 @@ jobs:
 
       - name: Configure AWS Credentials
         id: aws
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
@@ -145,6 +145,9 @@ jobs:
         id: dblog
         if: failure()
         uses: cafuego/command-output@main
+          with:
+            run: |
+              docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
