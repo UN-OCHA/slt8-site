@@ -10,8 +10,14 @@
         "drupal/csp": {
             "Simplify log format": "PATCHES/csp-log-format.patch"
         },
+        "drupal/layout_paragraphs": {
+            "Drupal 10 compatibility": "PATCHES/layout_paragraphs-drupal-10-compatibility.patch"
+        },
         "drupal/maintenance200": {
             "Drupal 10 compatibility": "PATCHES/maintenance200-drupal-10-compatibility.patch"
+        },
+        "drupal/paragraphs_viewmode": {
+            "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
         },
         "drupal/pathauto": {
             "PHP 8.2 compatibility": "PATCHES/pathauto-php-82-compatibility.patch"
@@ -22,9 +28,6 @@
         },
         "drupal/yaml_content" : {
             "https://www.drupal.org/project/yaml_content/issues/3084161": "https://www.drupal.org/files/issues/2020-04-10/yaml_content-layout-builder-support-3084161-8.patch"
-        },
-        "unocha/common_design": {
-            "Drupal 10 compatibility": "PATCHES/common_design-drupal-10-compatibility.patch"
         }
     }
 }
