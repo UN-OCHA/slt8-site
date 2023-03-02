@@ -44,10 +44,6 @@ echo "Install the site with the existing config."
 docker exec -it slt-test-site drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
 docker exec -it slt-test-site drush -y en dblog
 
-# Uninstall the social auth modules to allow normal user login for the tests.
-echo "Uninstall the social auth modules to allow normal user login for the tests."
-docker exec -it slt-test-site drush -y pm-uninstall social_auth
-
 # Create the build logs directory and make sure it's writable.
 echo "Create the build logs directory and make sure it's writable."
 docker exec -it -u root slt-test-site mkdir -m 777 -p /srv/www/html/build/logs
