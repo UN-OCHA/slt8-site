@@ -1,7 +1,25 @@
 uuid: f924f421-3481-4f76-8c2f-1fb0f1869206
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - node.type.contact
+    - node.type.private_page
+    - node.type.public_page
+    - taxonomy.vocabulary.agency
+    - taxonomy.vocabulary.country
+    - taxonomy.vocabulary.duty_station_region
+    - taxonomy.vocabulary.theme
+  module:
+    - filter
+    - media
+    - node
+    - slt_access
+    - slt_contacts
+    - system
+    - taxonomy
+    - toolbar
 id: administrator
 label: Administrator
 weight: -6
@@ -23,7 +41,6 @@ permissions:
   - 'create terms in agency'
   - 'create terms in country'
   - 'create terms in duty_station_region'
-  - 'create terms in security_role_area'
   - 'create terms in theme'
   - 'delete all revisions'
   - 'delete any contact content'
@@ -40,7 +57,6 @@ permissions:
   - 'delete terms in agency'
   - 'delete terms in country'
   - 'delete terms in duty_station_region'
-  - 'delete terms in security_role_area'
   - 'delete terms in theme'
   - 'edit any contact content'
   - 'edit any private_page content'
@@ -51,7 +67,6 @@ permissions:
   - 'edit terms in agency'
   - 'edit terms in country'
   - 'edit terms in duty_station_region'
-  - 'edit terms in security_role_area'
   - 'edit terms in theme'
   - 'import contacts'
   - 'revert all revisions'

@@ -1,7 +1,15 @@
 global-styling:
   css:
-    theme:
+    base:
+      css/brand.css: {}
       css/styles.css: {}
+
+# Common Design extensions
+cd-header:
+  css:
+    theme:
+      components/cd/cd-header/cd-header.css: {}
+      components/cd/cd-header/cd-logo.css: {}
 
 # Custom components
 slt-contact-table:

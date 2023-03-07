@@ -1,7 +1,7 @@
 Common Design Admin Subtheme
 ============================
 
-Simple subtheme of the Seven theme to customize some elements of the admin
+Simple subtheme of the Claro theme to customize some elements of the admin
 interface.
 
 Customizations

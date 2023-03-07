@@ -1,0 +1,10 @@
+slt_contacts.settings:
+  type: config_object
+  label: 'SLT Contacts settings'
+  mapping:
+    max_rows:
+      type: integer
+      label: 'Maximum number of rows to parse in the spreadsheet.'
+    batch_size:
+      type: integer
+      label: 'Number of contact nodes to delete/create per batch.'

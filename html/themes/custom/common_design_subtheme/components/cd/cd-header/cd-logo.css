@@ -1,0 +1,15 @@
+.cd-site-logo {
+  width: 52px;
+}
+
+@media (max-width: 767px) {
+  .cd-site-logo {
+    background: url(/themes/custom/common_design_subtheme/img/logos/slt-compact.svg) center no-repeat;
+  }
+}
+
+@media (min-width: 768px) {
+  .cd-site-logo {
+    width: 121px;
+  }
+}

@@ -1,7 +1,9 @@
 uuid: dfe53615-58cc-4b19-b3e1-40d8414b20f2
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - slt_access
 id: internal_document_viewer
 label: 'Internal Document Viewer'
 weight: -7

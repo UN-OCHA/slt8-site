@@ -1,84 +1,87 @@
 dist: focal
 language: php
-cache:
-  - composer
 
 php:
-  - 8.0
+  - 8.2
 
-# Make sure we have a recent version of docker-compose and chrome.
+install:
+  - sudo apt-get update
+  - sudo apt-get install libonig5
+
+# Make sure we have a recent version of docker-compose.
 addons:
   apt:
     packages:
       - docker-compose
-  chrome: stable
-
-services:
-  - mysql
-
-mysql:
-  database: drupal
-  username: root
-  encoding: utf8
-
-install:
-  ssh-agent -k || true
 
 before_script:
-  # Composer.
-  - sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
-  - source $HOME/.bashrc
-  - composer self-update
-
   # Ensure the PHP environment is ready.
   - phpenv rehash
 
-  # Code sniff
-  - cd $TRAVIS_BUILD_DIR
-  - composer install
+  # Install the AWS CLI and login to the ECR. Credentials are secrets set via the UI.
+  - if ! [ -x "$(command -v aws)" ]; then curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ; sudo ./aws/install ; fi
+  - aws ecr-public get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin public.ecr.aws/unocha
 
 script:
+  # Get docker information.
+  - docker version
+  - docker-compose version
+
   # PHP linting
   - test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
-  - test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+  - test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|theme\)$' -print0 | xargs -0 -n 1 -P 4 php -l
 
-  # PHP CS
-  - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
+  # Build local image.
+  - make
 
-  # Theme build.
-  - composer run sass
+  # Create the site, redis and mysql containers.
+  - docker-compose -p slt-test -f tests/docker-compose.yml up -d
 
-  # Drupal install
-  - mysql -e "CREATE USER drupal@127.0.0.1 IDENTIFIED BY 'drupal';"
-  - mysql -e "CREATE DATABASE drupal;"
-  - mysql -e "GRANT ALL ON drupal.* to drupal@127.0.0.1;"
+  # Wait a bit for solr and mysql to be ready.
+  - sleep 10
 
-  - cd ${TRAVIS_BUILD_DIR}
-  - mkdir -p ./html/sites/default
-  - cp .travis/default.se* ./html/sites/default/
+  # Dump some information about the created containers.
+  - docker ps -a -fname=slt-test
 
-  - cd ${TRAVIS_BUILD_DIR}/html
-  - ../vendor/bin/drush -y si --db-url=mysql://drupal:drupal@127.0.0.1/drupal minimal
-  - ../vendor/bin/drush -y cset system.site uuid $(grep uuid ${TRAVIS_BUILD_DIR}/config/system.site.yml | awk '{print $2}')
-  - ../vendor/bin/drush -y cim --source=${TRAVIS_BUILD_DIR}/config
-  - ../vendor/bin/drush rs 127.0.0.1:8080 >/dev/null 2>&1 &
-  - ../vendor/bin/drush php-eval 'node_access_rebuild();'
-  - ../vendor/bin/drush cr
-  - sleep 5
+  # Install the dev dependencies.
+  - docker exec -it -w /srv/www slt-test-site composer install
 
-  - ../vendor/bin/drush en yaml_content -y
-  - ../vendor/bin/drush yaml-content-import ${TRAVIS_BUILD_DIR}/.travis/
+  # Check coding standards.
+  - docker exec -it -u appuser -w /srv/www slt-test-site ./vendor/bin/phpcs -p --report=full ./html/modules/custom ./html/themes/custom
 
-  # Chrome headless
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-  - sleep 5
+  # Install the site with the existing config.
+  - docker exec -it slt-test-site drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
+  - docker exec -it slt-test-site drush -y en dblog
 
-  # Test
-  - cd $TRAVIS_BUILD_DIR
-  - DTT_BASE_URL=http://127.0.0.1:8080 DTT_API_URL=http://localhost:9222 ./vendor/bin/phpunit --debug --colors --testsuite=existing-site,existing-site-javascript
+  # Ensure the file directories are writable.
+  - docker exec -it slt-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
+
+  # Create the directories for the tests.
+  - docker exec -it -u root slt-test-site mkdir -p /srv/www/html/build/logs
+  - docker exec -it -u root slt-test-site chmod -R 777 /srv/www/html/build/logs
+  - docker exec -it -u root slt-test-site mkdir -p /srv/www/html/sites/default/files/browser_output
+  - docker exec -it -u root slt-test-site chmod -R 777 /srv/www/html/sites/default/files/browser_output
+  - docker exec -it -u root slt-test-site mkdir -p /srv/www/coverage
+  - docker exec -it -u root slt-test-site chmod -R 777 /srv/www/coverage
+  - docker exec -it -u root slt-test-site mkdir -p /srv/www/html/sites/simpletest
+  - docker exec -it -u root slt-test-site chmod -R 777 /srv/www/html/sites/simpletest
+
+  # Run all tests and generate coverage report.
+  - docker exec -it -u appuser -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 -e SIMPLETEST_BASE_URL=http://127.0.0.1 slt-test-site ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
 
 after_success:
   - echo "The tests completed without errors."
+  # Create directory for clover.
+  - mkdir -p ./build/logs
+  - chmod -R 777 ./build/logs
+  - docker cp slt-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
+  # Fix source files path.
+  - sed -i 's#/srv/www#.#g' build/logs/clover.xml
+  # Get coveralls and execute.
+  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.4.3/php-coveralls.phar
+  - chmod +x php-coveralls.phar
+  - ./php-coveralls.phar -vv
 
 after_failure:
   - echo "The tests failed. Please check the output above for problems."
+  - docker exec -it slt-test-site drush watchdog:show --count=50 --extended

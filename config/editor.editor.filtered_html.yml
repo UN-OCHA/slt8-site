@@ -1,58 +1,66 @@
-uuid: b7315b45-f2b2-4969-b266-3ba20b5cc900
+uuid: e9795106-f8c2-42c6-9f9c-06fb6cfd56b3
 langcode: en
 status: true
 dependencies:
   config:
     - filter.format.filtered_html
   module:
-    - ckeditor
+    - ckeditor5
 format: filtered_html
-editor: ckeditor
+editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      -
-        -
-          name: Formatting
-          items:
-            - Bold
-            - Italic
-            - Format
-        -
-          name: Links
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: 'Lists and Tables'
-          items:
-            - BulletedList
-            - NumberedList
-            - Outdent
-            - Indent
-            - Table
-        -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalMediaLibrary
-        -
-          name: Tools
-          items:
-            - Undo
-            - Redo
-            - RemoveFormat
-            - Source
+    items:
+      - heading
+      - bold
+      - italic
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - indent
+      - outdent
+      - insertTable
+      - '|'
+      - blockQuote
+      - drupalMedia
+      - '|'
+      - removeFormat
+      - undo
+      - redo
+      - sourceEditing
   plugins:
-    stylescombo:
-      styles: ''
-    language:
-      language_list: un
-image_upload:
-  status: false
-  scheme: private
-  directory: inline-images
-  max_size: ''
-  max_dimensions:
-    width: null
-    height: null
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      reversed: false
+      startIndex: true
+    ckeditor5_sourceEditing:
+      allowed_tags:
+        - '<cite>'
+        - '<dl>'
+        - '<dt>'
+        - '<dd>'
+        - '<a target>'
+        - '<blockquote cite>'
+        - '<ul type>'
+        - '<ol a i type>'
+        - '<iframe height src title width>'
+        - '<h2 id jump-*>'
+        - '<h3 id jump-*>'
+        - '<h4 id jump-*>'
+        - '<h5 id jump-*>'
+        - '<h6 id jump-*>'
+        - '<drupal-media data-view-mode data-caption title>'
+    editor_advanced_link_link:
+      enabled_attributes:
+        - target
+    media_media:
+      allow_view_mode_override: true
+image_upload: {  }

@@ -1,7 +1,9 @@
 uuid: 21b3df71-911f-41d4-9fc3-423d9119804e
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - slt_access
 id: authorized
 label: 'Authorized user'
 weight: -8

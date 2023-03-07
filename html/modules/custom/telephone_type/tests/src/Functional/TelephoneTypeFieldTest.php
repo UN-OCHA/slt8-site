@@ -39,7 +39,7 @@ class TelephoneTypeFieldTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->drupalCreateContentType(['type' => 'article']);
@@ -116,12 +116,12 @@ class TelephoneTypeFieldTest extends BrowserTestBase {
    */
   public function testTelephoneTypeWidget() {
     $this->drupalGet('node/add/article');
-    $this->assertFieldByName("field_telephone1[0][number]", '', 'Widget found.');
-    $this->assertFieldByName("field_telephone2[0][number]", '', 'Widget found.');
-    $this->assertRaw('placeholder="Work cell"');
-    $this->assertRaw('placeholder="123-456-7890"');
-    $this->assertRaw('placeholder="Home cell"');
-    $this->assertRaw('placeholder="0123-456-789"');
+    $this->assertSession()->fieldExists('field_telephone1[0][number]');
+    $this->assertSession()->fieldExists('field_telephone2[0][number]');
+    $this->assertSession()->responseContains('placeholder="Work cell"');
+    $this->assertSession()->responseContains('placeholder="123-456-7890"');
+    $this->assertSession()->responseContains('placeholder="Home cell"');
+    $this->assertSession()->responseContains('placeholder="0123-456-789"');
   }
 
   /**
@@ -141,8 +141,9 @@ class TelephoneTypeFieldTest extends BrowserTestBase {
       'field_telephone2[0][number]' => $this->randomMachineName(),
     ];
 
-    $this->drupalPostForm('node/add/article', $edit, 'Save');
-    $this->assertRaw($expected['default']);
+    $this->drupalGet('node/add/article');
+    $this->submitForm($edit, 'Save');
+    $this->assertSession()->responseContains($expected['default']);
   }
 
   /**
@@ -162,8 +163,9 @@ class TelephoneTypeFieldTest extends BrowserTestBase {
       'field_telephone2[0][number]' => $input['number'],
     ];
 
-    $this->drupalPostForm('node/add/article', $edit, 'Save');
-    $this->assertRaw($expected['link']);
+    $this->drupalGet('node/add/article');
+    $this->submitForm($edit, 'Save');
+    $this->assertSession()->responseContains($expected['link']);
   }
 
   /**
