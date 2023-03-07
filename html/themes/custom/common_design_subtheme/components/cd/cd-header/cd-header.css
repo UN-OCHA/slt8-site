@@ -1,0 +1,17 @@
+.cd-header {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .cd-site-header__nav-holder nav > ul > li,
+  .cd-site-header__nav-holder nav > ul .cd-nav__item {
+    max-width: 120px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cd-site-header__nav-holder nav > ul > li,
+  .cd-site-header__nav-holder nav > ul .cd-nav__item {
+    max-width: 160px;
+  }
+}

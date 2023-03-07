@@ -1,22 +1,9 @@
-[![Develop - build Status](https://travis-ci.com/UN-OCHA/slt8-site.svg?token=q5DydpJDYUBJoayLktvd&branch=develop)](https://travis-ci.com/UN-OCHA/slt8-site)
-[![Main - build Status](https://travis-ci.com/UN-OCHA/slt8-site.svg?token=q5DydpJDYUBJoayLktvd&branch=main)](https://travis-ci.com/UN-OCHA/slt8-site)
 ![Build docker image](https://github.com/UN-OCHA/slt8-site/workflows/Build%20docker%20image/badge.svg)
 
-Saving Lives Together (SLT) site - Drupal 8 version
-===================================================
+Saving Lives Together (SLT) site - Drupal 10 version
+====================================================
 
-This is the drupal 8 codebase for the [Saving Lives Together](https://savinglivestogether.unocha.org) site.
-
-Migration
----------
-
-The migration is handled by the [slt_migrate](html/modules/custom/slt_migrate)
-module.
-
-Connection settings to the Drupal 7 database should be defined in a settings.php
-file with the name `slt7`.
-
-Run `drush mim --group=slt`.
+This is the drupal 10 codebase for the [Saving Lives Together](https://savinglivestogether.unocha.org) site.
 
 Content
 -------
@@ -141,7 +128,6 @@ Todo
 
 - [ ] Consolidate Hero image size (`object-fit: cover` etc.).
 - [ ] Review responsiveness of image grids.
-- [ ] Check `optimize_image_binaries` module and if `pngquant` is available
 
 
 Local development

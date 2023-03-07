@@ -6,7 +6,7 @@ module:
   bcc: 0
   block: 0
   breakpoint: 0
-  ckeditor: 0
+  ckeditor5: 0
   components: 0
   config: 0
   config_split: 0
@@ -74,6 +74,6 @@ theme:
   stable: 0
   common_design: 0
   common_design_subtheme: 0
-  seven: 0
+  claro: 0
   common_design_admin_subtheme: 0
 profile: minimal

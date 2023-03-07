@@ -10,8 +10,8 @@ dependencies:
     - text
 third_party_settings:
   allowed_formats:
-    filtered_html: filtered_html
-    plain_text: '0'
+    allowed_formats:
+      - filtered_html
 id: paragraph.text.field_media_content_text
 field_name: field_media_content_text
 entity_type: paragraph

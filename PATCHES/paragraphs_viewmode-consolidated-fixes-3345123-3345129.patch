@@ -1,0 +1,77 @@
+diff --git a/config/schema/paragraphs_viewmode.schema.yml b/config/schema/paragraphs_viewmode.schema.yml
+index 88c7a2d..377c706 100644
+--- a/config/schema/paragraphs_viewmode.schema.yml
++++ b/config/schema/paragraphs_viewmode.schema.yml
+@@ -3,14 +3,14 @@ paragraphs.behavior.settings.paragraphs_viewmode_behavior:
+   label: 'Paragraphs View Mode Settings'
+   mapping:
+     override_mode:
+-      type: text
++      type: string
+       label: 'Select which view mode to override'
+     override_available:
+       type: sequence
+       label: 'Select which view modes are allowed'
+       sequence:
+-        type: text
++        type: string
+         label: 'View Mode'
+     override_default:
+-      type: text
++      type: string
+       label: 'Select default view mode'
+diff --git a/paragraphs_viewmode.module b/paragraphs_viewmode.module
+index be58325..a9b2055 100644
+--- a/paragraphs_viewmode.module
++++ b/paragraphs_viewmode.module
+@@ -29,14 +29,14 @@ function paragraphs_viewmode_help($route_name, RouteMatchInterface $route_match)
+ /**
+  * Implements hook_entity_view_mode_alter().
+  */
+-function paragraphs_viewmode_entity_view_mode_alter(&$view_mode, EntityInterface $entity, $context) {
++function paragraphs_viewmode_entity_view_mode_alter(&$view_mode, EntityInterface $entity) {
+   if (!($entity instanceof ParagraphInterface)) {
+     return;
+   }
+   $paragraph_type = $entity->getParagraphType();
+   foreach ($paragraph_type->getEnabledBehaviorPlugins() as $plugin) {
+     if ($plugin instanceof ParagraphsViewmodeBehaviorInterface) {
+-      $plugin->entityViewModeAlter($view_mode, $entity, $context);
++      $plugin->entityViewModeAlter($view_mode, $entity);
+     }
+   }
+ }
+diff --git a/src/ParagraphsViewmodeBehaviorInterface.php b/src/ParagraphsViewmodeBehaviorInterface.php
+index d945748..0206255 100644
+--- a/src/ParagraphsViewmodeBehaviorInterface.php
++++ b/src/ParagraphsViewmodeBehaviorInterface.php
+@@ -17,12 +17,10 @@ interface ParagraphsViewmodeBehaviorInterface extends ParagraphsBehaviorInterfac
+    *   The current view mode.
+    * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+    *   The paragraph.
+-   * @param array $context
+-   *   Additional context information.
+    *
+    * @return mixed
+    *   The new view mode.
+    */
+-  public function entityViewModeAlter(&$view_mode, ParagraphInterface $paragraph, array $context);
++  public function entityViewModeAlter(&$view_mode, ParagraphInterface $paragraph);
+ 
+ }
+diff --git a/src/Plugin/paragraphs/Behavior/ParagraphsViewmodeBehavior.php b/src/Plugin/paragraphs/Behavior/ParagraphsViewmodeBehavior.php
+index b43a038..cdb5e27 100644
+--- a/src/Plugin/paragraphs/Behavior/ParagraphsViewmodeBehavior.php
++++ b/src/Plugin/paragraphs/Behavior/ParagraphsViewmodeBehavior.php
+@@ -172,9 +172,8 @@ class ParagraphsViewmodeBehavior extends ParagraphsBehaviorBase implements Parag
+   /**
+    * {@inheritdoc}
+    */
+-  public function entityViewModeAlter(&$view_mode, ParagraphInterface $paragraph, array $context) {
+-    $raw_override_mode = $this->configuration['override_mode'];
+-    $override_mode = array_search($raw_override_mode, $this->configuration['override_available'], TRUE);
++  public function entityViewModeAlter(&$view_mode, ParagraphInterface $paragraph) {
++    $override_mode = $this->configuration['override_mode'];
+     $new_view_mode = $paragraph->getBehaviorSetting($this->pluginId, 'view_mode', $this->configuration['override_default']);
+ 
+     if ($view_mode !== $override_mode || $override_mode === $new_view_mode) {

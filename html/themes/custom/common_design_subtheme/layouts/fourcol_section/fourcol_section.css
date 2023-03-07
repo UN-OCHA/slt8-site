@@ -7,7 +7,7 @@
 
 .layout--fourcol-section {
   /* Compensate for the padding of the regions. */
-  margin: -1rem;
+  margin: 0 -1rem;
 }
 
 .layout--fourcol-section:after {

@@ -1,7 +1,7 @@
 name:  OCHA Common Design sub theme
 type: theme
 description: OCHA Common Design sub theme
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 base theme: common_design
 logo: 'img/logos/slt-full.svg'
 
@@ -24,6 +24,10 @@ regions:
   footer_soft: Soft footer
   footer_navigation: Footer navigation
 
+libraries-extend:
+  common_design/cd-header:
+    - common_design_subtheme/cd-header
+
 # Override libraries.
 libraries-override:
   # Override the cd-table component.
@@ -34,6 +38,12 @@ libraries-override:
         components/cd-table/cd-table.css: components/cd-table/cd-table.css
     js:
       components/cd-table/cd-table.js: components/cd-table/cd-table.js
+  # Remove this unnecessary polyfill which breaks the contact view due to
+  # https://www.drupal.org/project/drupal/issues/3334704
+  # @todo: remove once it's fixed in drupal core.
+  common_design/array-from-polyfill:
+    js:
+      js/vendor/array-from-polyfill.js: false
   # Overrides the layouts.
   # @todo: put that in the common_design theme instead?
   layout_builder/twocol_section:
@@ -48,7 +58,3 @@ libraries-override:
     css:
       theme:
         layouts/fourcol_section/fourcol_section.css: layouts/fourcol_section/fourcol_section.css
-
-# Use the common_design_subtheme styles inside the editor.
-# ckeditor_stylesheets:
-#   - css/styles.css

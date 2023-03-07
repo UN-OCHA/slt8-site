@@ -71,7 +71,14 @@ function common_design_subtheme_preprocess_paragraph__page_title(&$variables) {
   // title field. We will display a placeholder instead, which is handled by
   // paragraphs_page_title_preprocess_paragraph__page_title().
   if (!isset($variables['elements']['#id'])) {
-    $variables['content']['title'] = common_design_get_block_render_array('page_title_block');
+    // Merge the block data if the title was already set by
+    // paragraphs_page_title_preprocess_paragraph__page_title().
+    if (isset($variables['content']['title'])) {
+      $variables['content']['title'] += common_design_get_block_render_array('page_title_block');
+    }
+    else {
+      $variables['content']['title'] = common_design_get_block_render_array('page_title_block');
+    }
     $variables['content']['local_tasks'] = common_design_get_block_render_array('local_tasks_block');
   }
 }

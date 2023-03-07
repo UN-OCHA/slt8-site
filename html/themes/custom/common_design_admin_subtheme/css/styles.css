@@ -1,6 +1,4 @@
-/*------------------------------------------------------------------------------
- * Forms
- *----------------------------------------------------------------------------*/
+/* Forms */
 
 /* Prevent overflow due to size attribute. */
 .field--name-title .form-text {
@@ -11,25 +9,21 @@
   z-index: 10000;
 }
 
-/*------------------------------------------------------------------------------
- * Styling of the SLT contact import form.
- *----------------------------------------------------------------------------*/
+/* Styling of the SLT contact import form. */
 
-.slt-contacts-import-contacts-form .seven-details__wrapper {
-  max-height: 400px;
+.slt-contacts-import-contacts-form .claro-details__wrapper {
   overflow-y: auto;
+  max-height: 400px;
 }
-.slt-contacts-import-contacts-form .seven-details__wrapper table th {
+.slt-contacts-import-contacts-form .claro-details__wrapper table th {
   position: sticky;
   top: 0;
 }
 
-/*------------------------------------------------------------------------------
- * Styling of the tabs navigation when collapsed (ex: /admin/content)
- *----------------------------------------------------------------------------*/
+/* Styling of the tabs navigation when collapsed (ex: /admin/content). */
 
 /* Fix an issue where the hidden tabs are displayed due to a missing overflow
- * rule in core/themes/seven/css/compoenents/tabs.css line 153. */
+ * rule in core/themes/claro/css/compoenents/tabs.css line 153. */
 .is-collapse-enabled .tabs {
   overflow: hidden;
 }
