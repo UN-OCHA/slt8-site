@@ -1,0 +1,11 @@
+uuid: 0abb7311-c115-430d-9d53-a23cc5a6d170
+langcode: en
+status: true
+dependencies: {  }
+machine: local
+description: null
+name: Local
+weight: ''
+url: 'https://slt.test/'
+fg_color: '#ffffff'
+bg_color: '#000000'
