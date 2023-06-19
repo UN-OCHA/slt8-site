@@ -5,12 +5,11 @@ namespace Drupal\Tests\linked_responsive_image_media_formatter\Functional\FieldF
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
-
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
+use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 use Drupal\Tests\TestFileCreationTrait;
 
 /**
