@@ -5,8 +5,8 @@
  * Defines a simple telephone number field type with a "type" sub-field.
  */
 
-use Drupal\Core\Url;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().

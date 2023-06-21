@@ -2,8 +2,8 @@
 
 namespace Drupal\slt_contacts\Form;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
