@@ -5,9 +5,9 @@
  * SLT access module file.
  */
 
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\node\NodeInterface;
