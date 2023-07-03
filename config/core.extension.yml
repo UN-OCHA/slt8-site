@@ -37,8 +37,6 @@ module:
   media_library: 0
   menu_link_content: 0
   menu_ui: 0
-  migrate: 0
-  migrate_drupal: 0
   mysql: 0
   node: 0
   page_cache: 0
