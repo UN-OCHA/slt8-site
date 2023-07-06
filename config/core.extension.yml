@@ -65,6 +65,7 @@ module:
   update: 0
   user: 0
   user_expire: 0
+  username_enumeration_prevention: 0
   pathauto: 1
   views: 10
   paragraphs: 11
