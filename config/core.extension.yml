@@ -37,8 +37,6 @@ module:
   media_library: 0
   menu_link_content: 0
   menu_ui: 0
-  migrate: 0
-  migrate_drupal: 0
   mysql: 0
   node: 0
   page_cache: 0
@@ -67,6 +65,7 @@ module:
   update: 0
   user: 0
   user_expire: 0
+  username_enumeration_prevention: 0
   pathauto: 1
   views: 10
   paragraphs: 11
