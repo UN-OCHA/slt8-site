@@ -6,6 +6,6 @@ machine: dev
 description: null
 name: Dev
 weight: ''
-url: 'https://dev.savinglivestogether-unocha-org.ahconu.org/'
-fg_color: '#000000'
-bg_color: '#34ccc1'
+url: ''
+fg_color: '#ffffff'
+bg_color: '#db7b18'
