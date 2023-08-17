@@ -6,6 +6,6 @@ machine: local
 description: null
 name: Local
 weight: ''
-url: 'https://slt.test/'
+url: 'https://slt-local.test/'
 fg_color: '#ffffff'
 bg_color: '#000000'
