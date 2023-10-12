@@ -18,9 +18,6 @@
         "drupal/paragraphs_viewmode": {
             "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
         },
-        "drupal/pathauto": {
-            "PHP 8.2 compatibility": "PATCHES/pathauto-php-82-compatibility.patch"
-        },
         "drupal/user_expire": {
             "Allow the notification email to be customised": "PATCHES/user_expire-customize-notification-email.patch",
             "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
