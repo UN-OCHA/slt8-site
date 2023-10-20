@@ -20,6 +20,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: administrator
 label: Administrator
 weight: -6
@@ -70,6 +71,10 @@ permissions:
   - 'use text format filtered_html'
   - 'view all media revisions'
   - 'view all revisions'
+  - 'view any unpublished contact content'
+  - 'view any unpublished content'
+  - 'view any unpublished private_page content'
+  - 'view any unpublished public_page content'
   - 'view contact revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
