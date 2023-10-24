@@ -75,6 +75,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 10
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   title:
     type: string_textfield
     weight: 0
@@ -92,6 +99,5 @@ hidden:
   created: true
   path: true
   promote: true
-  status: true
   sticky: true
   uid: true

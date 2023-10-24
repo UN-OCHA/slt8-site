@@ -20,6 +20,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: administrator
 label: Administrator
 weight: -6
@@ -31,6 +32,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
+  - 'administer nodes'
   - 'administer taxonomy'
   - 'administer users'
   - 'assign user roles'
@@ -42,18 +44,8 @@ permissions:
   - 'create terms in country'
   - 'create terms in duty_station_region'
   - 'create terms in theme'
-  - 'delete all revisions'
-  - 'delete any contact content'
   - 'delete any media'
-  - 'delete any private_page content'
-  - 'delete any public_page content'
-  - 'delete contact revisions'
   - 'delete media'
-  - 'delete own contact content'
-  - 'delete own private_page content'
-  - 'delete own public_page content'
-  - 'delete private_page revisions'
-  - 'delete public_page revisions'
   - 'delete terms in agency'
   - 'delete terms in country'
   - 'delete terms in duty_station_region'
@@ -78,8 +70,8 @@ permissions:
   - 'use text format filtered_html'
   - 'view all media revisions'
   - 'view all revisions'
+  - 'view any unpublished content'
   - 'view contact revisions'
-  - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view private_page revisions'
   - 'view public_page revisions'
