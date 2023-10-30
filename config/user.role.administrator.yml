@@ -32,6 +32,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
+  - 'administer menu'
   - 'administer nodes'
   - 'administer taxonomy'
   - 'administer users'
