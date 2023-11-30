@@ -1,8 +1,5 @@
 {
     "patches": {
-        "drupal/bcc": {
-            "Drupal 10 compatibility": "PATCHES/bcc-drupal-10-compatibility.patch"
-        },
         "drupal/core" : {
             "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
         },
@@ -11,9 +8,6 @@
         },
         "drupal/layout_paragraphs": {
             "Drupal 10 compatibility": "PATCHES/layout_paragraphs-drupal-10-compatibility.patch"
-        },
-        "drupal/maintenance200": {
-            "Drupal 10 compatibility": "PATCHES/maintenance200-drupal-10-compatibility.patch"
         },
         "drupal/paragraphs_viewmode": {
             "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
