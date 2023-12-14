@@ -6,9 +6,6 @@
         "drupal/csp": {
             "Simplify log format": "PATCHES/csp-log-format.patch"
         },
-        "drupal/layout_paragraphs": {
-            "Drupal 10 compatibility": "PATCHES/layout_paragraphs-drupal-10-compatibility.patch"
-        },
         "drupal/paragraphs_viewmode": {
             "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
         },
