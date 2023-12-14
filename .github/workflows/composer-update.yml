@@ -14,7 +14,6 @@ jobs:
       uses: UN-OCHA/actions/composer-update@main
       with:
         github_access_token: ${{ secrets.PAT }}
-        php_version: '8.2'
         patch_branch: 'develop'
         patch_packages: 'drupal/*'
         patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
