@@ -62,7 +62,7 @@
         "drupal/coder": "^8.3",
         "drupal/config_filter": "^2.2",
         "drupal/devel": "^5.0",
-        "kint-php/kint": "^3.3",
+        "kint-php/kint": "^5",
         "mikey179/vfsstream": "^1.6",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.11",
