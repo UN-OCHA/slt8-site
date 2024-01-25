@@ -25,6 +25,7 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_denied": "^2.0",
         "drupal/allowed_formats": "^2.0",
+        "drupal/amazon_ses": "^3.0",
         "drupal/bcc": "^4",
         "drupal/classy": "^1.0",
         "drupal/components": "^3.0@beta",
@@ -40,6 +41,7 @@
         "drupal/google_tag": "^1.6",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
         "drupal/layout_paragraphs": "^2.0",
+        "drupal/mailsystem": "^4.4",
         "drupal/maintenance200": "^2",
         "drupal/paragraphs": "^1.15",
         "drupal/paragraphs_viewmode": "^1.1",
@@ -60,7 +62,7 @@
         "drupal/coder": "^8.3",
         "drupal/config_filter": "^2.2",
         "drupal/devel": "^5.0",
-        "kint-php/kint": "^3.3",
+        "kint-php/kint": "^5",
         "mikey179/vfsstream": "^1.6",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.11",
@@ -84,7 +86,8 @@
             "drupal/console-extend-plugin": true,
             "orakili/composer-drupal-info-file-patch-helper": true,
             "phpstan/extension-installer": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "php-http/discovery": true
         }
     },
     "autoload": {
