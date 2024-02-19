@@ -22,7 +22,7 @@ services:
       - default
 
   mysql:
-    image: public.ecr.aws/unocha/mysql:10.6
+    image: public.ecr.aws/unocha/mysql:10.11
     hostname: slt-test-mysql
     container_name: slt-test-mysql
     environment:
