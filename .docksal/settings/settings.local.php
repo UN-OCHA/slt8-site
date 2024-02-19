@@ -130,15 +130,16 @@ $settings['rebuild_access'] = TRUE;
  */
 $settings['skip_permissions_hardening'] = TRUE;
 
-
-
 // Docksal DB connection settings.
 $databases['default']['default'] = array (
-	'database' => 'slt8',
-	'username' => 'slt8',
-	'password' => 'slt8',
-	'host' => 'mysql',
-	'driver' => 'mysql',
+  'database' => 'default',
+  'username' => 'root',
+  'password' => 'root',
+  'prefix' => '',
+  'host' => 'db',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
 );
 
 // Workaround for permission issues with NFS shares
