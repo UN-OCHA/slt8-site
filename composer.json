@@ -55,7 +55,7 @@
         "drush/drush": "^12",
         "orakili/composer-drupal-info-file-patch-helper": "^1",
         "phpoffice/phpspreadsheet": "^1.27.1",
-        "unocha/common_design": "^8.0",
+        "unocha/common_design": "^9",
         "webflo/drupal-finder": "^1.2.2"
     },
     "require-dev": {
