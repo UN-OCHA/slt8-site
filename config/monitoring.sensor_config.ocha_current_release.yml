@@ -1,0 +1,20 @@
+uuid: 2731530a-d9a4-410f-a9c1-089dfc97af09
+langcode: en
+status: false
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: J8GhNRySBdH2tkq9VG_OZckya_w78hO4ed5dgNZA2Fs
+id: ocha_current_release
+label: 'Current release'
+description: 'Current release'
+category: OCHA
+plugin_id: ocha_current_release
+result_class: null
+value_label: Release
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

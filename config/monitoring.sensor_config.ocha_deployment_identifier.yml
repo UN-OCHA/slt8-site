@@ -1,0 +1,20 @@
+uuid: cdc2f609-4ceb-41ec-b785-46ee75930446
+langcode: en
+status: false
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: ere9CmHK37HMBjz2iB_Bc7HCxVqddUBPh52MhTJnLvE
+id: ocha_deployment_identifier
+label: 'Deployment identifier'
+description: 'Deployment identifier'
+category: OCHA
+plugin_id: ocha_deployment_identifier
+result_class: null
+value_label: Deployment
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

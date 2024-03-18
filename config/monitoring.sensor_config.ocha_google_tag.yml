@@ -1,0 +1,20 @@
+uuid: 387db73c-d76b-4cf8-aec2-28e9c8531804
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: daoAuJSSd9vKvKeW1wjJO3HU4NP1ODgrGcvPYSPSNrw
+id: ocha_google_tag
+label: 'Google tag'
+description: 'Google tag'
+category: OCHA
+plugin_id: ocha_google_tag
+result_class: null
+value_label: 'GTM Id'
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

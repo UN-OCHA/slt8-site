@@ -1,0 +1,20 @@
+uuid: d5d06e40-fa1d-46cb-9d47-0e29f3906e8b
+langcode: en
+status: false
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: Z7mFKGp89JjTnstHqSWDLJ0zu9W-M2wjl2_6yIMARMA
+id: ocha_current_drupal_version
+label: 'Current drupal version'
+description: 'Current drupal version'
+category: OCHA
+plugin_id: ocha_current_drupal_version
+result_class: null
+value_label: Version
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

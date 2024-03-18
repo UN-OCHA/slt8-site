@@ -1,0 +1,20 @@
+uuid: 6d2b7bf8-10ad-43c3-9ee1-ef3cd19c6b52
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: JDRoZxAcRY6goJLBJ5IXhGuZtY4luymEso_DndWtlmY
+id: ocha_current_composer_version
+label: 'Current composer version'
+description: 'Current composer version'
+category: OCHA
+plugin_id: ocha_current_composer_version
+result_class: null
+value_label: null
+value_type: string
+caching_time: null
+settings: {  }
+thresholds:
+  type: none

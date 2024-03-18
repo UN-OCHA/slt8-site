@@ -1,0 +1,20 @@
+uuid: bdcbbc84-2aca-4969-8d63-8bdca7cf15b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: 5drurw9tYRxDecYr7Z6Zh9IP4obDQENzR2bTi3TuGGg
+id: ocha_common_design
+label: 'Common design'
+description: 'Common design'
+category: OCHA
+plugin_id: ocha_common_design
+result_class: null
+value_label: Version
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

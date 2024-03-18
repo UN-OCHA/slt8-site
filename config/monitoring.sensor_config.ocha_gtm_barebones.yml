@@ -1,0 +1,20 @@
+uuid: 48b6a94a-9f17-4945-b7a4-9fd90813d9e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: mwdBsqMx73dUbE3Jngyctoe6sk1QZ12etn-nLbZ3YU8
+id: ocha_gtm_barebones
+label: 'GTM Barebones'
+description: 'GTM Barebones'
+category: OCHA
+plugin_id: ocha_gtm_barebones
+result_class: null
+value_label: 'GTM Id'
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none

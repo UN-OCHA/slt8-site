@@ -1,0 +1,20 @@
+uuid: e58a9489-4978-44ce-9f1f-6a0aa1880675
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: jSQSHMDj-QUZ4XRrETPCF9BqVSbKLag73azb0_gsqGY
+id: ocha_env_link_fixer
+label: 'Environment Link Fixer'
+description: 'Environment Link Fixer'
+category: OCHA
+plugin_id: ocha_env_link_fixer
+result_class: null
+value_label: Version
+value_type: string
+caching_time: 86400
+settings: {  }
+thresholds:
+  type: none
