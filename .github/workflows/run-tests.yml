@@ -197,7 +197,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### Build output
+            ### Test run output
             #### Composer Validate `${{ steps.validate.outcome }}`
             #### PHP Lint `${{ steps.lint.outcome }}`
             #### Docker Build `${{ steps.build.outcome }}`
@@ -208,6 +208,27 @@ jobs:
             <details><summary>Software Versions</summary>
             <code>${{ steps.versions.outputs.stdout }}</code>
             </details>
+
+            <details><summary>Composer Validate</summary>
+            <code>${{ steps.validate.outputs.stdout }}</code>
+            <code>${{ steps.validate.outputs.stderr }}</code>
+            </details>
+
+            <details><summary>PHP Lint</summary>
+            <code>${{ steps.lint.outputs.stdout }}</code>
+            <code>${{ steps.lint.outputs.stderr }}</code>
+            </details>
+
+            <details><summary>PHPCS</summary>
+            <code>${{ steps.phpcs.outputs.stdout }}</code>
+            <code>${{ steps.phpcs.outputs.stderr }}</code>
+            </details>
+
+            <details><summary>Tests</summary>
+            <code>${{ steps.tests.outputs.stdout }}</code>
+            <code>${{ steps.tests.outputs.stderr }}</code>
+            </details>
+
             <details><summary>Drupal Logs</summary>
             <code>${{ steps.dblog.outputs.stdout }}</code>
             </details>
@@ -220,7 +241,7 @@ jobs:
         if: ${{ !env.ACT && success() }}
         uses: slackapi/slack-github-action@v1.25.0
         with:
-          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          channel-id: '${{ vars.SLACK_CHANNEL }}'
           payload: |
             {
               "text": "Tests passed for a pull request on ${{ github.repository }}",
@@ -247,7 +268,7 @@ jobs:
         if: ${{ !env.ACT && failure() }}
         uses: slackapi/slack-github-action@v1.25.0
         with:
-          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          channel-id: '${{ vars.SLACK_CHANNEL }}'
           payload: |
             {
               "text": "Tests failed for a pull request on ${{ github.repository }}",
@@ -275,6 +296,6 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker compose -f tests/docker-compose.yml down
+            docker compose -f tests/docker-compose.yml down --rmi local -v
         env:
           fail-fast: true
