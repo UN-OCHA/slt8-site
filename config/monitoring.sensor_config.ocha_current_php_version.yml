@@ -1,11 +1,9 @@
-uuid: 64e42ac5-06b6-4aec-a0e4-fa04a9baa722
+uuid: null
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - ocha_monitoring
-_core:
-  default_config_hash: OvBcsbNkDbE6x-IhwPJFCxB5kOZGTvyIivVlpzAoThM
 id: ocha_current_php_version
 label: 'Current PHP version'
 description: 'Current PHP version'
