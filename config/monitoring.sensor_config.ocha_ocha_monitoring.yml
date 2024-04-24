@@ -1,11 +1,9 @@
-uuid: accce03c-928c-45fb-8630-0ff643a46ab2
+uuid: null
 langcode: en
 status: true
 dependencies:
   module:
     - ocha_monitoring
-_core:
-  default_config_hash: fplx4RTa4gTlM0oV1neUt8ZQdsknNCuQ-sWA8m0E7lI
 id: ocha_ocha_monitoring
 label: 'OCHA Monitoring'
 description: 'OCHA Monitoring'

@@ -1,11 +1,9 @@
-uuid: 4b01d3b5-4727-4a43-a02e-274ceea49bc7
+uuid: null
 langcode: en
 status: true
 dependencies:
   module:
     - ocha_monitoring
-_core:
-  default_config_hash: SYrs2XQqCwJd_irnnaW73Nal_csoWLlY1_2Z8j-KXIw
 id: ocha_un_date
 label: 'UN Date'
 description: 'UN Date'
