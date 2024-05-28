@@ -6,5 +6,6 @@ dependencies:
     - paragraphs
 id: paragraph.linked_image_medium
 label: 'Linked image - Medium'
+description: ''
 targetEntityType: paragraph
 cache: true
