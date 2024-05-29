@@ -44,7 +44,7 @@ class GridLayout extends LayoutDefault {
    * Generate the list of regions based on the grid size.
    *
    * @return array
-   *   List of regions with earch region being an associative array with at
+   *   List of regions with each region being an associative array with at
    *   least a label key.
    *
    * @see \Drupal\Core\Layout\LayoutDefinition::getRegions()

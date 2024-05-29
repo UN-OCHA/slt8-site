@@ -12,6 +12,12 @@ name: 'Filtered Html'
 format: filtered_html
 weight: 0
 filters:
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
@@ -21,6 +27,12 @@ filters:
       allowed_html: '<br> <p> <h2 id jump-*> <h3 id jump-*> <h4 id jump-*> <h5 id jump-*> <h6 id jump-*> <cite> <dl> <dt> <dd> <a target href> <blockquote cite> <ul type> <ol a i type start> <iframe height src title width> <drupal-media data-view-mode data-caption title data-entity-type data-entity-uuid alt data-align> <strong> <em> <li> <table> <tr> <td rowspan colspan> <th rowspan colspan> <thead> <tbody> <tfoot> <caption>'
       filter_html_help: true
       filter_html_nofollow: false
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: true
+    weight: 9
+    settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
@@ -40,15 +52,3 @@ filters:
         thumbnail_small: thumbnail_small
       allowed_media_types:
         image: image
-  filter_html_image_secure:
-    id: filter_html_image_secure
-    provider: filter
-    status: true
-    weight: 9
-    settings: {  }
-  filter_align:
-    id: filter_align
-    provider: filter
-    status: true
-    weight: 0
-    settings: {  }
