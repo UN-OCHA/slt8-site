@@ -27,7 +27,7 @@ class SltContactsImportContactsForm extends FormBase {
   /**
    * Supported spreadsheet columns.
    *
-   * Each column defintion can contain the following values:
+   * Each column definition can contain the following values:
    * - legacy: indicates that the column itself is not used as is anymore
    *   though it may still be used when processing other columns.
    * - mandatory: indicates that the column must be present.
@@ -728,7 +728,7 @@ class SltContactsImportContactsForm extends FormBase {
    * Display message after the batch import is finished.
    *
    * @param bool $success
-   *   Whether the batch process succeeeded or not.
+   *   Whether the batch process succeeded or not.
    * @param array $results
    *   Batch results.
    * @param array $operations
@@ -942,7 +942,7 @@ class SltContactsImportContactsForm extends FormBase {
    *   associative array with the found columns which is an associative array
    *   with the column name (header) as value and the column letter as value.
    *   If the row is the header one but some mandatory columns are missing, the
-   *   returnning array will have an `errors` key with the list of errors.
+   *   returning array will have an `errors` key with the list of errors.
    */
   public static function parseHeaderRow(Worksheet $sheet, Row $row) {
     $columns = [];
