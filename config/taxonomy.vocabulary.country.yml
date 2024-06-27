@@ -6,3 +6,4 @@ name: Country
 vid: country
 description: "Countries used for example for a countact's duty station country."
 weight: 0
+new_revision: false

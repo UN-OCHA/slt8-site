@@ -6,3 +6,4 @@ name: 'Duty Station Region'
 vid: duty_station_region
 description: "Regions used for a contact's duty station region."
 weight: 0
+new_revision: false
