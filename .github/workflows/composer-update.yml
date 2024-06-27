@@ -11,14 +11,10 @@ jobs:
     steps:
     - name: Update The Thing
       id: update-action
-      # uses: UN-OCHA/actions/composer-update@main
-      # TODO: revert this when the other PR is merged and before merging this!
-      uses: UN-OCHA/actions/composer-update@OPS-10254-config-too
+      uses: UN-OCHA/actions/composer-update@main
       with:
-        aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
         github_access_token: ${{ secrets.PAT }}
-        patch_branch: ${{ github.head_ref || github.ref_name }}
+        patch_branch: 'develop'
         patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
         slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         slack_channel_name: ${{ vars.SLACK_CHANNEL }}
