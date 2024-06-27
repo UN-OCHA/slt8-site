@@ -48,6 +48,7 @@
         "drupal/pathauto": "^1.11",
         "drupal/r4032login": "^2.2",
         "drupal/redirect": "^1.8",
+        "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^3.2",
         "drupal/stage_file_proxy": "*",
         "drupal/user_expire": "^1.1",
