@@ -13,7 +13,7 @@ third_party_settings:
 name: 'Public page'
 type: public_page
 description: 'Page that will be accessible to any visitor whether they are logged in or not.'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false
