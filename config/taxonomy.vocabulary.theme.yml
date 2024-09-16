@@ -6,3 +6,4 @@ name: Theme
 vid: theme
 description: 'General themes for example to group internal documents.'
 weight: 0
+new_revision: false

@@ -1,11 +1,9 @@
-uuid: cdc2f609-4ceb-41ec-b785-46ee75930446
+uuid: 65be5447-b709-481e-97bc-85ed96cbfa1a
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - ocha_monitoring
-_core:
-  default_config_hash: ere9CmHK37HMBjz2iB_Bc7HCxVqddUBPh52MhTJnLvE
 id: ocha_deployment_identifier
 label: 'Deployment identifier'
 description: 'Deployment identifier'

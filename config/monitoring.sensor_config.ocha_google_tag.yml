@@ -4,8 +4,6 @@ status: true
 dependencies:
   module:
     - ocha_monitoring
-_core:
-  default_config_hash: daoAuJSSd9vKvKeW1wjJO3HU4NP1ODgrGcvPYSPSNrw
 id: ocha_google_tag
 label: 'Google tag'
 description: 'Google tag'

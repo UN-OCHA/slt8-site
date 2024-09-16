@@ -1,5 +1,3 @@
-version: "2.2"
-
 networks:
   default:
 
@@ -49,6 +47,8 @@ services:
       # Mount the folders needed for the tests.
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      # Mount the volume with the config.
+      - "../config:/srv/www/config:rw"
       # Mount local custom code.
       - "../html/modules/custom:/srv/www/html/modules/custom:ro"
       - "../html/themes/custom:/srv/www/html/themes/custom:ro"
