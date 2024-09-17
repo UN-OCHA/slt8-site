@@ -63,10 +63,12 @@
         "webflo/drupal-finder": "^1.2.2"
     },
     "require-dev": {
+        "davidrjonas/composer-lock-diff": "^1.7",
         "drupal/coder": "^8.3",
         "drupal/config_filter": "^2.2",
         "drupal/devel": "^5.0",
         "kint-php/kint": "^5",
+        "marcocesarato/php-conventional-changelog": "^1.17",
         "mikey179/vfsstream": "^1.6",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.11",
@@ -122,7 +124,7 @@
         "patchLevel": {
             "drupal/core": "-p2"
         },
-         "installer-paths": {
+        "installer-paths": {
             "html/core": [
                 "type:drupal-core"
             ],
@@ -154,14 +156,14 @@
         "drupal-scaffold": {
             "file-mapping": {
                 "[web-root]/sites/default/default.services.yml": {
-                  "mode": "replace",
-                  "path": "html/core/assets/scaffold/files/default.services.yml",
-                  "overwrite": false
+                    "mode": "replace",
+                    "path": "html/core/assets/scaffold/files/default.services.yml",
+                    "overwrite": false
                 },
                 "[web-root]/sites/default/default.settings.php": {
-                  "mode": "replace",
-                  "path": "html/core/assets/scaffold/files/default.settings.php",
-                  "overwrite": false
+                    "mode": "replace",
+                    "path": "html/core/assets/scaffold/files/default.settings.php",
+                    "overwrite": false
                 }
             },
             "locations": {
@@ -183,5 +185,6 @@
                 "drupal/maintenance200"
             ]
         }
-    }
+    },
+    "version": "2.0.13"
 }
