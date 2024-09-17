@@ -4,6 +4,21 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.4](https://github.com/UN-OCHA/slt8-site/compare/v2.1.3...v2.1.4) (2024-09-17)
+
+### Bug Fixes
+
+* Include core patch for aggregation error ([5e14f1](https://github.com/UN-OCHA/slt8-site/commit/5e14f1c7a761879dabe47a7345b33c78e56303a1))
+
+### Chores
+
+* Add tools [#OPS-10867](https://https://humanitarian.atlassian.net/browse/OPS-10867), [#OPS-10867](https://https://humanitarian.atlassian.net/browse/OPS-10867), [#OPS-10867](https://https://humanitarian.atlassian.net/browse/OPS-10867) ([215f9f](https://github.com/UN-OCHA/slt8-site/commit/215f9f53695c79dd897bdb785a2f052bfaacdf06), [be8eb5](https://github.com/UN-OCHA/slt8-site/commit/be8eb5b1e2ee85418b224b1b0c21348436d40867), [ef3753](https://github.com/UN-OCHA/slt8-site/commit/ef3753ed1d733cd91ef37e1d0727cc57b71433ed))
+* Include php logs if tests fail ([313cd8](https://github.com/UN-OCHA/slt8-site/commit/313cd80352fb40d62c28f62b4e2b1fc6b620d130))
+* Pass on credentials to action ([02b127](https://github.com/UN-OCHA/slt8-site/commit/02b127b44d8b0ba261f8094dd1dff9ee3a6b9fc4))
+* Remove patch which is blocking core update ([53e735](https://github.com/UN-OCHA/slt8-site/commit/53e735a72adf6a847d4618d5b6b4bf952961bb6e))
+* Update all outdated drupal/* unocha/* drush/* packages. ([fe782a](https://github.com/UN-OCHA/slt8-site/commit/fe782a0dbe19972314aa8e3a1e17ddc1c84d6e82), [444be0](https://github.com/UN-OCHA/slt8-site/commit/444be0384deaa4193004ccd3da8d63027aeabdb8), [427253](https://github.com/UN-OCHA/slt8-site/commit/4272532b0afaea512637f268eec9f934987a29e7), [f3f676](https://github.com/UN-OCHA/slt8-site/commit/f3f676f8ecc586b2f0da997adb1099f575b9dd25), [9c10c4](https://github.com/UN-OCHA/slt8-site/commit/9c10c4efccf0900a8b4377497aea634e3d58c70f))
+* Update phpspreadsheet ([52cbbb](https://github.com/UN-OCHA/slt8-site/commit/52cbbb2af825bd2de1f05f3bd66179a6b0dd6f43))
+
 ## [2.0.12](https://github.com/UN-OCHA/slt8-site/compare/v2.0.11...v2.0.12) (2023-11-14)
 
 
