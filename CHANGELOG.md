@@ -4,6 +4,16 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.5](https://github.com/UN-OCHA/slt8-site/compare/v2.1.4...v2.1.5) (2024-10-15)
+
+### Chores
+
+* Csp config for UNTV ([6359c5](https://github.com/UN-OCHA/slt8-site/commit/6359c54214986744bca6fb9122d3591b0d06a79e))
+* Ignore audit warning that doesn't affect us ([1031d0](https://github.com/UN-OCHA/slt8-site/commit/1031d041c69fb4ddea61ceaf98b494745d3351b9))
+* Phpcs ([f94a59](https://github.com/UN-OCHA/slt8-site/commit/f94a5947fe53bf9ee83e21dfa101bdd38e7efbda))
+* Remove csp module and update phpoffice package ([282d19](https://github.com/UN-OCHA/slt8-site/commit/282d19059f517a0802aea4d09945e050ba6542e0))
+* Update all outdated drupal/* unocha/* drush/* packages. ([0f3764](https://github.com/UN-OCHA/slt8-site/commit/0f3764b3a74df703bc207c1075bf66d2fd713611), [b312ba](https://github.com/UN-OCHA/slt8-site/commit/b312ba997c1acd59c014d1d41c6689d5466ef6d8), [3e3afa](https://github.com/UN-OCHA/slt8-site/commit/3e3afac323895e9ca947da3517b8b7cc4d5c2558), [bee46f](https://github.com/UN-OCHA/slt8-site/commit/bee46f9d408d2c3d82e332a4fdc8bae51c7c6cfb), [524326](https://github.com/UN-OCHA/slt8-site/commit/5243267a4009c5a24d397fbd230b152e915501e4))
+
 ## [2.1.4](https://github.com/UN-OCHA/slt8-site/compare/v2.1.3...v2.1.4) (2024-09-17)
 
 ### Bug Fixes

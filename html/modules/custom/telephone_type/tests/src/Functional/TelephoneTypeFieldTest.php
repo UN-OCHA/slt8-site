@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\telephone_type\Functional;
 
+use Drupal\Tests\BrowserTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests the creation of telephone fields.
