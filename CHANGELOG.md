@@ -4,6 +4,13 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.6](https://github.com/UN-OCHA/slt8-site/compare/v2.1.5...v2.1.6) (2024-11-18)
+
+### Chores
+
+* Add csp for vimeo iframes ([d657a2](https://github.com/UN-OCHA/slt8-site/commit/d657a292cbf9aeafa4bbb5c9561603b0cfedf815))
+* Update all outdated drupal/* unocha/* drush/* packages. ([405fdb](https://github.com/UN-OCHA/slt8-site/commit/405fdb52b99340f70fd770c645a5aab0bf5d7433), [e7e54f](https://github.com/UN-OCHA/slt8-site/commit/e7e54fb491948c8bad6fdcf78744c5cd75e380dd), [b706e0](https://github.com/UN-OCHA/slt8-site/commit/b706e0a968318017d66dbc60210fad112fd95f0b), [3c139a](https://github.com/UN-OCHA/slt8-site/commit/3c139a8e34e71ab0b2d47b809e5f4db3a1c231eb), [0fd878](https://github.com/UN-OCHA/slt8-site/commit/0fd878377321000a87acde62d688bfba42224de8))
+
 ## [2.1.5](https://github.com/UN-OCHA/slt8-site/compare/v2.1.4...v2.1.5) (2024-10-15)
 
 ### Chores
