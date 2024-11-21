@@ -4,6 +4,12 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.8](https://github.com/UN-OCHA/slt8-site/compare/v2.1.7...v2.1.8) (2024-11-21)
+
+### Chores
+
+* Update all outdated drupal/* unocha/* drush/* packages. ([a5bd70](https://github.com/UN-OCHA/slt8-site/commit/a5bd702b55c98be804920e5854dcd547bfd68e2b))
+
 ## [2.1.6](https://github.com/UN-OCHA/slt8-site/compare/v2.1.5...v2.1.6) (2024-11-18)
 
 ### Chores
