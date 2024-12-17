@@ -4,6 +4,21 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.9](https://github.com/UN-OCHA/slt8-site/compare/v2.1.8...v2.1.9) (2024-12-16)
+
+### Chores
+
+* Update all outdated drupal/* unocha/* drush/* packages. ([c37240](https://github.com/UN-OCHA/slt8-site/commit/c3724076491c8ce17c2e3cbfc3a7fac7bd4fda47), [86dd89](https://github.com/UN-OCHA/slt8-site/commit/86dd892c17f50f98310554acb16d59e75d2e0a1d), [88626b](https://github.com/UN-OCHA/slt8-site/commit/88626b902b5baba8125953b4800b727eba496a2c))
+
+##### Deps
+
+* Bump braces and babel-jest ([0bbcbf](https://github.com/UN-OCHA/slt8-site/commit/0bbcbf1fc11d0bdf9752f5b99507b0911d480d10))
+* Bump ws and puppeteer ([4a05e7](https://github.com/UN-OCHA/slt8-site/commit/4a05e78acbfc260b293ddc09b23965e14e743a7c))
+
+##### Deps-dev
+
+* Bump axios ([4b71a4](https://github.com/UN-OCHA/slt8-site/commit/4b71a4afd4ce09b7417caffeee35308fdc156295))
+
 ## [2.1.8](https://github.com/UN-OCHA/slt8-site/compare/v2.1.7...v2.1.8) (2024-11-21)
 
 ### Chores
