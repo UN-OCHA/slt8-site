@@ -4,6 +4,21 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.10](https://github.com/UN-OCHA/slt8-site/compare/v2.1.9...v2.1.10) (2025-01-14)
+
+### Chores
+
+* Bump version of mariadb for local development ([7ad6b4](https://github.com/UN-OCHA/slt8-site/commit/7ad6b46dc6b6b5270574788af75ec4e6b5ca14a1))
+* Update all outdated drupal/* unocha/* drush/* packages. ([7ef4fd](https://github.com/UN-OCHA/slt8-site/commit/7ef4fdef95150338634711236082ea44199698d7), [32e084](https://github.com/UN-OCHA/slt8-site/commit/32e0845cb4b7e34233a9de7c0c788ffc1fc56370), [221aaa](https://github.com/UN-OCHA/slt8-site/commit/221aaaed108767f55c5a0c15aff9d7f6ca89f6a2), [125662](https://github.com/UN-OCHA/slt8-site/commit/12566207ccdc6dbbf2f753ba7784feb9f96782b8))
+
+##### Deps
+
+* Bump phpoffice/phpspreadsheet from 2.3.2 to 2.3.5 ([34e109](https://github.com/UN-OCHA/slt8-site/commit/34e109f464bbb0c3abc503f4884b373c8652e6be))
+
+##### Tests
+
+* Bump the test MariaDB to match what the dev sites will use soon. (#344) ([1f5e6a](https://github.com/UN-OCHA/slt8-site/commit/1f5e6af391e574a99c2c0b8c5f0d1d74af1e387a))
+
 ## [2.1.9](https://github.com/UN-OCHA/slt8-site/compare/v2.1.8...v2.1.9) (2024-12-16)
 
 ### Chores
