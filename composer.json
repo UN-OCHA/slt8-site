@@ -28,7 +28,6 @@
         "drupal/amazon_ses": "^3",
         "drupal/aws": "dev-2.0.x",
         "drupal/bcc": "^4",
-        "drupal/classy": "^1.0",
         "drupal/components": "^3.0@beta",
         "drupal/config_split": "^2.0@rc",
         "drupal/core-composer-scaffold": "^10",
