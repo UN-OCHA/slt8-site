@@ -64,7 +64,6 @@
     "require-dev": {
         "davidrjonas/composer-lock-diff": "^1.7",
         "drupal/coder": "^8.3",
-        "drupal/config_filter": "^2.2",
         "drupal/devel": "^5.0",
         "kint-php/kint": "^5",
         "marcocesarato/php-conventional-changelog": "^1.17",
