@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd0e48cdba4f9795a6aa367b5e91e43f",
+    "content-hash": "131770f0eb21ca3eb5736f4e8993edcc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2555,7 +2555,7 @@
                 "shasum": "6ffe6724692ec8f59a2feb2f1a17e416912ac84f"
             },
             "require": {
-                "drupal/core": "^9 || ^10 || ^11"
+                "drupal/core": "^10"
             },
             "type": "drupal-module",
             "extra": {
@@ -3781,7 +3781,7 @@
                 "shasum": "fc8ea60619b6b4682bade340e13fb4565d3a7e0c"
             },
             "require": {
-                "drupal/core": "^9.1 || ^10"
+                "drupal/core": "^10"
             },
             "type": "drupal-module",
             "extra": {
@@ -8012,19 +8012,20 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "2.3.6",
+            "version": "2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "098b848ee6688cb9a252d9ce97889defc517ee88"
+                "reference": "7a700683743bf1c4a21837c84b266916f1aa7d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/098b848ee6688cb9a252d9ce97889defc517ee88",
-                "reference": "098b848ee6688cb9a252d9ce97889defc517ee88",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/7a700683743bf1c4a21837c84b266916f1aa7d25",
+                "reference": "7a700683743bf1c4a21837c84b266916f1aa7d25",
                 "shasum": ""
             },
             "require": {
+                "composer/pcre": "^1 || ^2 || ^3",
                 "ext-ctype": "*",
                 "ext-dom": "*",
                 "ext-fileinfo": "*",
@@ -8110,9 +8111,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.3.6"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.3.8"
             },
-            "time": "2025-01-12T03:22:26+00:00"
+            "time": "2025-02-08T03:01:45+00:00"
         },
         {
             "name": "phpowermove/docblock",
@@ -14619,16 +14620,16 @@
     "packages-dev": [
         {
             "name": "davidrjonas/composer-lock-diff",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/davidrjonas/composer-lock-diff.git",
-                "reference": "3c39a39849e6d235e588c6ae273d97c8785e9008"
+                "reference": "829047c7116f923486a107ae5cd7a1ba50c873ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/davidrjonas/composer-lock-diff/zipball/3c39a39849e6d235e588c6ae273d97c8785e9008",
-                "reference": "3c39a39849e6d235e588c6ae273d97c8785e9008",
+                "url": "https://api.github.com/repos/davidrjonas/composer-lock-diff/zipball/829047c7116f923486a107ae5cd7a1ba50c873ad",
+                "reference": "829047c7116f923486a107ae5cd7a1ba50c873ad",
                 "shasum": ""
             },
             "bin": [
@@ -14653,9 +14654,9 @@
             "description": "See what has changed after a composer update.",
             "support": {
                 "issues": "https://github.com/davidrjonas/composer-lock-diff/issues",
-                "source": "https://github.com/davidrjonas/composer-lock-diff/tree/1.7.0"
+                "source": "https://github.com/davidrjonas/composer-lock-diff/tree/1.7.1"
             },
-            "time": "2022-03-11T17:43:07+00:00"
+            "time": "2025-01-24T05:58:02+00:00"
         },
         {
             "name": "doctrine/common",
@@ -15500,7 +15501,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.1"
+        "php": ">=8.3"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
