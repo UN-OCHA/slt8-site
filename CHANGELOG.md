@@ -4,6 +4,15 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.11](https://github.com/UN-OCHA/slt8-site/compare/v2.1.10...v2.1.11) (2025-02-18)
+
+### Chores
+
+* Remove config_filter module ([a0b6e7](https://github.com/UN-OCHA/slt8-site/commit/a0b6e7cf47a6c8455b3c283f323ee46ebe34a29d))
+* Remove patch and update user_expire module ([9eea25](https://github.com/UN-OCHA/slt8-site/commit/9eea25d77aef4b6b84e458cd88d8289ede2b7d3b))
+* Remove unused allowed_formats modules ([35a0a5](https://github.com/UN-OCHA/slt8-site/commit/35a0a5b3b8785fd3127eee0d5ff26935cc7211fa))
+* Update all outdated drupal/* unocha/* drush/* weitzman/drupal-test-traits packages. ([f28ee8](https://github.com/UN-OCHA/slt8-site/commit/f28ee8a3f3083ac900bbe8bcfd929f563f77c94d), [b1c753](https://github.com/UN-OCHA/slt8-site/commit/b1c753f2d373906fd48997e596d1c0be6245c022), [1654ea](https://github.com/UN-OCHA/slt8-site/commit/1654ea10a31835d31e42c38ad692b3a51e028e52), [85aeb7](https://github.com/UN-OCHA/slt8-site/commit/85aeb7221e50194aca2724eff370b812cab15082))
+
 ## [2.1.10](https://github.com/UN-OCHA/slt8-site/compare/v2.1.9...v2.1.10) (2025-01-14)
 
 ### Chores
