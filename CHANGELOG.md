@@ -4,6 +4,13 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.12](https://github.com/UN-OCHA/slt8-site/compare/v2.1.11...v2.1.12) (2025-02-20)
+
+### Chores
+
+* Remove unused module ([f986f6](https://github.com/UN-OCHA/slt8-site/commit/f986f6eeeecf0c3081a4d41d48f8be3de0c5e27d))
+* Update all outdated drupal/* unocha/* drush/* weitzman/drupal-test-traits packages. ([5625ae](https://github.com/UN-OCHA/slt8-site/commit/5625ae7a4e65ee5d18ca91d69911465fe2ff4d25))
+
 ## [2.1.11](https://github.com/UN-OCHA/slt8-site/compare/v2.1.10...v2.1.11) (2025-02-18)
 
 ### Chores

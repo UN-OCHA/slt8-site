@@ -24,7 +24,6 @@
         "composer/installers": "^2",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_denied": "^2.0",
-        "drupal/allowed_formats": "^3",
         "drupal/amazon_ses": "^3",
         "drupal/aws": "dev-2.0.x",
         "drupal/bcc": "^4",
@@ -188,5 +187,5 @@
             ]
         }
     },
-    "version": "2.1.11"
+    "version": "2.1.12"
 }
