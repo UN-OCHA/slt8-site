@@ -28,7 +28,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'node',
     'field',
@@ -42,7 +42,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stable';
+  protected $defaultTheme = 'stark';
 
   /**
    * View display for the node type used in the tests.
@@ -166,17 +166,17 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > picture > source[media="(min-width: 0px)"]' => [
+          'source[media="(min-width: 0px)"]' => [
             'attributes' => [
               'srcset' => '/files/styles/thumbnail/public/example.png',
             ],
           ],
-          '.field--name-field-media > .field__item > picture > source[media="(min-width: 851px)"]' => [
+          'source[media="(min-width: 851px)"]' => [
             'attributes' => [
               'srcset' => '/files/styles/large/public/example.png',
             ],
           ],
-          '.field--name-field-media > .field__item > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => 'test image alt text',
             ],
@@ -193,7 +193,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => 'Custom alt text',
             ],
@@ -210,7 +210,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => ['callback' => 'getTestNodeTitle'],
             ],
@@ -227,7 +227,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestMediaUrl'],
             ],
@@ -244,7 +244,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestImageUrl'],
             ],
@@ -261,12 +261,12 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => 'https://example.org',
             ],
           ],
-          '.field--name-field-media > .field__item > a > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => 'test image alt text',
             ],
@@ -283,7 +283,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestNodeUrl'],
             ],
@@ -300,12 +300,12 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => FALSE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestNodeUrl'],
             ],
           ],
-          '.field--name-field-media > .field__item > a > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => 'test image alt text',
             ],
@@ -322,17 +322,17 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => TRUE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => 'https://example.org',
             ],
           ],
-          '.field--name-field-media > .field__item > a > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => '',
             ],
           ],
-          '.field--name-field-media > .field__item > a > .link__title' => [
+          'a > .link__title' => [
             'text' => 'test image alt text',
           ],
         ],
@@ -347,17 +347,17 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
           'image_as_background' => TRUE,
         ],
         'selectors' => [
-          '.field--name-field-media > .field__item > a' => [
+          'a' => [
             'attributes' => [
               'href' => ['callback' => 'getTestNodeUrl'],
             ],
           ],
-          '.field--name-field-media > .field__item > a > picture > img' => [
+          'img' => [
             'attributes' => [
               'alt' => '',
             ],
           ],
-          '.field--name-field-media > .field__item > a > .link__title' => [
+          'a > .link__title' => [
             'text' => ['callback' => 'getTestNodeTitle'],
           ],
         ],
