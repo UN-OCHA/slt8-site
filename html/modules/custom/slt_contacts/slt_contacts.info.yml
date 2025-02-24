@@ -2,4 +2,4 @@ type: module
 name: SLT Contacts
 description: 'SLT contacts import handling.'
 package: slt
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

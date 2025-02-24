@@ -2,4 +2,4 @@ type: module
 name: SLT General
 description: 'Provides customizations and tests for the SLT site.'
 package: slt
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
