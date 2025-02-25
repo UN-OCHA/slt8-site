@@ -171,7 +171,7 @@ class TelephoneTypeFieldTest extends BrowserTestBase {
   /**
    * Provides the phone numbers to check and expected results.
    */
-  public function providerPhoneNumbers() {
+  protected function providerPhoneNumbers() {
     return [
       'Phone number with type' => [
         'input' => [

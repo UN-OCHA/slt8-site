@@ -233,8 +233,7 @@ jobs:
             </details>
 
             <details><summary>Tests</summary>
-            <code>${{ steps.tests.outputs.stdout }}</code>
-            <code>${{ steps.tests.outputs.stderr }}</code>
+            <p>Results hidden due to verbosity. See the output of tests below.</p>
             </details>
 
             <details><summary>Drupal Logs</summary>
