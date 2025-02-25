@@ -232,8 +232,8 @@ jobs:
             <code>${{ steps.phpcs.outputs.stderr }}</code>
             </details>
 
-            <details><summary>Tests - stderror hidden due to verbosity. See the output of tests below.</summary>
-            <code>${{ steps.tests.outputs.stdout }}</code>
+            <details><summary>Tests</summary>
+            <p>Results hidden due to verbosity. See the output of tests below.</p>
             </details>
 
             <details><summary>Drupal Logs</summary>
