@@ -154,7 +154,7 @@ class LinkedResponsiveImageMediaFormatterTest extends BrowserTestBase {
    * @return array
    *   Data for the ::testRender().
    */
-  public function providerRender() {
+  protected function providerRender() {
     return [
       'Responsive image style only' => [
         'settings' => [

@@ -232,7 +232,8 @@ jobs:
             <code>${{ steps.phpcs.outputs.stderr }}</code>
             </details>
 
-            <details><summary>Tests - temporarily truncated - see Run tests step above</summary>
+            <details><summary>Tests - stderror hidden due to verbosity. See the output of tests below.</summary>
+            <code>${{ steps.tests.outputs.stdout }}</code>
             </details>
 
             <details><summary>Drupal Logs</summary>
