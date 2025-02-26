@@ -16,6 +16,9 @@
             "D11 compatibility - #3433848": "PATCHES/paragraphs_viewmode-D11-compatibility-3433848.patch",
             "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
         },
+        "drupal/social_auth": {
+            "Type Error - #3496656": "PATCHES/social_auth-type-error-3496656.patch"
+        },
         "drupal/user_expire": {
             "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
         },
