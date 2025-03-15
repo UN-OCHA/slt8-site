@@ -57,6 +57,8 @@ services:
       - ENVIRONMENT=dev
       - NGINX_SERVERNAME=slt-test-site,localhost,127.0.0.1
       - NGINX_OVERRIDE_PROTOCOL=HTTP,slt-test-site,localhost,127.0.0.1
+      - NGINX_LIMIT_BOTS=64r/s
+      - NGINX_BURST_BOTS=256 nodelay
       - DRUSH_OPTIONS_URI=http://slt-test-site
       - DRUPAL_DB_DATABASE=slt
       - DRUPAL_DB_USERNAME=slt
