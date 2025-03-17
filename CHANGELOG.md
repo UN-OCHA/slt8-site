@@ -4,6 +4,19 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [2.1.13](https://github.com/UN-OCHA/slt8-site/compare/v2.1.12...v2.1.13) (2025-03-17)
+
+### Bug Fixes
+
+* Include social_auth patch ([c3e3a9](https://github.com/UN-OCHA/slt8-site/commit/c3e3a9308e045ed2c29f4954825b30c96a4914cc))
+* Use include and not include_once because software sucks. ([fb3e1f](https://github.com/UN-OCHA/slt8-site/commit/fb3e1f290885ce30f36136774f16dc6fe7e00e4a))
+
+### Chores
+
+* Csp exception for dragula library ([e6ef62](https://github.com/UN-OCHA/slt8-site/commit/e6ef62d005f954e546bf27a34bbb0dec881e4315))
+* Temporarily reduce test verbosity ([f3066b](https://github.com/UN-OCHA/slt8-site/commit/f3066b71a4c232f5259aa51b34875978e1f9d1eb))
+* Update phpunit config ([a7c942](https://github.com/UN-OCHA/slt8-site/commit/a7c942b066814f946038a0b843323cb86502aa09))
+
 ## [2.1.12](https://github.com/UN-OCHA/slt8-site/compare/v2.1.11...v2.1.12) (2025-02-20)
 
 ### Chores
