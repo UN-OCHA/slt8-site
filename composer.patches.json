@@ -3,11 +3,21 @@
         "drupal/amazon_ses": {
             "Cron fails on amazon_ses when not configured": "PATCHES/amazon_ses-cron-queue-3417090-8.patch"
         },
+        "drupal/classy" : {
+            "D11 compatibility - #3461089": "https://www.drupal.org/files/issues/2024-08-26/classy-3461089-5.patch"
+        },
         "drupal/core" : {
             "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
         },
+        "drupal/maintenance200": {
+            "D11 compatibility - #3431791": "PATCHES/maintenance200-D11-compatibility-3431791.patch"
+        },
         "drupal/paragraphs_viewmode": {
+            "D11 compatibility - #3433848": "PATCHES/paragraphs_viewmode-D11-compatibility-3433848.patch",
             "Consolidated fixes for issues 3345123 and 3345129": "PATCHES/paragraphs_viewmode-consolidated-fixes-3345123-3345129.patch"
+        },
+        "drupal/social_auth": {
+            "Type Error - #3496656": "PATCHES/social_auth-type-error-3496656.patch"
         },
         "drupal/user_expire": {
             "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
